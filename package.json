@@ -2,10 +2,11 @@
   "name": "web-dev-final-project",
   "version": "1.0.0",
   "description": "Final project for CS4550. Podcast sharing, rating and reviewing app.",
-  "main": "server.js",
+  "main": "app/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/holly-christensen/web-dev-final-project.git"
