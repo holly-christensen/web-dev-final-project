@@ -3,15 +3,18 @@ module.exports = mongoose => {
         "user",
         mongoose.Schema(
             {
+                userId: String,
                 firstName: String,
                 lastName: String,
+                phoneNumber: String,
                 profileImg: Blob,
                 credentials: {
                     username: String,
                     email: String,
                     password: String,
                 },
-                isAdmin: Boolean
+                type: String,
+                following: [{podcastId: String}]
             },
             {timestamps: true}
         )
