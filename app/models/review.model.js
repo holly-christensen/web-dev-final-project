@@ -3,11 +3,13 @@ module.exports = mongoose => {
         "review",
         mongoose.Schema(
             {
+                ratingId: String,
+                userId: String,
+                podcastId: String,
                 title: String,
                 body: String,
-                rating: Boolean,
+                rating: Number,
                 datePosted: String,
-                userId: String,
             },
             { timestamps: true }
         )

@@ -6,6 +6,8 @@ module.exports = mongoose => {
                 body: String,
                 datePosted: String,
                 userId: String,
+                creatorId: String,
+                episodeId: String,
                 likes: Number,
                 dislikes: Number,
             },
