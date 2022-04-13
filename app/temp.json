@@ -1,0 +1,13 @@
+{
+  "firstName": "Sponge",
+  "lastName": "Bob",
+  "phoneNumber": "206-666-6669",
+  "profileImg": "",
+  "credentials": {
+    "username": "spongebob",
+    "email": "sponge@bob.com",
+    "password": "1234"
+  },
+  "type": "CONSUMER",
+  "following": []
+}

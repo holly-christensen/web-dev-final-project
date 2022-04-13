@@ -1,23 +1,9 @@
-module.exports = mongoose => {
+import mongoose from "mongoose";
+import usersSchema from "../schemas/users-schema.js"
+
     const User = mongoose.model(
         "user",
-        mongoose.Schema(
-            {
-                userId: String,
-                firstName: String,
-                lastName: String,
-                phoneNumber: String,
-                profileImg: Blob,
-                credentials: {
-                    username: String,
-                    email: String,
-                    password: String,
-                },
-                type: String,
-                following: [{podcastId: String}]
-            },
-            {timestamps: true}
-        )
+        usersSchema
     );
-    return User;
-};
+
+export default User;

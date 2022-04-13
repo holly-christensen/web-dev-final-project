@@ -1,16 +1,20 @@
 // reference: https://www.bezkoder.com/react-node-express-mongodb-mern-stack/
 import express from 'express';
 import cors from 'cors';
+import mongoose from "mongoose";
 // const bodyParser = require("body-parser");
 import userController from "./controller/user-controller.js";
 const app = express();
 app.use(express.json());
+mongoose.connect('mongodb://localhost:27017/podcastapp');
 app.get('/', (req, res) => {res.send('Welcome to Full Stack Development!')})
 
-var corsOptions = {
-  origin: "http://localhost:4000"
-};
-app.use(cors(corsOptions));
+
+// var corsOptions = {
+//   origin: "http://localhost:4000"
+// };
+// app.use(cors(corsOptions));
+app.use(cors);
 
 // parse requests of content-type - application/json
 // app.use(bodyParser.json());

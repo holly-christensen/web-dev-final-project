@@ -20,7 +20,7 @@ export function useGetPodcasts() {
                 title,
                 description
             }
-        } returnPartialData
+        }
       }
     `);
         return getPodcastList;
