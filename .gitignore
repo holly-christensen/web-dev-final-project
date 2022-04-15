@@ -108,3 +108,7 @@ dist
 
 # ignore package-lock
 package-lock.json
+
+# ignore mongo db
+/data
+data
