@@ -1,18 +1,8 @@
+const commentsSchema = require("../schemas/comments-schema.js");
 module.exports = mongoose => {
     const Comment = mongoose.model(
         "comment",
-        mongoose.Schema(
-            {
-                body: String,
-                datePosted: String,
-                userId: String,
-                creatorId: String,
-                episodeId: String,
-                likes: Number,
-                dislikes: Number,
-            },
-            { timestamps: true }
-        )
+        commentsSchema
     );
     return Comment;
 };
