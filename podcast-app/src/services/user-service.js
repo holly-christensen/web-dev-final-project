@@ -9,6 +9,7 @@ export const createUser = async (user) => {
 export const findAllUsers = async () => {
     const response = await axios.get(USERS_API);
     const users = response.data;
+    console.log('in user-service '+JSON.stringify(users));
     return users;
 }
 

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import reviewsSchema from "./reviews-schema.js"
-import episodesSchema from "./episodes-schema.js"
+import commentsSchema from "./comments-schema.js";
+import podcastsSchema from "./podcasts-schema.js";
 
 const usersSchema = mongoose.Schema({
         firstName: String,
@@ -13,8 +14,8 @@ const usersSchema = mongoose.Schema({
             password: String,
         },
         type: String,
-        following: [{podcastId: String}],
-        likes: [{episodesSchema}],
+        following: [{podcastsSchema}],
+        comments: [{commentsSchema}],
         reviews: [{reviewsSchema}]
     },
     {timestamps: true}, {collection: "users"})

@@ -1,8 +1,9 @@
-const commentsSchema = require("../schemas/comments-schema.js");
-module.exports = mongoose => {
-    const Comment = mongoose.model(
-        "comment",
-        commentsSchema
-    );
-    return Comment;
-};
+import commentsSchema from "../schemas/comments-schema.js";
+import mongoose from "mongoose";
+
+const Comment = mongoose.model(
+    "comment",
+    commentsSchema
+);
+
+export default Comment;

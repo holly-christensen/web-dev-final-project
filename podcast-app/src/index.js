@@ -2,12 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {QueryClient, QueryClientProvider} from "react-query";
 import App from "./App";
-import {createStore} from 'redux'
+import {combineReducers, createStore} from 'redux'
 import {Provider} from "react-redux";
-import userReducer from "./reducers/user-reducer.js";
+import users from "./reducers/user-reducer";
+import comments from "./reducers/comment-reducer";
 
 
-const store = createStore(userReducer);
+const reducers = combineReducers({users, comments})
+const store = createStore(reducers);
 
 
 const queryClient = new QueryClient();

@@ -5,7 +5,10 @@ const commentsSchema = mongoose.Schema({
         userId: String,
         body: String,
         datePosted: String,
-        likes: Number,
+        likes: {
+                count: Number,
+                likedBy: [{userId: String}]
+        },
         dislikes: Number
     },
     {timestamps: true}, {collection: "comments"})

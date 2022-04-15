@@ -1,13 +1,11 @@
 {
-  "firstName": "Sponge",
-  "lastName": "Bob",
-  "phoneNumber": "206-666-6669",
-  "profileImg": "",
-  "credentials": {
-    "username": "spongebob",
-    "email": "sponge@bob.com",
-    "password": "1234"
+  "episodeId": "1234",
+  "userId": "4567",
+  "body": "a comment!",
+  "datePosted": "today",
+  "likes": {
+    "count": 1,
+    "likedBy": [{"userId": "0001"}]
   },
-  "type": "CONSUMER",
-  "following": []
+  "dislikes": 0
 }
