@@ -8,9 +8,20 @@ import {
 const commentsReducer = (state = [], action) => {
     switch (action.type) {
         case CREATE_COMMENT:
+            const newComment = {
+                episodeId: action.episodeId,
+                userId: action.userId,
+                body: action.comment,
+                datePosted: new Date().toLocaleString() + "",
+                likes: {
+                    count: 0,
+                    likedBy: []
+                },
+                dislikes: 0
+            }
             return [
                 ...state,
-                action.newComment
+                newComment
             ];
         case FIND_ALL_COMMENTS:
             return action.comments;

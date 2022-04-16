@@ -1,10 +1,7 @@
 import usersDao  from '../daos/users-dao.js';
 
 const findAllUsers = async (req, res) => {
-    console.log('in findAllUsers ');
     const users = await usersDao.findAllUsers()
-    console.log('users '+users);
-
     res.json(users)
 }
 const findUserById = async (req, res) => {

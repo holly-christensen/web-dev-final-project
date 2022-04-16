@@ -1,7 +1,6 @@
 import usersModel from '../models/user.model.js'
 
 const findAllUsers = () => {
-    console.log('in the dao');
     return usersModel.find()
 }
 const findUserById = (id) => {

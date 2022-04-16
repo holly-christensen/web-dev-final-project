@@ -1,10 +1,7 @@
 import commentsDao  from '../daos/comments-dao.js';
 
 const findAllComments = async (req, res) => {
-    console.log('in findAllComments ');
     const comments = await commentsDao.findAllComments()
-    console.log('comments '+comments);
-
     res.json(comments)
 }
 const findCommentById = async (req, res) => {

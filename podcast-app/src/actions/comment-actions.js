@@ -6,11 +6,13 @@ export const FIND_COMMENT_BY_ID = 'FIND_COMMENT_BY_ID';
 export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
-export const createComment = async (dispatch, newComment) => {
-    const comment = await service.createComment(newComment.comment);
+export const createComment = async (dispatch, commentBody, episodeId, userId) => {
+    const comment = await service.createComment(commentBody, episodeId, userId);
     dispatch({
         type: CREATE_COMMENT,
-        comment
+        comment: comment.comment,
+        episodeId: comment.episodeId,
+        userId: comment.userId
     });
 }
 export const findAllComments = async (dispatch) => {

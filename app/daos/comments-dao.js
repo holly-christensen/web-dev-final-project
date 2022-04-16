@@ -6,7 +6,7 @@ const findAllComments = () => {
 
 const likeComment = async (comment) => {
     // update
-    const existingComment = await commentsModel().findOne({_id: comment._id})
+    const existingComment = await commentsModel.findOne({_id: comment._id})
     await commentsModel.updateOne({_id: comment._id}, {
         $set: {likes: existingComment.likes + 1}
     })
@@ -14,7 +14,7 @@ const likeComment = async (comment) => {
 
 const dislikeComment = async (comment) => {
     // update
-    const existingComment = await commentsModel().findOne({_id: comment._id})
+    const existingComment = await commentsModel.findOne({_id: comment._id})
     await commentsModel.updateOne({_id: comment._id}, {
         $set: {dislikes: existingComment.dislikes + 1}
     })
@@ -28,6 +28,10 @@ const deleteComment = (id) => {
     return commentsModel.deleteOne({_id: id})
 }
 
+const createComment = (comment) => {
+    return commentsModel.insertMany(comment)
+}
+
 export default {
-    likeComment, dislikeComment, findCommentById, deleteComment, findAllComments
+    likeComment, dislikeComment, findCommentById, deleteComment, findAllComments, createComment
 }
