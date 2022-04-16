@@ -5,19 +5,24 @@ import {useGetPodcasts} from "./useRequest";
 
 
 function App() {
-    // const {isSuccess, isError, error, data, isLoading} = useGetPodcasts();
-    // if (isError) return <h1>{error}</h1>;
-    // if (isLoading) return <h1>Loading...</h1>;
-    // if (isSuccess) return <pre>{data}</pre>;
+    const {isSuccess, isError, error, data, isLoading} = useGetPodcasts();
 
+     if (isError) return <h1>{error}</h1>;
+     if (isLoading) return <h1>Loading...</h1>;
+
+     let podcasts = []
+     if (isSuccess) {
+         podcasts = data.podcasts.data;
+     }
 
     return (
         <>
             <div className="App">
-                <p>Hello</p>
-                {/*{data &&*/}
-                {/*    data.podcasts.map((post) => <p>post.title</p>)}*/}
-
+                <h1>Popular Podcasts</h1>
+                {podcasts.map((podcast) =>
+                    <div>
+                        {podcast.title}
+                    </div>)}
             </div>
             <UsersList/>
         </>

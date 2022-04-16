@@ -13,7 +13,7 @@ const graphQLClient = new GraphQLClient(API_URL, {
 
 export function useGetPodcasts() {
     return useQuery("get-podcasts", async () => {
-        const {getPodcastList} = await graphQLClient.request(gql`
+        const getPodcastList = await graphQLClient.request(gql`
       query {
         podcasts {
             data {
