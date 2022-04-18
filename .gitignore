@@ -112,3 +112,5 @@ package-lock.json
 # ignore mongo db
 /data/db
 /data
+
+.DS_Store

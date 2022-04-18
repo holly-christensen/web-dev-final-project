@@ -4,22 +4,25 @@ import {createComment, findAllComments, deleteComment} from "./actions/comment-a
 import {findAllUsers} from "./actions/user-actions";
 
 const UserList = () => {
+    let [commentBody, setCommentBody] = useState('');
+
     const users = useSelector((state) => state.users);
     const comments = useSelector((state) => state.comments);
 
     const dispatch = useDispatch();
 
     const createCommentHandler = () => {
+        console.log('in comment handler!');
         createComment(dispatch, commentBody, "123", "0002");
+        setCommentBody('')
     }
     const deleteCommentHandler = (comment) => {
-        deleteComment(dispatch, comment._id);
+        deleteComment(dispatch, comment);
     }
 
     useEffect(() => findAllUsers(dispatch), []);
-    useEffect(() => findAllComments(dispatch), [createCommentHandler]);
-
-    let [commentBody, setCommentBody] = useState('');
+    useEffect(() => findAllComments(dispatch), []);
+    const commentList = Object.values(comments);
 
     return (
         <div>
@@ -29,22 +32,26 @@ const UserList = () => {
             </ul>
             <h2>Create User</h2>
             <h1>Comments</h1>
-            <div>{JSON.stringify(comments)}</div>
-            <div>{comments.length}</div>
             <ul>
-                {/*{comments.map((comment) => {*/}
-                {/*    return (<li>*/}
-                {/*        <div>{comment.body}</div>*/}
-                {/*        <button onClick={deleteCommentHandler}>Delete</button>*/}
-                {/*    </li>)*/}
-                {/*})}*/}
+                {commentList.map((comment) => {
+                    return (
+                        <li key={comment._id}>
+                            <div>{comment.body}</div>
+                            <button onClick={() => {
+                                deleteCommentHandler(comment)
+                            }}>Delete
+                            </button>
+                        </li>)
+                })}
             </ul>
             <h2>Create Comment</h2>
             <textarea value={commentBody}
                       onChange={(event) =>
                           setCommentBody(event.target.value)}>
             </textarea>
-            <button onClick={createCommentHandler}>
+            <button onClick={() => {
+                createCommentHandler()
+            }}>
                 Create comment
             </button>
         </div>
