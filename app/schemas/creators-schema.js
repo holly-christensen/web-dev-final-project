@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const creatorsSchema = mongoose.Schema({
         userId: String,
         podcastId: String,
-        body: String,
+        podcastName: String,
         funFact: String,
         boringFact: String,
     },

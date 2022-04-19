@@ -32,4 +32,4 @@ export const getPodcasts = async () => {
     });
 }
 
-getPodcasts();
+// getPodcasts();

@@ -3,6 +3,7 @@ import './App.css';
 import CommentList from "./CommentList"
 import UserSignUp from "./UserSignUp";
 import {useGetPodcasts} from "./useRequest";
+import CreatorSignUp from "./CreatorSignUp";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             </div>
             <CommentList/>
             <UserSignUp/>
+            <CreatorSignUp/>
         </>
     );
 }

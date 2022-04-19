@@ -11,9 +11,8 @@ const graphQLClient = new GraphQLClient(API_URL, {
     }
 });
 
-export function useGetPodcasts() {
-    return useQuery("get-podcasts", async () => {
-        const getPodcastList = await graphQLClient.request(gql`
+export async function useGetPodcasts() {
+        return await graphQLClient.request(gql`
       query {
         podcasts {
             data {
@@ -24,13 +23,10 @@ export function useGetPodcasts() {
         }
       }
     `);
-        return getPodcastList;
-    });
 }
 
-export function useGetPodcast(podcastId) {
-    return useQuery(["get-podcast", podcastId], async () => {
-        const {getPodcast} = await graphQLClient.request(
+export async function useGetPodcast(podcastId) {
+        return await graphQLClient.request(
             gql`
         query getPost($postId: ID!) {
           getPost(_id: $postId) {
@@ -40,9 +36,20 @@ export function useGetPodcast(podcastId) {
             title
           }
         }
-      `,
-            {podcastId}
+      `,{podcastId}
         );
-        return getPodcast;
-    });
+
+}
+
+export async function  getPodcastsBySearchTerm(searchTerm) {
+        return await graphQLClient.request(gql`
+        query {
+            podcasts(searchTerm: "${searchTerm}") {
+                data {
+                    id,
+                    title
+                }
+            }
+        }
+    `);
 }

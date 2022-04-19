@@ -20,7 +20,8 @@ const UserSignUp = () => {
     const dispatch = useDispatch();
 
     const createUserHandler = () => {
-        createUser(dispatch, userDetails).then(r => setUserDetails(initialUserDetails));
+        createUser(dispatch, userDetails)
+            .then(r => setUserDetails(initialUserDetails));
     }
 
     const handleInputChange = (event) => {
@@ -36,9 +37,7 @@ const UserSignUp = () => {
     return (
         <div>
             <h1>User Sign Up</h1>
-            <ul>
-                {JSON.stringify(users)}
-            </ul>
+            <div>{JSON.stringify(users)}</div>
             <h2>Sign Up</h2>
             <pre>{JSON.stringify(userDetails)}</pre>
 

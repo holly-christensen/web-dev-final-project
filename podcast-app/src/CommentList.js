@@ -7,25 +7,24 @@ const CommentList = () => {
     let [commentBody, setCommentBody] = useState('');
 
     const comments = useSelector((state) => state.comments);
-    console.log('comments: '+JSON.stringify(comments))
 
     const dispatch = useDispatch();
-    useEffect(() => findAllComments(dispatch), []);
 
     const createCommentHandler = () => {
-        createComment(dispatch, commentBody, "123", "0002");
-        setCommentBody('')
+        createComment(dispatch, commentBody, "123", "0002")
+            .then(r => setCommentBody(''));
+
     }
     const deleteCommentHandler = (comment) => {
         deleteComment(dispatch, comment);
     }
 
+    useEffect(() => findAllComments(dispatch), []);
 
     return (
         <div>
             <h1>Comments</h1>
             <div>{JSON.stringify(comments)}</div>
-            <div>{comments.length}</div>
             <ul>
                 {(comments.length > 0) && comments.map((comment) => {
                     return (
