@@ -1,4 +1,5 @@
 import * as service from '../services/user-service.js';
+import {USER_CONSUMER} from "../user-types";
 
 export const CREATE_USER = 'CREATE_USER';
 export const FIND_ALL_USERS = 'FIND_ALL_USERS';
@@ -6,8 +7,23 @@ export const FIND_USER_BY_ID = 'FIND_USER_BY_ID';
 export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
 
-export const createUser = async (dispatch, newUser) => {
-    const user = await service.createUser(newUser.user);
+export const createUser = async (dispatch, userDetails) => {
+    const newUser = {
+        firstname: userDetails.firstname,
+        lastname: userDetails.lastname,
+        phoneNumber: userDetails.phoneNumber,
+        profileImg: '',
+        credentials: {
+            username: userDetails.username,
+            email: userDetails.email,
+            password: userDetails.password,
+        },
+        type: USER_CONSUMER,
+        following: [],
+        comments: [],
+        reviews: []
+    }
+    const user = await service.createUser(newUser);
     dispatch({
         type: CREATE_USER,
         user

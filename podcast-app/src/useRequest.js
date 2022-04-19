@@ -17,6 +17,7 @@ export function useGetPodcasts() {
       query {
         podcasts {
             data {
+                id,
                 title,
                 description
             }

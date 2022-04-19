@@ -5,12 +5,14 @@ import {
     FIND_ALL_USERS,
     FIND_USER_BY_ID
 } from "../actions/user-actions.js";
+
 const usersReducer = (state = [], action) => {
     switch (action.type) {
         case CREATE_USER:
+            console.log(state);
             return [
                 ...state,
-                action.newUser
+                action.user,
             ];
         case FIND_ALL_USERS:
             return action.users;
