@@ -7,12 +7,18 @@ export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 export const createComment = async (dispatch, commentBody, episodeId, userId) => {
-    const comment = await service.createComment(commentBody, episodeId, userId);
+    const newComment = {
+        likes: {count: 0, likedBy: []},
+        episodeId: episodeId,
+        userId: userId,
+        body: commentBody,
+        datePosted: new Date().toLocaleDateString() + "",
+        dislikes: 0
+    }
+    const comment = await service.createComment(newComment);
     dispatch({
         type: CREATE_COMMENT,
-        comment: comment.comment,
-        episodeId: comment.episodeId,
-        userId: comment.userId
+        comment: comment
     });
 }
 export const findAllComments = async (dispatch) => {

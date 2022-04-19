@@ -3,13 +3,14 @@ import {useSelector, useDispatch} from 'react-redux';
 import {createComment, findAllComments, deleteComment} from "./actions/comment-actions";
 import {findAllUsers} from "./actions/user-actions";
 
-const UserList = () => {
+const CommentList = () => {
     let [commentBody, setCommentBody] = useState('');
 
-    const users = useSelector((state) => state.users);
     const comments = useSelector((state) => state.comments);
+    console.log('comments: '+JSON.stringify(comments))
 
     const dispatch = useDispatch();
+    useEffect(() => findAllComments(dispatch), []);
 
     const createCommentHandler = () => {
         createComment(dispatch, commentBody, "123", "0002");
@@ -19,20 +20,14 @@ const UserList = () => {
         deleteComment(dispatch, comment);
     }
 
-    useEffect(() => findAllUsers(dispatch), []);
-    useEffect(() => findAllComments(dispatch), []);
-    const commentList = Object.values(comments);
 
     return (
         <div>
-            <h1>Users</h1>
-            <ul>
-                {JSON.stringify(users)}
-            </ul>
-            <h2>Create User</h2>
             <h1>Comments</h1>
+            <div>{JSON.stringify(comments)}</div>
+            <div>{comments.length}</div>
             <ul>
-                {commentList.map((comment) => {
+                {(comments.length > 0) && comments.map((comment) => {
                     return (
                         <li key={comment._id}>
                             <div>{comment.body}</div>
@@ -57,4 +52,4 @@ const UserList = () => {
     );
 };
 
-export default UserList;
+export default CommentList;

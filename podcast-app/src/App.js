@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import UsersList from "./UserList"
+import CommentList from "./CommentList"
 import UserSignUp from "./UserSignUp";
 import {useGetPodcasts} from "./useRequest";
 
@@ -27,7 +27,7 @@ function App() {
                 {/*    </li>)}*/}
                 {/*</ul>*/}
             </div>
-            {/*<UsersList/>*/}
+            <CommentList/>
             <UserSignUp/>
         </>
     );

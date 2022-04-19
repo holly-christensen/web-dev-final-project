@@ -16,7 +16,6 @@ const UserSignUp = () => {
     let [userDetails, setUserDetails] = useState(initialUserDetails);
 
     const users = useSelector((state) => state.users);
-    console.log('users from selector: ' + JSON.stringify(users))
 
     const dispatch = useDispatch();
 
@@ -25,7 +24,6 @@ const UserSignUp = () => {
     }
 
     const handleInputChange = (event) => {
-        console.log(event);
         const value = event.target.value;
         setUserDetails({
             ...userDetails,
@@ -34,11 +32,10 @@ const UserSignUp = () => {
     }
 
     useEffect(() => findAllUsers(dispatch), []);
-    useEffect(() => findAllComments(dispatch), []);
 
     return (
         <div>
-            <h1>Users</h1>
+            <h1>User Sign Up</h1>
             <ul>
                 {JSON.stringify(users)}
             </ul>

@@ -6,7 +6,6 @@ import {combineReducers, createStore} from 'redux'
 import {Provider} from "react-redux";
 import usersReducer from "./reducers/user-reducer";
 import commentsReducer from "./reducers/comment-reducer";
-import initialState from "./initialState";
 
 
 const store = createStore(combineReducers({

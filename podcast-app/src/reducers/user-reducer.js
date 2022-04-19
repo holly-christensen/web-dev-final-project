@@ -10,8 +10,6 @@ import initialState from "../initialState";
 const usersReducer = (state = initialState.users, action) => {
     switch (action.type) {
         case CREATE_USER:
-            console.log('user state: '+JSON.stringify(state))
-            console.log('user to add: '+JSON.stringify(action.user))
             return [
                 ...state,
                 action.user,
@@ -28,8 +26,6 @@ const usersReducer = (state = initialState.users, action) => {
                 user => user._id === action.user._id ?
                     action.user : user);
         default: {
-            console.log('user state in default: '+JSON.stringify(state))
-
             return state.users || initialState.users;
         }
     }

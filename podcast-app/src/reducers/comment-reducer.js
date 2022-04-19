@@ -10,20 +10,9 @@ import initialState from "../initialState";
 const commentsReducer = (state = initialState.comments, action) => {
     switch (action.type) {
         case CREATE_COMMENT:
-            const newComment = {
-                episodeId: action.episodeId,
-                userId: action.userId,
-                body: action.comment,
-                datePosted: new Date().toLocaleString() + "",
-                likes: {
-                    count: 0,
-                    likedBy: []
-                },
-                dislikes: 0
-            }
             return [
                 ...state,
-                newComment
+                action.comment
             ];
         case FIND_ALL_COMMENTS:
             return action;
@@ -37,7 +26,7 @@ const commentsReducer = (state = initialState.comments, action) => {
                 comment => comment._id === action.comment._id ?
                     action.comment : comment);
         default: {
-            return state
+            return state.comments || initialState.comments;
         }
     }
 }
