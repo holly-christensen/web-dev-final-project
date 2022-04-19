@@ -16,14 +16,12 @@ const UserSignUp = () => {
     let [userDetails, setUserDetails] = useState(initialUserDetails);
 
     const users = useSelector((state) => state.users);
-    const comments = useSelector((state) => state.comments);
+    console.log('users from selector: ' + JSON.stringify(users))
 
     const dispatch = useDispatch();
 
     const createUserHandler = () => {
-        createUser(dispatch, userDetails.firstname, userDetails.lastname, userDetails.phoneNumber, userDetails.username, userDetails.email, userDetails.password);
-        // clears the form inputs after it has been submitted
-        setUserDetails(initialUserDetails);
+        createUser(dispatch, userDetails).then(r => setUserDetails(initialUserDetails));
     }
 
     const handleInputChange = (event) => {
@@ -37,7 +35,6 @@ const UserSignUp = () => {
 
     useEffect(() => findAllUsers(dispatch), []);
     useEffect(() => findAllComments(dispatch), []);
-    const commentList = Object.values(comments);
 
     return (
         <div>

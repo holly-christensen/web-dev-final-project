@@ -12,7 +12,6 @@ const UserList = () => {
     const dispatch = useDispatch();
 
     const createCommentHandler = () => {
-        console.log('in comment handler!');
         createComment(dispatch, commentBody, "123", "0002");
         setCommentBody('')
     }

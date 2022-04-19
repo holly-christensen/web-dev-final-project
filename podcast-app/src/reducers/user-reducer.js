@@ -5,17 +5,19 @@ import {
     FIND_ALL_USERS,
     FIND_USER_BY_ID
 } from "../actions/user-actions.js";
+import initialState from "../initialState";
 
-const usersReducer = (state = [], action) => {
+const usersReducer = (state = initialState.users, action) => {
     switch (action.type) {
         case CREATE_USER:
-            console.log(state);
+            console.log('user state: '+JSON.stringify(state))
+            console.log('user to add: '+JSON.stringify(action.user))
             return [
                 ...state,
                 action.user,
             ];
         case FIND_ALL_USERS:
-            return action.users;
+            return action;
         case FIND_USER_BY_ID:
             return action.user;
         case DELETE_USER:
@@ -26,9 +28,9 @@ const usersReducer = (state = [], action) => {
                 user => user._id === action.user._id ?
                     action.user : user);
         default: {
-            return {
-                ...state
-            }
+            console.log('user state in default: '+JSON.stringify(state))
+
+            return state.users || initialState.users;
         }
     }
 }

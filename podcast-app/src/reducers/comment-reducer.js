@@ -5,7 +5,9 @@ import {
     FIND_ALL_COMMENTS,
     FIND_COMMENT_BY_ID
 } from "../actions/comment-actions.js";
-const commentsReducer = (state = [], action) => {
+import initialState from "../initialState";
+
+const commentsReducer = (state = initialState.comments, action) => {
     switch (action.type) {
         case CREATE_COMMENT:
             const newComment = {
@@ -24,7 +26,7 @@ const commentsReducer = (state = [], action) => {
                 newComment
             ];
         case FIND_ALL_COMMENTS:
-            return action.comments;
+            return action;
         case FIND_COMMENT_BY_ID:
             return action.comment;
         case DELETE_COMMENT:
@@ -35,9 +37,7 @@ const commentsReducer = (state = [], action) => {
                 comment => comment._id === action.comment._id ?
                     action.comment : comment);
         default: {
-            return {
-                ...state
-            }
+            return state
         }
     }
 }
