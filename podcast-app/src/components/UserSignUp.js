@@ -19,6 +19,7 @@ const UserSignUp = () => {
 
     const dispatch = useDispatch();
 
+    // TODO: I think we should call signup in contexts/profile-context here instead
     const createUserHandler = () => {
         createUser(dispatch, userDetails)
             .then(r => setUserDetails(initialUserDetails));

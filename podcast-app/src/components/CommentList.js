@@ -12,7 +12,6 @@ const CommentList = () => {
     const createCommentHandler = () => {
         createComment(dispatch, commentBody, "123", "0002")
             .then(r => setCommentBody(''));
-
     }
     const deleteCommentHandler = (comment) => {
         deleteComment(dispatch, comment);
