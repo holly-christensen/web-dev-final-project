@@ -1,8 +1,9 @@
-const creatorsSchema = require("../schemas/creators-schema.js");
-module.exports = mongoose => {
+import mongoose from "mongoose";
+import creatorsSchema from "../schemas/users-schema.js"
+
     const Creator = mongoose.model(
         "creator",
         creatorsSchema
     );
-    return Creator;
-};
+
+export default Creator;

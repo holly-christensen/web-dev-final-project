@@ -35,7 +35,7 @@ const CreatorSignUp = () => {
     let [errors, setErrors] = useState(initialErrors);
     let [podcastSearchDetails, setPodcastSearchDetails] = useState(initialPodcastSearchDetails);
 
-    // const creators = useSelector((state) => state.creators);
+    const creators = useSelector((state) => state.creators);
 
     const dispatch = useDispatch();
 

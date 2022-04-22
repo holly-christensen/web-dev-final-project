@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 // const bodyParser = require("body-parser");
 import userController from "./controller/user-controller.js";
 import commentController from "./controller/comment-controller.js";
+import creatorController from "./controller/creator-controller.js";
 const app = express();
 app.use(express.json());
 mongoose.connect('mongodb://localhost:27017/podcastapp');
@@ -29,6 +30,7 @@ app.use(cors({
 
 userController(app);
 commentController(app);
+creatorController(app);
 
 // simple route
 // app.get("/", (req, res) => {

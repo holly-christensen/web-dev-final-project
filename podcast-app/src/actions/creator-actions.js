@@ -7,10 +7,17 @@ export const UPDATE_CREATOR = 'UPDATE_CREATOR';
 export const DELETE_CREATOR = 'DELETE_CREATOR';
 
 export const createCreator = async (dispatch, creatorDetails) => {
-    const creator = await service.createCreator(creatorDetails);
+    const newCreator = {
+        userId: creatorDetails.userId,
+        podcastId: creatorDetails.podcastId,
+        podcastName: creatorDetails.podcastName,
+        funFact: creatorDetails.funFact,
+        boringFact: creatorDetails.boringFact,
+    }
+    const creator = await service.createCreator(newCreator);
     dispatch({
         type: CREATE_CREATOR,
-        creator: creator
+        creator,
     });
 }
 export const findAllCreators = async (dispatch) => {

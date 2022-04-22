@@ -6,11 +6,12 @@ import {combineReducers, createStore} from 'redux'
 import {Provider} from "react-redux";
 import usersReducer from "./reducers/user-reducer";
 import commentsReducer from "./reducers/comment-reducer";
-
+import creatorsReducer from "./reducers/creator-reducer";
 
 const store = createStore(combineReducers({
         users: usersReducer,
-        comments: commentsReducer
+        comments: commentsReducer,
+        creators: creatorsReducer
     })
 );
 
