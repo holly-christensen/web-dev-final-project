@@ -6,6 +6,19 @@ import mongoose from "mongoose";
 import userController from "./controller/user-controller.js";
 import commentController from "./controller/comment-controller.js";
 const app = express();
+const session = require('express-session');
+app.set('trust proxy', 1);
+let sess = {
+  secret: 'fake secret',
+  cookie: { secure: false }
+};
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1)
+  sess.cookie.secure = true;
+}
+
+app.use(session(sess));
 app.use(express.json());
 mongoose.connect('mongodb://localhost:27017/podcastapp');
 app.get('/', (req, res) => {res.send('Welcome to Full Stack Development!')})
