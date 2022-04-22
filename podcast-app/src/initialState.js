@@ -17,6 +17,7 @@ const initialState = {
         }
     ],
     comments: [],
+    creators: [],
 }
 
 export default initialState;
