@@ -66,16 +66,16 @@ const CreatorSignUp = () => {
         // if it fails, set the credentialsError to that message and display it
     }
 
-    const handleRadioOnChange = (event) => {
-        const id = event.target.key;
-        const name = event.target.value;
+    const handleRadioOnChange = (result) => {
+        console.log(result);
         setCreatorDetails({
             ...creatorDetails,
-            podcastId: id,
-            podcastName: name
+            podcastId: result.id,
+            podcastName: result.title
         })
     }
 
+    // PODCHASER REQUEST
     const [isSending, setIsSending] = useState(false)
     const isMounted = useRef(true)
 
@@ -142,13 +142,18 @@ const CreatorSignUp = () => {
                 onClick={sendRequest}>
                 Find Podcast
             </button>
-            <div onChange={handleRadioOnChange}>
+            <div>
                 {podcastSearchDetails.results.map((result) => {
                     return (
-                        <div key={result.id}>
+                        <div
+                            key={result.id}
+                        >
                             <input
+                                onChange={() => {
+                                    handleRadioOnChange(result)
+                                }}
                                 type={"radio"}
-                                value={result.title}
+                                value={result.id}
                                 name={"results"}/>
                             {result.title}</div>)
                 })}
