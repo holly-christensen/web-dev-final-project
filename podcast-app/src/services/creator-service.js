@@ -3,7 +3,6 @@ const CREATORS_API = 'http://localhost:4000/api/creators';
 
 export const createCreator = async (creator) => {
     const response = await axios.post(CREATORS_API, creator)
-    console.log("in service createCreator"+response.data);
     return response.data;
 }
 
