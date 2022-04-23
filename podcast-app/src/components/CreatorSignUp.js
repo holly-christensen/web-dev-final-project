@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {findAllCreators, createCreator} from "./actions/creator-actions";
-import {getPodcastsBySearchTerm,} from "./useRequest";
+import {findAllCreators, createCreator} from "../actions/creator-actions";
+import {getPodcastsBySearchTerm,} from "../useRequest";
 
 const CreatorSignUp = () => {
 
@@ -86,28 +86,28 @@ const CreatorSignUp = () => {
         // }
 
 // PODCHASER REQUEST
-        const [isSending, setIsSending] = useState(false)
-        const isMounted = useRef(true)
+//         const [isSending, setIsSending] = useState(false)
+//         const isMounted = useRef(true)
 
 // set isMounted to false when we unmount the component
-        useEffect(() => {
-            return () => {
-                isMounted.current = false
-            }
-        }, [])
-
-        const sendRequest = useCallback(async () => {
-            if (isSending) return
-            setIsSending(true)
-
-            const result = await getPodcastsBySearchTerm(creatorDetails.podcastName);
-            setPodcastSearchDetails({...podcastSearchDetails, results: result.podcasts.data})
-
-            // once the request is sent, update state again
-            if (isMounted.current) // only update if we are still mounted
-                setIsSending(false)
-        }, [isSending, creatorDetails.podcastName]) // update the callback if the state changes
-
+//         useEffect(() => {
+//             return () => {
+//                 isMounted.current = false
+//             }
+//         }, [])
+//
+//         const sendRequest = useCallback(async () => {
+//             if (isSending) return
+//             setIsSending(true)
+//
+//             const result = await getPodcastsBySearchTerm(creatorDetails.podcastName);
+//             setPodcastSearchDetails({...podcastSearchDetails, results: result.podcasts.data})
+//
+//             // once the request is sent, update state again
+//             if (isMounted.current) // only update if we are still mounted
+//                 setIsSending(false)
+//         }, [isSending, creatorDetails.podcastName]) // update the callback if the state changes
+//
 
         return (
             <div>
@@ -146,7 +146,8 @@ const CreatorSignUp = () => {
                     </input>
                 </label>
                 <button
-                    onClick={sendRequest}>
+                    // onClick={sendRequest}
+                >
                     Find Podcast
                 </button>
                 <div>

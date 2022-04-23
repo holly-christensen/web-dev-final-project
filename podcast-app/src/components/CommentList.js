@@ -1,12 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {createComment, findAllComments, deleteComment} from "./actions/comment-actions";
+import {createComment, findAllComments, deleteComment} from "../actions/comment-actions";
 
 const CommentList = () => {
     let [commentBody, setCommentBody] = useState('');
 
     const comments = useSelector((state) => state.comments);
-    const commentRef = useRef();
 
     const dispatch = useDispatch();
 
@@ -39,9 +38,8 @@ const CommentList = () => {
             </ul>
             <h2>Create Comment</h2>
             <input
-                ref={commentRef}
-                // onChange={(event) =>
-                //           setCommentBody(event.target.value)}
+                onChange={(event) =>
+                          setCommentBody(event.target.value)}
             >
             </input>
             <button onClick={() => {
