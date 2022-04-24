@@ -47,7 +47,9 @@ export async function  getPodcastsBySearchTerm(searchTerm) {
             podcasts(searchTerm: "${searchTerm}") {
                 data {
                     id,
-                    title
+                    title,
+                    imageUrl,
+                    description
                 }
             }
         }
