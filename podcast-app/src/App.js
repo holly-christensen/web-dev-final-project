@@ -1,37 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
-import CommentList from "./CommentList"
-import UserSignUp from "./UserSignUp";
-import {useGetPodcasts} from "./useRequest";
-import CreatorSignUp from "./CreatorSignUp";
+// import './vendors/bootstrap/css/bootstrap.min.css';
+// import './vendors/bootstrap/bootstrap.min.css';
+// import './vendors/fontawesome/css/all.min.css';
 
+import './App.css';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import UserProfile from "./components/UserProfile";
+import CreatorProfile from "./components/CreatorProfile";
+import EpisodeDetails from "./components/EpisodeDetails";
+import Homepage from "./components/Homepage";
+import PodcastDetails from "./components/PodcastDetails";
+import Search from "./components/Search";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import SignOut from "./components/SignOut";
+import Nav from "./components/Nav";
+
+// import {ProfileProvider} from "./contexts/profile-context";
+// import SecureRoute from "./components/secure-route";
 
 function App() {
-    // const {isSuccess, isError, error, data, isLoading} = useGetPodcasts();
-    //
-    //  if (isError) return <h1>{error}</h1>;
-    //  if (isLoading) return <h1>Loading...</h1>;
-    //
-    //  let podcasts = []
-    //  if (isSuccess) {
-    //      podcasts = data.podcasts.data;
-    //  }
-
     return (
-        <>
-            <div className="App">
-                <h1>Popular Podcasts</h1>
-                {/*<ul>*/}
-                {/*{podcasts.map((podcast) =>*/}
-                {/*    <li key={podcast.id}>*/}
-                {/*        {podcast.title}*/}
-                {/*    </li>)}*/}
-                {/*</ul>*/}
+        // <ProfileProvider>
+        <BrowserRouter>
+            <Nav/>
+            <div className="container">
+                <Routes>
+                    <Route path="/">
+                        <Route path="/home" element={<Homepage/>}/>
+                        <Route path="/profile" element={
+                            // <SecureRoute>
+                            <UserProfile/>
+                            // </SecureRoute>
+                        }/>
+                        <Route path="/signin" element={<SignIn/>}/>
+                        <Route path="/signup" element={<SignUp/>}/>
+                        <Route path="/signout" element={<SignOut/>}/>
+                        <Route path="/podcasts" element={<Search/>}/>
+                        <Route path="podcasts/:searchString" element={<Search/>}/>
+                        <Route path="podcasts/details/:pid" element={<PodcastDetails/>}/>
+                        <Route path="podcasts/details/:pid/:eid" element={<EpisodeDetails/>}/>
+                        <Route path="podcasts/details/:pid/creator/:cid" element={
+                            // <SecureRoute>
+                            <CreatorProfile/>
+                            // </SecureRoute>
+                        }/>
+                    </Route>
+                </Routes>
+
             </div>
-            <CommentList/>
-            <UserSignUp/>
-            <CreatorSignUp/>
-        </>
+        </BrowserRouter>
+        // </ProfileProvider>
     );
 }
 

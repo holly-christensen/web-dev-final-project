@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {findAllComments} from "./actions/comment-actions";
-import {findAllUsers, createUser} from "./actions/user-actions";
+import {findAllComments} from "../actions/comment-actions";
+import {findAllUsers, createUser} from "../actions/user-actions";
 
 const UserSignUp = () => {
 
