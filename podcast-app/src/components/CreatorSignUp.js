@@ -69,45 +69,45 @@ const CreatorSignUp = () => {
                 podcastId: result.id,
                 podcastName: result.title
             })
-            // checkIfSubmitIsValid();
+            checkIfSubmitIsValid();
         }
 
-        // const checkIfSubmitIsValid = () => {
-        //     if (userDetails.username
-        //         && userDetails.password
-        //         && creatorDetails.podcastName
-        //         && creatorDetails.podcastId
-        //         && creatorDetails.userId) {
-        //
-        //         setSubmitIsDisabled(false)
-        //     } else {
-        //         setSubmitIsDisabled(true);
-        //     }
-        // }
+        const checkIfSubmitIsValid = () => {
+            if (userDetails.username
+                && userDetails.password
+                && creatorDetails.podcastName
+                && creatorDetails.podcastId
+                && creatorDetails.userId) {
+
+                setSubmitIsDisabled(false)
+            } else {
+                setSubmitIsDisabled(true);
+            }
+        }
 
 // PODCHASER REQUEST
-//         const [isSending, setIsSending] = useState(false)
-//         const isMounted = useRef(true)
+        const [isSending, setIsSending] = useState(false)
+        const isMounted = useRef(true)
 
 // set isMounted to false when we unmount the component
-//         useEffect(() => {
-//             return () => {
-//                 isMounted.current = false
-//             }
-//         }, [])
-//
-//         const sendRequest = useCallback(async () => {
-//             if (isSending) return
-//             setIsSending(true)
-//
-//             const result = await getPodcastsBySearchTerm(creatorDetails.podcastName);
-//             setPodcastSearchDetails({...podcastSearchDetails, results: result.podcasts.data})
-//
-//             // once the request is sent, update state again
-//             if (isMounted.current) // only update if we are still mounted
-//                 setIsSending(false)
-//         }, [isSending, creatorDetails.podcastName]) // update the callback if the state changes
-//
+        useEffect(() => {
+            return () => {
+                isMounted.current = false
+            }
+        }, [])
+
+        const sendRequest = useCallback(async () => {
+            if (isSending) return
+            setIsSending(true)
+
+            const result = await getPodcastsBySearchTerm(creatorDetails.podcastName);
+            setPodcastSearchDetails({...podcastSearchDetails, results: result.podcasts.data})
+
+            // once the request is sent, update state again
+            if (isMounted.current) // only update if we are still mounted
+                setIsSending(false)
+        }, [isSending, creatorDetails.podcastName]) // update the callback if the state changes
+        // TODO i don't think creatorDetails.podcastName should be a dependency here because it is updated on every keypress
 
         return (
             <div>
@@ -146,7 +146,7 @@ const CreatorSignUp = () => {
                     </input>
                 </label>
                 <button
-                    // onClick={sendRequest}
+                    onClick={sendRequest}
                 >
                     Find Podcast
                 </button>
