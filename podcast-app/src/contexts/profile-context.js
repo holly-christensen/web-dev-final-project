@@ -1,5 +1,7 @@
 import React, {useContext, useState} from "react";
 import axios from "axios";
+import {createUser} from "../actions/user-actions";
+import {useDispatch} from "react-redux";
 
 const ProfileContext = React.createContext()
 
@@ -25,8 +27,18 @@ export const ProfileProvider = ({children}) => {
             throw e
         }
     }
+    const dispatch = useDispatch();
 
-    const signup = async (email, password) => {
+    const signup = async (username, email, password, firstname, lastname, phonenumber) => {
+        const userDetails = {
+            'username': username,
+            'password': password,
+            'email': email,
+            'firstname': firstname,
+            'lastname': lastname,
+            'phonenumber': phonenumber
+        }
+        const response = await createUser(dispatch, userDetails);
         try { // TODO: move this to service
             const response = await api
                 .post("http://localhost:4000/api/signup",
