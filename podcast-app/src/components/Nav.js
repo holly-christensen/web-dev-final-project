@@ -1,18 +1,18 @@
 import React from 'react';
 
-import {Link, Routes} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const Nav = () => {
     return(
         <div className="list-group">
-            <Link to="/" className="list-group-item">
+            <Link to="/home" className="list-group-item">
                 Home
             </Link>
-            <Link to="search" className="list-group-item">
+            <Link to="podcasts" className="list-group-item">
                 Search
             </Link>
             <Link to="profile" className="list-group-item">
-                Search
+                Profile
             </Link>
             <Link to="signin" className="list-group-item">
                 SignIn
