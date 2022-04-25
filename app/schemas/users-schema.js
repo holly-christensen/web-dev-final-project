@@ -8,9 +8,9 @@ const usersSchema = mongoose.Schema({
         lastName: String,
         phoneNumber: String,
         profileImg: String,
+        email: String,
         credentials: {
             username: String,
-            email: String,
             password: String,
         },
         type: String,
