@@ -11,7 +11,7 @@ const app = express();
 //const session = require('express-session');
 app.set('trust proxy', 1);
 let sess = {
-  secret: 'fake secret',
+  secret: 'secret',
   cookie: { }
 };
 

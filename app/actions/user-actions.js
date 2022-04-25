@@ -44,5 +44,3 @@ export const deleteUser = async (dispatch, user) => {
         user
     })
 }
-
-// TODO: i think i need to create signup/signin/signout actions here
