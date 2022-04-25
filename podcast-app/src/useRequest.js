@@ -12,7 +12,7 @@ const graphQLClient = new GraphQLClient(API_URL, {
 });
 
 export async function useGetPodcasts() {
-        return await graphQLClient.request(gql`
+    return await graphQLClient.request(gql`
       query {
         podcasts {
             data {
@@ -26,8 +26,8 @@ export async function useGetPodcasts() {
 }
 
 export async function useGetPodcast(podcastId) {
-        return await graphQLClient.request(
-            gql`
+    return await graphQLClient.request(
+        gql`
         query getPost($postId: ID!) {
           getPost(_id: $postId) {
             _id
@@ -36,13 +36,13 @@ export async function useGetPodcast(podcastId) {
             title
           }
         }
-      `,{podcastId}
-        );
+      `, {podcastId}
+    );
 
 }
 
-export async function  getPodcastsBySearchTerm(searchTerm) {
-        return await graphQLClient.request(gql`
+export async function getPodcastsBySearchTerm(searchTerm) {
+    return await graphQLClient.request(gql`
         query {
             podcasts(searchTerm: "${searchTerm}") {
                 data {
@@ -50,6 +50,41 @@ export async function  getPodcastsBySearchTerm(searchTerm) {
                     title,
                     imageUrl,
                     description
+                }
+            }
+        }
+    `);
+}
+
+export async function getPodcastsById(id) {
+    return await graphQLClient.request(gql`
+        query {
+            podcast(identifier: {type: PODCHASER, id: "${id}"}) {
+                id,
+                title,
+                imageUrl,
+                description
+            }
+        }
+    `);
+}
+
+export async function getPodcastEpisodes(id, page) {
+    return await graphQLClient.request(gql`
+        query {
+            podcast(identifier: {type: PODCHASER, id: "${id}"}) {
+                episodes(page: ${page}, first: 5, sort: {sortBy: AIR_DATE, direction: DESCENDING}) {
+                    paginatorInfo {
+                        currentPage,
+                        hasMorePages,
+                        lastPage,
+                    },
+                    data {
+                        id,
+                        title,
+                        airDate,
+                        imageUrl,
+                    }
                 }
             }
         }

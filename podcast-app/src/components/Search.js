@@ -7,7 +7,6 @@ const Search = () => {
     const {searchString} = useParams()
     const titleRef = useRef()
     const navigate = useNavigate()
-    const location = useLocation()
     useEffect(async () => {
         if (searchString) {
             titleRef.current.value = searchString
