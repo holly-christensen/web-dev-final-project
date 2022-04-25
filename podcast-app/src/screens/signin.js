@@ -22,6 +22,7 @@ const Signin = () => {
                 emailRef.current.value,
                 passwordRef.current.value
             )
+            console.log('signed in... now navigating to profile')
             navigate('/profile')
         } catch (e) {
             alert('oops')
