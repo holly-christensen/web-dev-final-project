@@ -7,7 +7,7 @@ import {Provider} from "react-redux";
 import usersReducer from "./reducers/user-reducer";
 import commentsReducer from "./reducers/comment-reducer";
 import creatorsReducer from "./reducers/creator-reducer";
-import 'bootstrap/dist/css/bootstrap.css';
+//import 'bootstrap/dist/css/bootstrap.css';
 
 const store = createStore(combineReducers({
         users: usersReducer,
