@@ -26,9 +26,12 @@ export const ProfileProvider = ({children}) => {
     }
 
     const checkLoggedIn = async () => {
+        console.log("in check logged in")
         try {
             const response = await api
                 .post("http://localhost:4000/api/profile")
+            console.log("response")
+            console.log(response.data)
             setProfile(response.data)
             return response.data
         } catch (e) {
