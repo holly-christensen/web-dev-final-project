@@ -4,7 +4,15 @@ import {useProfile} from "../contexts/profile-context";
 
 const SecureRoute = ({children}) => {
     const {checkLoggedIn} = useProfile()
-    const [currentUser, setCurrentUser] = useState()
+    const initialUserDetails = {
+        firstname: '',
+        lastname: '',
+        phoneNumber: '',
+        username: '',
+        email: '',
+        password: ''
+    }
+    const [currentUser, setCurrentUser] = useState(initialUserDetails)
     const [waiting, setWaiting] = useState(true)
     const check = async () => {
         console.log("in check")
