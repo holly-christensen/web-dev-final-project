@@ -8,18 +8,17 @@ const SecureRoute = ({children}) => {
         firstname: '',
         lastname: '',
         phoneNumber: '',
-        username: '',
         email: '',
-        password: ''
+        credentials: {
+            username: '',
+            password: ''
+        }
     }
     const [currentUser, setCurrentUser] = useState(initialUserDetails)
     const [waiting, setWaiting] = useState(true)
     const check = async () => {
-        console.log("in check")
         try {
             const user = await checkLoggedIn()
-            console.log("after checkLoggedIn")
-            console.log(user)
             setCurrentUser(user)
             setWaiting(false)
         } catch (e) {

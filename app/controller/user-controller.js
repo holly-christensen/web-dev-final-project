@@ -49,7 +49,7 @@ const updateUser = async (req, res) => {
 const signup = async (req, res) => {
     const user = req.body
     const existingUser = await usersDao
-        .findUserByEmail(user.credentials.email)
+        .findUserByEmail(user.email)
     if(existingUser) {
         res.sendStatus(403)
     } else {
@@ -61,11 +61,8 @@ const signup = async (req, res) => {
 }
 
 const signin = async (req, res) => {
-    console.log("in signin in user controller")
     const existingUser = await usersDao
         .findUserByCredentials(req.body.email, req.body.password)
-    console.log("found existing user")
-    console.log(existingUser)
     if(existingUser) {
         req.session['currentUser'] = existingUser
         return res.send(existingUser)

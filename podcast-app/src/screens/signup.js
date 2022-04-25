@@ -15,16 +15,12 @@ const Signup = () => {
     const navigate = useNavigate()
     const {signup} = useProfile()
     const handleSignupBtn = async () => {
-        // alert(emailRef.current.value)
         try {
             // TODO: move this to user-service.js or auth-service.js
             // await api.post("http://localhost:4000/api/signup", {
             //   email: emailRef.current.value,
             //   password: passwordRef.current.value
             // })
-            // username, email, password, firstname, lastname, phonenumber
-            console.log("in signup btn")
-
             await signup(
                 usernameRef.current.value,
                 emailRef.current.value,
