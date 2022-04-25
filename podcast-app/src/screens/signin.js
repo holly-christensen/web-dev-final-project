@@ -14,18 +14,13 @@ const Signin = () => {
     const {signin} = useProfile()
     const handleSigninBtn = async () => {
         try {
-            // await api.post("http://localhost:4000/api/signin", {
-            //   email: emailRef.current.value,
-            //   password: passwordRef.current.value
-            // })
             await signin(
                 emailRef.current.value,
                 passwordRef.current.value
             )
-            console.log('signed in... now navigating to profile')
             navigate('/profile')
         } catch (e) {
-            alert('oops')
+            alert(e)
         }
     }
     return (

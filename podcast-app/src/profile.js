@@ -14,12 +14,10 @@ const Profile = () => {
         }
         navigate('/signin')
     }
-    console.log("profile is")
-    console.log(profile)
     return (
         <div>
             <h1>Profile</h1>
-            {profile && profile.credentials.email}
+            {profile && profile.email}
             <button
                 onClick={logout}
                 className="btn btn-danger">
