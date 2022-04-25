@@ -20,6 +20,11 @@ const Profile = () => {
         <div>
             <h1>Profile</h1>
             {profile && profile.credentials.email}
+            <button
+                onClick={logout}
+                className="btn btn-danger">
+                Logout
+            </button>
         </div>
     );
 

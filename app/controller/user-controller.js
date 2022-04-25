@@ -47,15 +47,12 @@ const updateUser = async (req, res) => {
 }
 
 const signup = async (req, res) => {
-    console.log("in signup in user controller")
     const user = req.body
     const existingUser = await usersDao
-        .findUserByEmail(user.email)
-    console.log("is it an existing user")
+        .findUserByEmail(user.credentials.email)
     if(existingUser) {
         res.sendStatus(403)
     } else {
-        console.log("creating the user")
         const actualUser = await usersDao
             .createUser(user)
         req.session['currentUser'] = actualUser

@@ -24,6 +24,7 @@ const Signup = () => {
             // })
             // username, email, password, firstname, lastname, phonenumber
             console.log("in signup btn")
+
             await signup(
                 usernameRef.current.value,
                 emailRef.current.value,

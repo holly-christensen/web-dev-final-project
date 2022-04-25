@@ -10,8 +10,8 @@ export const DELETE_USER = 'DELETE_USER';
 export const createUser = async (dispatch, userDetails) => {
     console.log("in actions")
     const newUser = {
-        firstname: userDetails.firstname,
-        lastname: userDetails.lastname,
+        firstName: userDetails.firstname,
+        lastName: userDetails.lastname,
         phoneNumber: userDetails.phoneNumber,
         profileImg: '',
         credentials: {
