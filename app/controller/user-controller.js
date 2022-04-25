@@ -26,6 +26,7 @@ const findUserByCredentials = async (req, res) => {
     }
 }
 const createUser = async (req, res) => {
+    console.log("in create user in controller")
     const newUser = req.body
     const insertedUser = await usersDao.createUser(newUser)
     res.json(insertedUser)
@@ -46,12 +47,15 @@ const updateUser = async (req, res) => {
 }
 
 const signup = async (req, res) => {
+    console.log("in signup in user controller")
     const user = req.body
     const existingUser = await usersDao
         .findUserByEmail(user.email)
+    console.log("is it an existing user")
     if(existingUser) {
         res.sendStatus(403)
     } else {
+        console.log("creating the user")
         const actualUser = await usersDao
             .createUser(user)
         req.session['currentUser'] = actualUser
@@ -60,8 +64,11 @@ const signup = async (req, res) => {
 }
 
 const signin = async (req, res) => {
+    console.log("in signin in user controller")
     const existingUser = await usersDao
         .findUserByCredentials(req.body.email, req.body.password)
+    console.log("found existing user")
+    console.log(existingUser)
     if(existingUser) {
         req.session['currentUser'] = existingUser
         return res.send(existingUser)

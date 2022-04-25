@@ -1,7 +1,9 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {createUser} from "../actions/user-actions";
 import {useDispatch} from "react-redux";
+import * as service from "../actions/user-actions";
+//import {signupUser} from "../services/user-service";
 
 const ProfileContext = React.createContext()
 
@@ -9,7 +11,13 @@ const api = axios.create({withCredentials: true})
 
 export const ProfileProvider = ({children}) => {
     const [profile, setProfile]
-        = useState()
+        = useState({})
+
+    // useEffect(async () => {
+    //     const user = await service.profile();
+    //     setProfile(user);
+    // }, []);
+
 
     const signout = async () => {
         const response = await api
@@ -30,20 +38,38 @@ export const ProfileProvider = ({children}) => {
     const dispatch = useDispatch();
 
     const signup = async (username, email, password, firstname, lastname, phonenumber) => {
-        const userDetails = {
-            'username': username,
-            'password': password,
-            'email': email,
-            'firstname': firstname,
-            'lastname': lastname,
-            'phonenumber': phonenumber
-        }
-        const response = await createUser(dispatch, userDetails);
+        // const userDetails = {
+        //     'username': username,
+        //     'password': password,
+        //     'email': email,
+        //     'firstname': firstname,
+        //     'lastname': lastname,
+        //     'phoneNumber': phonenumber
+        // }
+        // console.log(userDetails)
+        //
+        // let response = undefined;
+        // try {
+        //     response = await createUser(dispatch, userDetails);
+        //     console.log(response)
+        //     setProfile(response._id)
+        //     console.log(profile)
+        //
+        // } catch (e) {
+        //     throw e
+        // }
+        // console.log("made it past the try")
+        // console.log(response)
+        // setProfile(response._id)
+        // console.log(profile)
+
         try { // TODO: move this to service
             const response = await api
                 .post("http://localhost:4000/api/signup",
                     { email, password })
             setProfile(response.data)
+            console.log(response)
+            console.log(profile)
         } catch (e) { throw e }
     }
 
@@ -54,6 +80,8 @@ export const ProfileProvider = ({children}) => {
                 .post("http://localhost:4000/api/signin",
                     {email, password})
             setProfile(response.data)
+            console.log(response)
+            console.log(profile)
         } catch (e) {
             throw e
         }

@@ -8,6 +8,7 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
 
 export const createUser = async (dispatch, userDetails) => {
+    console.log("in actions")
     const newUser = {
         firstname: userDetails.firstname,
         lastname: userDetails.lastname,
@@ -24,10 +25,13 @@ export const createUser = async (dispatch, userDetails) => {
         reviews: []
     }
     const user = await service.createUser(newUser);
+    console.log("new user added")
+    console.log(user)
     dispatch({
         type: CREATE_USER,
         user
     });
+    return user;
 }
 export const findAllUsers = async (dispatch) => {
     const users = await service.findAllUsers();
