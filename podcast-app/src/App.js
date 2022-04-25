@@ -8,6 +8,8 @@ import {ProfileProvider} from "./contexts/profile-context";
 import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
 import Signin from "./screens/signin";
 import Signup from "./screens/signup";
+import SecureRoute from "./components/secure-route";
+import Profile from "./profile";
 
 
 function App() {
@@ -41,11 +43,11 @@ function App() {
                 <div className="container">
                     <Routes>
                         <Route path="/">
-                            {/*<Route path="/profile" element={*/}
-                            {/*    <SecureRoute>*/}
-                            {/*        <Profile/>*/}
-                            {/*    </SecureRoute>*/}
-                            {/*}/>*/}
+                            <Route path="/profile" element={
+                                <SecureRoute>
+                                    <Profile/>
+                                </SecureRoute>
+                            }/>
                             <Route path="/signin" element={<Signin/>}/>
                             <Route path="/signup" element={<Signup/>}/>
                             {/*<Route path="/omdb" element={<SearchOmdb/>}/>*/}
