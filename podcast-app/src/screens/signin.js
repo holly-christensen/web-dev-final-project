@@ -36,12 +36,14 @@ const Signin = () => {
                 type="email"
                 className="form-control"
             />
+            <br></br>
             <input
                 ref={passwordRef}
                 placeholder="password"
                 type="password"
                 className="form-control"
             />
+            <br></br>
             <button
                 onClick={handleSigninBtn}
                 className="btn btn-primary">

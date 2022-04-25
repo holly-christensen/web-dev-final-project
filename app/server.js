@@ -12,7 +12,7 @@ const app = express();
 app.set('trust proxy', 1);
 let sess = {
   secret: 'fake secret',
-  cookie: { secure: false }
+  cookie: { }
 };
 
 if (app.get('env') === 'production') {
@@ -36,7 +36,17 @@ var corsOptions = {
 //   headers: ['Authorization', 'X-Requested-With', 'Content-Type']
 // }));
 
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
+// app.use(cors({
+//   allowedOrigins: ['http://localhost:4000'],
+//   headers: ['Authorization', 'X-Requested-With', 'Content-Type']
+// }));
+
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:3000',
+  headers: ['Authorization', 'X-Requested-With', 'Content-Type']
+}));
 // parse requests of content-type - application/json
 // app.use(bodyParser.json());
 

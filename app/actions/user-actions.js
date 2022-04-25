@@ -13,6 +13,7 @@ export const createUser = async (dispatch, user) => {
         newUser
     });
 }
+
 export const findAllUsers = async (dispatch) => {
     const users = await service.findAllUsers();
     dispatch({
@@ -43,3 +44,5 @@ export const deleteUser = async (dispatch, user) => {
         user
     })
 }
+
+// TODO: i think i need to create signup/signin/signout actions here
