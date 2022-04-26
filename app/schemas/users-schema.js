@@ -16,7 +16,7 @@ const usersSchema = mongoose.Schema({
         type: {
             type: String,
             enum:['USER_CREATOR', 'USER_ADMIN', 'USER_CONSUMER'],
-            default: 'CONSUMER'
+            default: 'USER_CONSUMER'
         },
         following: [{podcastsSchema}],
         comments: [{commentsSchema}],
