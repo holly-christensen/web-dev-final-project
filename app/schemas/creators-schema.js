@@ -1,8 +1,14 @@
 import mongoose from "mongoose";
 
 const creatorsSchema = mongoose.Schema({
-        userId: String,
-        podcastId: String,
+        userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+        },
+        podcastId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Podcast'
+        },
         podcastName: String,
         funFact: String,
         boringFact: String,

@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 const adminsSchema = mongoose.Schema({
-        userId: String,
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
         body: String,
         nemesis: String,
         favoriteAnimal: String,
