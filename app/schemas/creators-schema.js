@@ -5,10 +5,7 @@ const creatorsSchema = mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
         },
-        podcastId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Podcast'
-        },
+        podcastId: String,
         podcastName: String,
         funFact: String,
         boringFact: String,

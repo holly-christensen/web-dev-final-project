@@ -1,10 +1,7 @@
 import mongoose from "mongoose";
 
 const reviewsSchema = mongoose.Schema({
-        podcastId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Podcast'
-        },
+        podcastId: String,
         userId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'

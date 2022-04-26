@@ -1,10 +1,7 @@
 import mongoose from "mongoose";
 
 const commentsSchema = mongoose.Schema({
-        episodeId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Episode'
-        },
+        episodeId: String,
         userId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'

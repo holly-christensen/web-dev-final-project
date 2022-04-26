@@ -3,10 +3,7 @@ import commentsSchema from "./comments-schema.js";
 
 const episodesSchema = mongoose.Schema({
         episodeId: String,
-        podcastId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Podcast'
-        },
+        podcastId: String,
         creatorId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Creator'
