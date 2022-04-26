@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import {getPodcastEpisodes, getPodcastsById} from "../useRequest";
+import {findUserById, updateUser} from "../actions/user-actions";
+import {useDispatch} from "react-redux";
+
+
 const PodcastDetails = () => {
 
     const initialPodcastDetails = {
@@ -17,6 +21,9 @@ const PodcastDetails = () => {
     let [episodesDetails, setEpisodesDetails] = useState(initialEpisodesDetails);
 
     const {pid} = useParams();
+    const dispatch = useDispatch();
+    const uid = "625f16058c3f5dec99597147"; // TODO THIS IS TEMP
+
 
     useEffect(() => getPodcastInfo(), []);
     useEffect(() => getEpisodes(episodesDetails.currentPage), []);
@@ -50,6 +57,35 @@ const PodcastDetails = () => {
         return `${month} ${day}, ${year}`;
     }
 
+    const followHandler = async () => {
+        const podcast = {
+            title: podcastDetails.title,
+            id: pid,
+            description: podcastDetails.description,
+            imageUrl: podcastDetails.imageUrl
+        }
+        const updatedUser = user.following.push(podcast);
+        const result = updateUser(dispatch, updatedUser);
+        console.log('user followed '+pid+': '+JSON.stringify(result));
+    }
+
+    const unFollowHandler = async () => {
+        const following = user.following;
+        const updatedFollowing = following.filter(podcast => {
+            return podcast.id !== pid
+        })
+        const updatedUser = user.following = updatedFollowing;
+        const result = await updateUser(dispatch, updatedUser);
+        console.log('user unfollowed '+pid+': '+JSON.stringify(result));
+    }
+
+    const userIsFollowingThisPodcast = false; // filter the user's list of following for this podcast id
+
+    //so when a user wants to follow a podcast, we need to add that podcast info to the
+    // user's list of followed podcasts
+    // so we need to update the user service controller etc to add something that takes in
+    // a podcast and adds that to the user
+
     return (
         <>
         <div className={"container col-9 mt-5"}>
@@ -58,7 +94,12 @@ const PodcastDetails = () => {
             <img src={podcastDetails.imageUrl} alt={"Podcast Image"} height={350}/>
             <p className={"mt-3"}>{podcastDetails.description}</p>
             <div>
-                <button>Follow Podcast</button>
+                <button
+                    onClick={followHandler}
+                >Follow Podcast</button>
+                <button
+                    onClick={unFollowHandler}
+                >Unfollow Podcast</button>
             </div>
             <div>
                 <h3>Episodes</h3>
