@@ -9,13 +9,14 @@ export const DELETE_USER = 'DELETE_USER';
 
 export const createUser = async (dispatch, userDetails) => {
     const newUser = {
-        firstname: userDetails.firstname,
-        lastname: userDetails.lastname,
+        firstName: userDetails.firstname,
+        lastName: userDetails.lastname,
         phoneNumber: userDetails.phoneNumber,
         profileImg: '',
+        email: userDetails.email,
         credentials: {
             username: userDetails.username,
-            email: userDetails.email,
+
             password: userDetails.password,
         },
         type: USER_CONSUMER,
@@ -24,10 +25,12 @@ export const createUser = async (dispatch, userDetails) => {
         reviews: []
     }
     const user = await service.createUser(newUser);
+    console.log(user)
     dispatch({
         type: CREATE_USER,
         user
     });
+    return user;
 }
 export const findAllUsers = async (dispatch) => {
     const users = await service.findAllUsers();

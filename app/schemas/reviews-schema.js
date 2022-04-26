@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 
 const reviewsSchema = mongoose.Schema({
         podcastId: String,
-        userId: String,
+        userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+        },
         rating: String,
         title: String,
         body: String,

@@ -4,7 +4,10 @@ import commentsSchema from "./comments-schema.js";
 const episodesSchema = mongoose.Schema({
         episodeId: String,
         podcastId: String,
-        creatorId: String,
+        creatorId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Creator'
+        },
         title: String,
         description: String,
         imageUrl: String,

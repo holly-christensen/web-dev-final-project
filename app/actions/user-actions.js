@@ -13,6 +13,7 @@ export const createUser = async (dispatch, user) => {
         newUser
     });
 }
+
 export const findAllUsers = async (dispatch) => {
     const users = await service.findAllUsers();
     dispatch({
