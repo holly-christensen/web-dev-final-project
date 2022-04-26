@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 const creatorsSchema = mongoose.Schema({
-        userId: String,
+        userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+        },
         podcastId: String,
         podcastName: String,
         funFact: String,

@@ -2,12 +2,18 @@ import mongoose from "mongoose";
 
 const commentsSchema = mongoose.Schema({
         episodeId: String,
-        userId: String,
+        userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+        },
         body: String,
         datePosted: String,
         likes: {
                 count: Number,
-                likedBy: [{userId: String}]
+                likedBy: [{userId: {
+                                type: mongoose.Schema.Types.ObjectId,
+                                ref: 'User'
+                        }}]
         },
         dislikes: Number
     },
