@@ -1,21 +1,5 @@
 const initialState = {
-    users: [
-        {
-            firstname: "Default",
-            lastname: "User",
-            phoneNumber: "5555555555",
-            profileImg: "",
-            credentials: {
-                username: "DEFAULT-USER",
-                email: "default-user@gmail.com",
-                password: "asdkfjadlskjsdhfkjsfhakjsh"
-            },
-            type: "USER_CONSUMER",
-            following: [],
-            comments: [],
-            reviews: [],
-        }
-    ],
+    users: [],
     comments: [],
     creators: [],
 }

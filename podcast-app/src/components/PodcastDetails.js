@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import {getPodcastEpisodes, getPodcastsById} from "../useRequest";
-import {findUserById, updateUser} from "../actions/user-actions";
+// import {findUserById, updateUser} from "../actions/user-actions";
+import {updateUser} from "../services/user-service";
 import {useDispatch} from "react-redux";
 import {useProfile} from "../contexts/profile-context";
 
@@ -24,7 +25,7 @@ const PodcastDetails = () => {
     let {profile} = useProfile();
 
     const {pid} = useParams();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
 
     useEffect(() => getPodcastInfo(), []);
@@ -69,8 +70,8 @@ const PodcastDetails = () => {
         }
         const updatedUser = profile;
         updatedUser.following.push(podcast);
-        console.log(updatedUser);
-        const result = updateUser(dispatch, updatedUser);
+        console.log("from followHandler: "+JSON.stringify(updatedUser));
+        const result = updateUser(updatedUser);
         setPodcastDetails({...podcastDetails, userIsFollowingThisPodcast: true});
     }
 
@@ -81,7 +82,7 @@ const PodcastDetails = () => {
             })
             const updatedUser = profile;
             updatedUser.following = updatedFollowing;
-            const result = await updateUser(dispatch, updatedUser);
+            const result = await updateUser(updatedUser);
             setPodcastDetails({...podcastDetails, userIsFollowingThisPodcast: false});
         }
     }
@@ -103,6 +104,11 @@ const PodcastDetails = () => {
         setPodcastDetails({...podcastDetails, userIsFollowingThisPodcast: isFollowing});
         console.log("set to "+isFollowing);
     }
+
+    // so when they follow a podcast i'm going to post it to the db
+    // then add that id to update the user
+
+    // to check if they are following it, check if the podchaser id exists in our podcasts db
 
 
     return (

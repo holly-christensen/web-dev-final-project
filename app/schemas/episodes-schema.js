@@ -11,7 +11,10 @@ const episodesSchema = mongoose.Schema({
         title: String,
         description: String,
         imageUrl: String,
-        comments: [{commentsSchema}]
+        comments: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Comment'
+        }]
     },
     {timestamps: true}, {collection: "episodes"})
 

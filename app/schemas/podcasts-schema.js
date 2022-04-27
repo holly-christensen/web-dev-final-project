@@ -11,7 +11,10 @@ const podcastsSchema = mongoose.Schema({
         imageUrl: String,
         language: String,
         episodes: [{episodeId: String}],
-        reviews: [{reviewsSchema}]
+        reviews: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Review'
+        }]
     },
     {timestamps: true}, {collection: "podcasts"})
 

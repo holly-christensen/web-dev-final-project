@@ -2,7 +2,7 @@ const podcastsSchema = require("../schemas/podcasts-schema.js");
 
 module.exports = mongoose => {
     const Podcast = mongoose.model(
-        "podcast",
+        "Podcast",
         podcastsSchema
     );
     return Podcast;

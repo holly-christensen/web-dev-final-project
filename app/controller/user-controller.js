@@ -38,7 +38,9 @@ const deleteUser = async (req, res) => {
 }
 const updateUser = async (req, res) => {
     const userId = req.params.id
+    console.log('user id: '+userId)
     const updatedUser = req.body
+    console.log('user body: '+JSON.stringify(req.body))
     const status = await usersDao.updateUser(
         userId,
         updatedUser
