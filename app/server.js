@@ -7,6 +7,7 @@ import session from 'express-session';
 import userController from "./controller/user-controller.js";
 import commentController from "./controller/comment-controller.js";
 import creatorController from "./controller/creator-controller.js";
+import podcastController from "./controller/podcast-controller.js";
 const app = express();
 //const session = require('express-session');
 app.set('trust proxy', 1);
@@ -56,6 +57,7 @@ app.use(cors({
 userController(app);
 commentController(app);
 creatorController(app);
+podcastController(app);
 
 // simple route
 // app.get("/", (req, res) => {

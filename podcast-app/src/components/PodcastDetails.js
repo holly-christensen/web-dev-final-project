@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import {getPodcastEpisodes, getPodcastsById} from "../useRequest";
-// import {findUserById, updateUser} from "../actions/user-actions";
 import {updateUser} from "../services/user-service";
-import {useDispatch} from "react-redux";
+import {createPodcast, findPodcastByPodchaserId} from "../services/podcast-service";
 import {useProfile} from "../contexts/profile-context";
 
 
@@ -14,6 +13,7 @@ const PodcastDetails = () => {
         description: '',
         imageUrl: '',
         userIsFollowingThisPodcast: false,
+        mongoPodcastId: ''
     }
     const initialEpisodesDetails = {
         episodes: [],
@@ -30,6 +30,7 @@ const PodcastDetails = () => {
 
     useEffect(() => getPodcastInfo(), []);
     useEffect(() => updateWhetherUserIsFollowingThisPodcast(), []);
+    // useEffect(() => getMongoPodcastId(), []);
     // useEffect(() => getEpisodes(episodesDetails.currentPage), []);
 
     const getPodcastInfo = async () => {
@@ -53,6 +54,29 @@ const PodcastDetails = () => {
         })
     }
 
+    const getMongoPodcastId = async () => {
+       const result = await findPodcastByPodchaserId(pid);
+       return result._id;
+    }
+
+    // returns the mongo id of the newly created podcast
+    const handleCreatePodcast = async () => {
+        const episodeIds = episodesDetails.episodes.map((episode) => {
+            return episode.episodeId;
+        })
+        const podcast = {
+            podcastId: pid,
+            title: podcastDetails.title,
+            description: podcastDetails.description,
+            imageUrl: podcastDetails.imageUrl,
+            episodes: episodeIds,
+            reviews: [] // TODO update once review component is added
+        }
+        const result = await createPodcast(podcast);
+        console.log(JSON.stringify(result));
+        return result._id;
+    }
+
     const prettyDate = (dateString) => {
         let date = new Date(dateString);
         const month = date.toLocaleString('default', {month: 'short'})
@@ -62,47 +86,60 @@ const PodcastDetails = () => {
     }
 
     const followHandler = async () => {
-        const podcast = {
-            title: podcastDetails.title,
-            podcastId: pid,
-            description: podcastDetails.description,
-            imageUrl: podcastDetails.imageUrl
+        let mongoId = await getMongoPodcastId();
+        if (mongoId === undefined) {
+            mongoId = await handleCreatePodcast();
         }
-        const updatedUser = profile;
-        updatedUser.following.push(podcast);
-        console.log("from followHandler: "+JSON.stringify(updatedUser));
-        const result = updateUser(updatedUser);
-        setPodcastDetails({...podcastDetails, userIsFollowingThisPodcast: true});
+
+        let following = profile.following;
+        following.push({_id: mongoId});
+        let updatedUser = profile;
+        updatedUser.following = following;
+        const result = await updateUser(updatedUser);
+        setPodcastDetails({...podcastDetails, userIsFollowingThisPodcast: true, mongoPodcastId: mongoId});
     }
 
     const unFollowHandler = async () => {
-        if (profile.following.length > 0) {
-            const updatedFollowing = profile.following.filter(podcast => {
-                return podcast.podcastId !== pid
-            })
-            const updatedUser = profile;
-            updatedUser.following = updatedFollowing;
+        let mongoId = await getMongoPodcastId();
+        if (mongoId !== undefined) {
+            console.log("not undef")
+            let following = profile.following;
+            following.filter((podcast) => {
+                return podcast._id !== mongoId
+            });
+            let updatedUser = profile;
+            updatedUser.following = following;
             const result = await updateUser(updatedUser);
             setPodcastDetails({...podcastDetails, userIsFollowingThisPodcast: false});
         }
+
+        // if the mongoId is undefined, it means the podcast isn't in the db and
+        // therefore can't be on the user's following list
+
+        // if (profile.following.length > 0) {
+        //     const updatedFollowing = profile.following.filter(podcast => {
+        //         return podcast.podcastId !== pid
+        //     })
+        //     const updatedUser = profile;
+        //     updatedUser.following = updatedFollowing;
+        //     const result = await updateUser(updatedUser);
+        //     setPodcastDetails({...podcastDetails, userIsFollowingThisPodcast: false});
+        // }
     }
 
     // should be called one time when the component mounts
     // determines if the signed in user is following this podcast
     // sets the state to reflect that
     const updateWhetherUserIsFollowingThisPodcast = () => {
-        console.log('in here');
         let matches = [];
         if (profile.following) {
-            console.log('length more than 0');
             matches = profile.following.filter((podcast) => {
-                console.log(podcast.podcastId+" "+pid);
+                console.log(podcast._id+" + "+podcastDetails.mongoPodcastId);
                 return podcast.podcastId === pid;
             })
         }
         const isFollowing = matches.length >0;
         setPodcastDetails({...podcastDetails, userIsFollowingThisPodcast: isFollowing});
-        console.log("set to "+isFollowing);
     }
 
     // so when they follow a podcast i'm going to post it to the db
@@ -131,6 +168,11 @@ const PodcastDetails = () => {
                         >Unfollow Podcast
                         </button>}
 
+                </div>
+                <div>
+                    <button onClick={handleCreatePodcast}>
+                        Add to Mongodb
+                    </button>
                 </div>
                 <div>
                     <h3>Episodes</h3>

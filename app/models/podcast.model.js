@@ -1,9 +1,9 @@
-const podcastsSchema = require("../schemas/podcasts-schema.js");
+import mongoose from "mongoose";
+import podcastsSchema from "../schemas/podcasts-schema.js";
 
-module.exports = mongoose => {
-    const Podcast = mongoose.model(
-        "Podcast",
-        podcastsSchema
-    );
-    return Podcast;
-};
+
+const Podcast = mongoose.model(
+    "Podcast",
+    podcastsSchema)
+
+export default Podcast;
