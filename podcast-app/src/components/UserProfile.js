@@ -97,6 +97,7 @@ const UserProfile = () => {
     const navigate = useNavigate()
     const signedIn = profile && Object.keys(profile).length > 0
     console.log(signedIn)
+
     const logout = async () => {
         try {
             await signout()
@@ -129,5 +130,6 @@ const UserProfile = () => {
                 </div>}
         </div>
     );
+
 }
 export default UserProfile;
