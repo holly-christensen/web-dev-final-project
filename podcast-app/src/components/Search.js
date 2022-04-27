@@ -45,7 +45,7 @@ const Search = () => {
             <ul className={"ps-0 mt-4"}>
                 {
                     podcasts.map(podcast =>
-                        <li className="list-group-item  align-items-start">
+                        <li className="list-group-item  align-items-start" key={podcast.id}>
                             <Link to={`/podcasts/details/${podcast.id}`} className="d-flex align-items-center text-decoration-none">
                                 <img src={podcast.imageUrl} alt={podcast.title}
                                      height={60}/>
