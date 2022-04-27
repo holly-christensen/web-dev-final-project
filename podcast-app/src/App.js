@@ -16,6 +16,7 @@ import SignOut from "./components/SignOut";
 import Nav from "./components/Nav";
 import {ProfileProvider} from "./contexts/profile-context";
 import SecureRoute from "./components/secure-route";
+import EditProfile from "./components/EditProfile";
 
 function App() {
     return (
@@ -29,6 +30,11 @@ function App() {
                             <Route path="/profile" element={
                                 <SecureRoute>
                                     <UserProfile/>
+                                </SecureRoute>
+                            }/>
+                            <Route path="/edit-profile" element={
+                                <SecureRoute>
+                                    <EditProfile/>
                                 </SecureRoute>
                             }/>
                             <Route path="/signin" element={<SignIn/>}/>

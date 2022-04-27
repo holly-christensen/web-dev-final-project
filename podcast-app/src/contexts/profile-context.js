@@ -44,8 +44,8 @@ export const ProfileProvider = ({children}) => {
             following: [],
             comments: [],
             reviews: [],
-            firstname: firstname,
-            lastname: lastname,
+            firstName: firstname,
+            lastName: lastname,
             phoneNumber: phonenumber
         }
         try {

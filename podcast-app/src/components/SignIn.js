@@ -25,7 +25,7 @@ const Signin = () => {
     }
     return (
         <div>
-            <h1>Signin</h1>
+            <h1>SignIn</h1>
             <input
                 ref={emailRef}
                 placeholder="email"
@@ -43,7 +43,7 @@ const Signin = () => {
             <button
                 onClick={handleSigninBtn}
                 className="btn btn-primary">
-                Signin
+                SignIn
             </button>
             <Link className="float-end" to="/signup">
                 Signup
