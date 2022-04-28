@@ -47,6 +47,7 @@ export const findCommentById = async (dispatch, commentId) => {
 }
 
 export const updateComment = async (dispatch, comment) => {
+    console.log(comment);
     const status = await service.updateComment(comment);
     dispatch({
         type: UPDATE_COMMENT,

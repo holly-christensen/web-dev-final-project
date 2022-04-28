@@ -7,6 +7,7 @@ import {useProfile} from "../contexts/profile-context";
 import {createComment} from "../actions/comment-actions";
 import {useDispatch, useSelector} from "react-redux";
 import {findUserById} from "../services/user-service";
+import {updateComment} from "../actions/comment-actions";
 
 
 const EpisodeDetails = () => {
@@ -18,7 +19,7 @@ const EpisodeDetails = () => {
         }
 
         const commentsFromState = useSelector((state) => state.comments);
-        console.log('comments from state'+JSON.stringify(commentsFromState));
+        console.log('comments from state' + JSON.stringify(commentsFromState));
 
         let [episodeDetails, setEpisodeDetails] = useState(initialEpisodeDetails);
         let [comments, setComments] = useState(commentsFromState);
@@ -43,12 +44,12 @@ const EpisodeDetails = () => {
 
         const getComments = async () => {
             const comments = await findCommentsByEpisodeId(eid);
-            console.log('comments from db '+comments);
+            console.log('comments from db ' + comments);
             setComments(comments);
         }
 
         const getUsername = async (uid) => {
-            if(uid !== undefined){
+            if (uid !== undefined) {
                 const user = await findUserById({_id: uid})
                 console.log(user.credentials.username);
                 return user.credentials.username;
@@ -77,6 +78,15 @@ const EpisodeDetails = () => {
             await getComments();
         }
 
+        const handleLike = async (comment) => {
+            // update comment
+            const newComment = comment;
+            newComment.likes.count = comment.likes.count + 1;
+            const result = await updateComment(dispatch, newComment)
+            // update user
+            // update comment
+        }
+
         return (
             <>
                 <div className={"container col-9 mt-5"}>
@@ -99,8 +109,8 @@ const EpisodeDetails = () => {
                             <button
                                 className={"btn btn-outline-primary my-2 my-sm-0"}
                                 onClick={() => {
-                                createCommentHandler()
-                            }}>
+                                    createCommentHandler()
+                                }}>
                                 Comment
                             </button>
                         </div>
@@ -110,8 +120,15 @@ const EpisodeDetails = () => {
                                     <li className="list-group-item  align-items-start" key={comment._id}>
                                         <div className="d-flex align-items-center text-decoration-none">
                                             <div className="ms-3">
-                                                <small className="text-muted mb-1 text-sm-start">{comment.username} <span>{prettyDate(comment.datePosted)}</span></small>
+                                                <small className="text-muted mb-1">{comment.username}
+                                                    <span>{prettyDate(comment.datePosted)}</span></small>
                                                 <p className="text-black mb-1">{comment.body}</p>
+                                                <button
+                                                    className={"btn btn-light btn-sm me-2"}
+                                                    onClick={() => handleLike(comment)}
+                                                >Like
+                                                </button>
+                                                <small className="text-muted mb-1">{comment.likes.count}</small>
                                             </div>
                                         </div>
                                     </li>
