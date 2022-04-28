@@ -35,7 +35,11 @@ const UserProfile = () => {
                 <button onClick={signIn}
                     className="btn btn-primary">SignIn</button>
             }
-            {signedIn && <UserDetails user={profile}></UserDetails>}
+            {signedIn &&
+                <div>
+                    <UserDetails user={profile}></UserDetails>
+                    <button className="btn btn-primary" onClick={logout}>Sign Out</button>
+                </div>}
 
         </div>
     );

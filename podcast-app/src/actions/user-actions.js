@@ -1,4 +1,5 @@
 import * as service from '../services/user-service.js';
+import {USER_CONSUMER} from "../user-types";
 import {signupUser} from "../services/user-service.js";
 
 export const CREATE_USER = 'CREATE_USER';
