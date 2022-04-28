@@ -6,6 +6,7 @@ const CommentList = () => {
     let [commentBody, setCommentBody] = useState('');
 
     const comments = useSelector((state) => state.comments);
+    console.log("comments"+JSON.stringify(comments))
 
     const dispatch = useDispatch();
 

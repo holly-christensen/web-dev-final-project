@@ -69,6 +69,19 @@ export async function getPodcastsById(id) {
     `);
 }
 
+export async function getEpisodesById(id) {
+    return await graphQLClient.request(gql`
+        query {
+            episode(identifier: {type: PODCHASER, id: "${id}"}) {
+                id,
+                title,
+                imageUrl,
+                description
+            }
+        }
+    `);
+}
+
 export async function getPodcastEpisodes(id, page) {
     return await graphQLClient.request(gql`
         query {

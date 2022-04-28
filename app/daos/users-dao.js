@@ -21,8 +21,7 @@ const deleteUser = (id) => {
 const updateUser = (id, updatedUser) => {
     const result = usersModel.updateOne(
         {_id: id},
-        {$set: updatedUser},
-        {upsert: true}
+        {$set: updatedUser}
     )
     return result;
 }

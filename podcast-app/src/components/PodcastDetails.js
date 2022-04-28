@@ -28,10 +28,10 @@ const PodcastDetails = () => {
 
         useEffect(() => getPodcastInfo(), []);
         useEffect(() => {
-            console.log("user is following: ", podcastDetails.userIsFollowing);
+            // console.log("user is following: ", podcastDetails.userIsFollowing);
         }, [podcastDetails.userIsFollowing]);
-        useEffect(() => updateUserIsFollowing, [])
-        // useEffect(() => getEpisodes(episodesDetails.currentPage), []);
+        // useEffect(() => updateUserIsFollowing, [])
+        useEffect(() => getEpisodes(episodesDetails.currentPage), []);
 
         const getPodcastInfo = async () => {
             const podcastInfo = await getPodcastsById(pid);

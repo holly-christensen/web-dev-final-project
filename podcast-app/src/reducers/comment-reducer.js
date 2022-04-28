@@ -8,24 +8,32 @@ import {
 import initialState from "../initialState";
 
 const commentsReducer = (state = initialState.comments, action) => {
+    let result;
     switch (action.type) {
         case CREATE_COMMENT:
-            return [
+            result =  [
                 ...state,
                 action.comment
             ];
+            console.log(state);
+            return result;
         case FIND_ALL_COMMENTS:
             return action;
         case FIND_COMMENT_BY_ID:
             return action.comment;
         case DELETE_COMMENT:
-            return state.filter(
+            result =  state.filter(
                 comment => comment._id !== action.comment._id);
+            console.log(state);
+            return result;
         case UPDATE_COMMENT:
-            return state.map(
+            result = state.map(
                 comment => comment._id === action.comment._id ?
                     action.comment : comment);
+            console.log(state);
+            return result;
         default: {
+            console.log(state);
             return state.comments || initialState.comments;
         }
     }

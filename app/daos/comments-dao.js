@@ -24,6 +24,10 @@ const findCommentById = (id) => {
     return commentsModel.findById(id)
 }
 
+const findCommentsByEpisodeId = (episodeId) => {
+    return commentsModel.find({"episodeId": episodeId})
+}
+
 const deleteComment = (id) => {
     return commentsModel.deleteOne({_id: id})
 }
@@ -33,5 +37,5 @@ const createComment = (comment) => {
 }
 
 export default {
-    likeComment, dislikeComment, findCommentById, deleteComment, findAllComments, createComment
+    likeComment, dislikeComment, findCommentById, deleteComment, findAllComments, createComment, findCommentsByEpisodeId
 }

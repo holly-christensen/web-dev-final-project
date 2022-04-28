@@ -9,35 +9,34 @@ export const FIND_USER_BY_ID = 'FIND_USER_BY_ID';
 export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
 
-export const createUser = async (dispatch, userDetails) => {
-    const newUser = {
-        firstName: userDetails.firstname,
-        lastName: userDetails.lastname,
-        phoneNumber: userDetails.phoneNumber,
-        profileImg: '',
-        email: userDetails.email,
-        credentials: {
-            username: userDetails.username,
-
-            password: userDetails.password,
-        },
-        type: USER_CONSUMER,
-        following: [],
-        comments: [],
-        reviews: []
-    }
-    const user = await service.createUser(newUser);
-    console.log(user)
-    dispatch({
-        type: CREATE_USER,
-        user
-    });
-    return user;
-}
+// export const createUser = async (dispatch, userDetails) => {
+//     const newUser = {
+//         firstName: userDetails.firstname,
+//         lastName: userDetails.lastname,
+//         phoneNumber: userDetails.phoneNumber,
+//         profileImg: '',
+//         email: userDetails.email,
+//         credentials: {
+//             username: userDetails.username,
+//
+//             password: userDetails.password,
+//         },
+//         type: USER_CONSUMER,
+//         following: [],
+//         comments: [],
+//         reviews: []
+//     }
+//     const user = await service.createUser(newUser);
+//     console.log(user)
+//     dispatch({
+//         type: CREATE_USER,
+//         user
+//     });
+//     return user;
+// }
 
 export const signUpUser = async (dispatch, userDetails) => {
     const newUser = await signupUser(userDetails);
-    console.log('signed up new user: '+JSON.stringify(newUser))
     dispatch({
         type: SIGNUP_USER,
         user: newUser
