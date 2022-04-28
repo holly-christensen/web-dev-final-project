@@ -48,6 +48,8 @@ export const findUserById = async (dispatch, userId) => {
 }
 
 export const updateUser = async (dispatch, user) => {
+    console.log("in actions")
+    console.log(user)
     const status = await service.updateUser(user);
     dispatch({
         type: UPDATE_USER,
