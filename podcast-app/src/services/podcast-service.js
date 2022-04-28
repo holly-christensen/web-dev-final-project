@@ -32,3 +32,8 @@ export const updatePodcast = async (podcast) => {
     const response = await axios.put(`${PODCASTS_API}/${podcast._id}`, podcast);
     return response.data;
 }
+
+export const upsertPodcastByPodchaserId = async (podcast) => {
+    const response = await axios.put(`${PODCASTS_API}/podchaser/${podcast}`, podcast);
+    return response.data;
+}

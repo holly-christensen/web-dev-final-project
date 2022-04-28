@@ -26,7 +26,6 @@ const findUserByCredentials = async (req, res) => {
     }
 }
 const createUser = async (req, res) => {
-    console.log("in create user in controller")
     const newUser = req.body
     const insertedUser = await usersDao.createUser(newUser)
     res.json(insertedUser)
@@ -38,9 +37,7 @@ const deleteUser = async (req, res) => {
 }
 const updateUser = async (req, res) => {
     const userId = req.params.id
-    console.log('user id: '+userId)
     const updatedUser = req.body
-    console.log('user body: '+JSON.stringify(req.body))
     const status = await usersDao.updateUser(
         userId,
         updatedUser

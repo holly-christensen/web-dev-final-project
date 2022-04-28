@@ -19,10 +19,10 @@ const deleteUser = (id) => {
     return usersModel.deleteOne({_id: id})
 }
 const updateUser = (id, updatedUser) => {
-    console.log('in dao: '+JSON.stringify(updatedUser));
     const result = usersModel.updateOne(
         {_id: id},
-        {$set: updatedUser}
+        {$set: updatedUser},
+        {upsert: true}
     )
     return result;
 }

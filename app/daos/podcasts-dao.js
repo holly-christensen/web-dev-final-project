@@ -18,11 +18,21 @@ const deletePodcast = (id) => {
 const updatePodcast = (id, updatedPodcast) => {
     return podcastsModel.updateOne(
         {_id: id},
-        {$set: updatedPodcast}
-    )
+        {$set: updatedPodcast},
+        {upsert: true}
+    );
+}
+
+const upsertPodcastByPodchaserId = (podcastId, updatedPodcast) => {
+    console.log("in dao with: "+podcastId)
+    return podcastsModel.updateOne(
+        {podcastId: podcastId},
+        {$set: updatedPodcast},
+        {upsert: true}
+    );
 }
 
 export default {
     findAllPodcasts, findPodcastById, findPodcastByPodchaserId, createPodcast, deletePodcast,
-    updatePodcast
+    updatePodcast, upsertPodcastByPodchaserId
 }

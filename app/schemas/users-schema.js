@@ -18,10 +18,7 @@ const usersSchema = mongoose.Schema({
             enum:['USER_CREATOR', 'USER_ADMIN', 'USER_CONSUMER'],
             default: 'USER_CONSUMER'
         },
-        following: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Podcast'
-        }],
+        following: [{podcastId: String}],
         comments: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Comment'

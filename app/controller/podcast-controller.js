@@ -14,6 +14,7 @@ const findPodcastByPodchaserId = async (req, res) => {
     console.log("in controller");
     console.log(podcastId);
     const podcast = await podcastsDao.findPodcastByPodchaserId(podcastId)
+    console.log(podcast)
     res.json(podcast)
 }
 
@@ -37,6 +38,17 @@ const updatePodcast = async (req, res) => {
     res.json(status)
 }
 
+const upsertPodcastByPodchaserId = async (req, res) => {
+    const podcastId = req.params.id
+    console.log('in upsert controller'+podcastId);
+    const updatedPodcast = req.body
+    const status = await podcastsDao.upsertPodcastByPodchaserId(
+        podcastId,
+        updatedPodcast
+    )
+    res.json(status)
+}
+
 export default (app) =>  {
     app.get('/api/podcasts', findAllPodcasts)
     app.get('/api/podcasts/:id', findPodcastById)
@@ -44,4 +56,5 @@ export default (app) =>  {
     app.post('/api/podcasts', createPodcast)
     app.delete('/api/podcasts/:id', deletePodcast)
     app.put('/api/podcasts/:id', updatePodcast)
+    app.put('/api/podcasts/podchaser/:id', upsertPodcastByPodchaserId)
 };

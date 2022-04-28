@@ -1,7 +1,9 @@
 import * as service from '../services/user-service.js';
 import {USER_CONSUMER} from "../user-types";
+import {signupUser} from "../services/user-service.js";
 
 export const CREATE_USER = 'CREATE_USER';
+export const SIGNUP_USER = 'SIGNUP_USER';
 export const FIND_ALL_USERS = 'FIND_ALL_USERS';
 export const FIND_USER_BY_ID = 'FIND_USER_BY_ID';
 export const UPDATE_USER = 'UPDATE_USER';
@@ -32,6 +34,17 @@ export const createUser = async (dispatch, userDetails) => {
     });
     return user;
 }
+
+export const signUpUser = async (dispatch, userDetails) => {
+    const newUser = await signupUser(userDetails);
+    console.log('signed up new user: '+JSON.stringify(newUser))
+    dispatch({
+        type: SIGNUP_USER,
+        user: newUser
+    })
+    return newUser;
+}
+
 export const findAllUsers = async (dispatch) => {
     const users = await service.findAllUsers();
     dispatch({

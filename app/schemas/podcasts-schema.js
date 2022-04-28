@@ -5,7 +5,10 @@ import creatorsSchema from "./creators-schema.js";
 
 const podcastsSchema = mongoose.Schema({
         podcastId: String,
-        creator: {creatorsSchema},
+        creator: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Creator'
+        },
         title: String,
         description: String,
         imageUrl: String,
