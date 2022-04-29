@@ -70,7 +70,6 @@ const EpisodeDetails = () => {
         const getUsername = async (uid) => {
             if (uid !== undefined) {
                 const user = await findUserById({_id: uid})
-                console.log(user.credentials.username);
                 return user.credentials.username;
             } else {
                 return " "
@@ -152,7 +151,7 @@ const EpisodeDetails = () => {
             // we need to look in our db for creators who have the same podcastId as pid
             const allCreators = await findAllCreators();
             let podcastCreator = null;
-            const filteredCreators = allCreators.filter((creator) => {
+            allCreators.filter((creator) => {
                 if (creator.podcastId === pid) {
                     podcastCreator = {
                         username: creator.username,
@@ -160,7 +159,6 @@ const EpisodeDetails = () => {
                     };
                 }
             })
-            console.log(podcastCreator);
             setCreatorDetails({...creatorDetails, username: podcastCreator.username, userId: podcastCreator.userId})
             return podcastCreator;
         }
@@ -242,5 +240,3 @@ const EpisodeDetails = () => {
 ;
 
 export default EpisodeDetails;
-
-// { "_id" : ObjectId("626c0a7d585e209e11c10e66"), "userId" : { "_id" : "626bef2d2133bcf6a909600c" }, "username": "supercoolcreator", "podcastId" : "924372", "podcastName" : "Lemon", "funFact" : "nothing is fun", "boringFact" : "everything is boring" }

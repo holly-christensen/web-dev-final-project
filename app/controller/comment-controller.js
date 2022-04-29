@@ -18,8 +18,6 @@ const findCommentsByEpisodeId = async (req, res) => {
 
 const createComment = async (req, res) => {
     const newComment = req.body
-    console.log("controller");
-    console.log(newComment);
     const insertedComment = await commentsDao.createComment(newComment)
     res.json(insertedComment)
 }

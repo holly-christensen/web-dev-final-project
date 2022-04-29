@@ -1,5 +1,4 @@
 import * as service from '../services/user-service.js';
-import {USER_CONSUMER} from "../user-types";
 import {signupUser} from "../services/user-service.js";
 
 export const CREATE_USER = 'CREATE_USER';
@@ -27,7 +26,6 @@ export const DELETE_USER = 'DELETE_USER';
 //         reviews: []
 //     }
 //     const user = await service.createUser(newUser);
-//     console.log(user)
 //     dispatch({
 //         type: CREATE_USER,
 //         user

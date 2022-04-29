@@ -24,7 +24,6 @@ const updatePodcast = (id, updatedPodcast) => {
 }
 
 const upsertPodcastByPodchaserId = (podcastId, updatedPodcast) => {
-    console.log("in dao with: "+podcastId)
     return podcastsModel.updateOne(
         {podcastId: podcastId},
         {$set: updatedPodcast},

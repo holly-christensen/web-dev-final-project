@@ -23,10 +23,6 @@ const dislikeComment = async (comment) => {
 
 const updateComment = async (id, comment) => {
     // update
-    console.log('comment:');
-    console.log(comment);
-    console.log('id:');
-    console.log(id);
     return commentsModel.updateOne(
         {_id: id},
         {$set: comment}
