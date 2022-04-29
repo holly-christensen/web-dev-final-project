@@ -73,18 +73,62 @@ const EpisodeDetails = () => {
             setCommentBody('');
             // update user with new comment id
             let updatedUser = profile;
-            updatedUser.comments.push(response[0]._id);
+            updatedUser.comments.push({_id: response[0]._id});
             const newUser = await updateUser(dispatch, updatedUser);
             await getComments();
         }
 
+        const checkIfAlreadyLikedOrDisliked = (userList) => {
+            let alreadyLikedOrDisliked = false;
+            userList.forEach((id) => {
+                console.log('comparing ' + id._id + " and " + profile._id)
+                if (id._id === profile._id)
+                    alreadyLikedOrDisliked = true;
+            })
+            console.log(alreadyLikedOrDisliked);
+            return alreadyLikedOrDisliked;
+        }
+
         const handleLike = async (comment) => {
-            // update comment
-            const newComment = comment;
-            newComment.likes.count = comment.likes.count + 1;
-            const result = await updateComment(dispatch, newComment)
-            // update user
-            // update comment
+            const isAlreadyLiked = checkIfAlreadyLikedOrDisliked(comment.likes.likedBy);
+            if (!isAlreadyLiked) {
+                // update comment
+                let newComment = comment;
+                newComment.likes.count = comment.likes.count + 1;
+                newComment.likes.likedBy.push({_id: profile._id})
+                const commentResult = await updateComment(dispatch, newComment)
+            } else {
+                // unlike and update comment
+                let newComment = comment;
+                newComment.likes.count = comment.likes.count - 1;
+                // filter out this user from the comment's list of users who liked it
+                newComment.likes.likedBy = newComment.likes.likedBy.filter((id) => {
+                    return id._id !== profile._id
+                })
+                const commentResult = await updateComment(dispatch, newComment)
+            }
+
+        }
+
+        const handleDislike = async (comment) => {
+            const isAlreadyDisliked = checkIfAlreadyLikedOrDisliked(comment.dislikes.dislikedBy);
+            if (!isAlreadyDisliked) {
+                // update comment
+                const newComment = comment;
+                newComment.dislikes.count = comment.dislikes.count + 1;
+                newComment.dislikes.dislikedBy.push({_id: profile._id})
+                const result = await updateComment(dispatch, newComment)
+            } else {
+                // undislike and update comment
+                let newComment = comment;
+                newComment.dislikes.count = comment.dislikes.count - 1;
+                // filter out this user from the comment's list of users who liked it
+                newComment.dislikes.dislikedBy = newComment.dislikes.dislikedBy.filter((id) => {
+                    return id._id !== profile._id;
+                })
+                const commentResult = await updateComment(dispatch, newComment)
+
+            }
         }
 
         return (
@@ -121,14 +165,19 @@ const EpisodeDetails = () => {
                                         <div className="d-flex align-items-center text-decoration-none">
                                             <div className="ms-3">
                                                 <small className="text-muted mb-1">{comment.username}
-                                                    <span>{prettyDate(comment.datePosted)}</span></small>
+                                                    <span> on {prettyDate(comment.datePosted)}</span></small>
                                                 <p className="text-black mb-1">{comment.body}</p>
-                                                <button
-                                                    className={"btn btn-light btn-sm me-2"}
-                                                    onClick={() => handleLike(comment)}
-                                                >Like
-                                                </button>
-                                                <small className="text-muted mb-1">{comment.likes.count}</small>
+                                                <i className="fa fa-regular fa-thumbs-up me-2 text-muted"
+                                                    onClick={() => handleLike(comment)}/>
+                                                <small className="text-muted mb-1 me-4">{comment.likes.count}</small>
+                                                {/*<button*/}
+                                                {/*    className={"btn btn-light btn-sm me-2 ms-3"}*/}
+                                                {/*    onClick={() => handleDislike(comment)}*/}
+                                                {/*>Dislike*/}
+                                                {/*</button>*/}
+                                                <i className="fa fa-regular fa-thumbs-down me-2 text-muted"
+                                                   onClick={() => handleDislike(comment)}/>
+                                                <small className="text-muted mb-1">{comment.dislikes.count}</small>
                                             </div>
                                         </div>
                                     </li>

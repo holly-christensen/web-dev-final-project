@@ -30,7 +30,7 @@ export const deleteUser = async (user) => {
     return response.data;
 }
 export const updateUser = async (user) => {
-    // console.log('updating user: '+user._id+" with: "+JSON.stringify(user.following));
+    console.log(user);
     const response = await axios.put(`${USERS_API}/${user._id}`, user);
     // console.log('service response; '+JSON.stringify(response));
     return response.data;

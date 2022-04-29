@@ -10,12 +10,12 @@ export const FIND_COMMENTS_BY_EPISODE_ID = 'FIND_COMMENTS_BY_EPISODE_ID';
 export const createComment = async (dispatch, commentBody, episodeId, userId, username) => {
     const newComment = {
         likes: {count: 0, likedBy: []},
+        dislikes: {count: 0, dislikedBy: []},
         episodeId: episodeId,
         userId: userId,
         username: username,
         body: commentBody,
         datePosted: new Date().toLocaleDateString() + "",
-        dislikes: 0
     }
     const comment = await service.createComment(newComment);
     dispatch({
