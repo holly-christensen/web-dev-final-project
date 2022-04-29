@@ -108,8 +108,8 @@ const EditProfile = () => {
                                                className="form-control"/></label>
                     <br></br><br></br>
                     <p>Are you a creator? Register
-                        <Link to="/creator-signup">
-                        here
+                        <Link to="/creator-signup" className="ps-1">
+                         here
                     </Link> </p>
 
                     <button className="btn btn-primary" onClick={handleEditProfile}>Submit</button>
