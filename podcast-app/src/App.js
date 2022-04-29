@@ -17,6 +17,7 @@ import Nav from "./components/Nav";
 import {ProfileProvider} from "./contexts/profile-context";
 import SecureRoute from "./components/secure-route";
 import EditProfile from "./components/EditProfile";
+import CreatorSignUp from "./components/CreatorSignUp";
 
 function App() {
     return (
@@ -41,6 +42,7 @@ function App() {
                             <Route path="/signup" element={<SignUp/>}/>
                             <Route path="/signout" element={<SignOut/>}/>
                             <Route path="/podcasts" element={<Search/>}/>
+                            <Route path="/creator-signup" element={<CreatorSignUp/>}/>
                             <Route path="podcasts/:searchString" element={<Search/>}/>
                             <Route path="podcasts/details/:pid" element={<PodcastDetails/>}/>
                             <Route path="podcasts/details/:pid/:eid" element={<EpisodeDetails/>}/>
