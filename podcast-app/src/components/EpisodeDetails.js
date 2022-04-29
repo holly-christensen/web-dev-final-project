@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {getEpisodesById} from "../useRequest";
 import {updateUser} from "../actions/user-actions";
 import {findCommentsByEpisodeId} from "../services/comment-service";
@@ -8,6 +8,8 @@ import {createComment} from "../actions/comment-actions";
 import {useDispatch, useSelector} from "react-redux";
 import {findUserById} from "../services/user-service";
 import {updateComment} from "../actions/comment-actions";
+import SecureContent from "./secure-content";
+import {findAllCreators} from "../services/creator-service";
 
 
 const EpisodeDetails = () => {
@@ -19,18 +21,21 @@ const EpisodeDetails = () => {
         }
 
         const commentsFromState = useSelector((state) => state.comments);
-        console.log('comments from state' + JSON.stringify(commentsFromState));
 
         let [episodeDetails, setEpisodeDetails] = useState(initialEpisodeDetails);
+        // let [commentsLikedByThisUser, setCommentsLikedByThisUser] = useState([]);
         let [comments, setComments] = useState(commentsFromState);
         let [commentBody, setCommentBody] = useState('');
+        let [creatorDetails, setCreatorDetails] = useState({username: null, _id: null});
 
         let {profile} = useProfile();
-        const {eid} = useParams();
+        const {pid, eid} = useParams();
         let dispatch = useDispatch();
 
         useEffect(() => getEpisodeInfo(), []);
         useEffect(() => getComments(), []);
+        useEffect(() => getPodcastCreatorIfExists(), []);
+        // useEffect(() => getCommentsLikedByThisUser(), []);
 
         const getEpisodeInfo = async () => {
             const episodeInfo = await getEpisodesById(eid);
@@ -44,9 +49,23 @@ const EpisodeDetails = () => {
 
         const getComments = async () => {
             const comments = await findCommentsByEpisodeId(eid);
-            console.log('comments from db ' + comments);
+            // getCommentsLikedByThisUser();
             setComments(comments);
         }
+
+        // method to find comments that are liked by this user and add them to the state
+        // const getCommentsLikedByThisUser = () => {
+        //     let likedCommentIds = [];
+        //     console.log(comments)
+        //     comments.forEach((comment) => {
+        //         comment.likes.likedBy.forEach((user) => {
+        //             if( user._id === profile._id) {
+        //                 likedCommentIds.push(comment._id);
+        //             }
+        //         })
+        //     })
+        //     setCommentsLikedByThisUser(likedCommentIds)
+        // }
 
         const getUsername = async (uid) => {
             if (uid !== undefined) {
@@ -81,11 +100,9 @@ const EpisodeDetails = () => {
         const checkIfAlreadyLikedOrDisliked = (userList) => {
             let alreadyLikedOrDisliked = false;
             userList.forEach((id) => {
-                console.log('comparing ' + id._id + " and " + profile._id)
                 if (id._id === profile._id)
                     alreadyLikedOrDisliked = true;
             })
-            console.log(alreadyLikedOrDisliked);
             return alreadyLikedOrDisliked;
         }
 
@@ -131,53 +148,84 @@ const EpisodeDetails = () => {
             }
         }
 
+        const getPodcastCreatorIfExists = async () => {
+            // we need to look in our db for creators who have the same podcastId as pid
+            const allCreators = await findAllCreators();
+            let podcastCreator = null;
+            const filteredCreators = allCreators.filter((creator) => {
+                if (creator.podcastId === pid) {
+                    podcastCreator = {
+                        username: creator.username,
+                        userId: creator.userId
+                    };
+                }
+            })
+            console.log(podcastCreator);
+            setCreatorDetails({...creatorDetails, username: podcastCreator.username, userId: podcastCreator.userId})
+            return podcastCreator;
+        }
+
         return (
             <>
                 <div className={"container col-9 mt-5"}>
                     <h1>{episodeDetails.title}</h1>
-                    <p>{eid}</p>
+                    <Link to={`/profile/${creatorDetails.userId}`} className={"text-decoration-none mb-4"}>
+                        <h6>{creatorDetails.username}</h6>
+                    </Link>
                     <p>{JSON.stringify(profile)}</p>
-                    <img src={episodeDetails.imageUrl} alt={"Podcast Image"} height={350}/>
-                    <p className={"mt-3"}>{episodeDetails.description}</p>
+                    <img src={episodeDetails.imageUrl} alt={"Podcast Image"} height={250}/>
+                    <h3 className={"my-3"}>Description</h3>
+                    <p>{episodeDetails.description}</p>
                     <div>
                         <h3>Comments</h3>
-                        <h6>Post a comment</h6>
-                        <div className={"d-flex"}>
-                            <input
-                                className={"form-control"}
-                                value={commentBody}
-                                onChange={(event) =>
-                                    setCommentBody(event.target.value)}
-                            >
-                            </input>
-                            <button
-                                className={"btn btn-outline-primary my-2 my-sm-0"}
-                                onClick={() => {
-                                    createCommentHandler()
-                                }}>
-                                Comment
-                            </button>
-                        </div>
+                        <SecureContent>
+                            <h6>Post a comment</h6>
+                            <div className={"d-flex"}>
+                                <input
+                                    className={"form-control"}
+                                    value={commentBody}
+                                    onChange={(event) =>
+                                        setCommentBody(event.target.value)}
+                                >
+                                </input>
+                                <button
+                                    className={"btn btn-outline-primary my-2 my-sm-0"}
+                                    onClick={() => {
+                                        createCommentHandler()
+                                    }}>
+                                    Comment
+                                </button>
+                            </div>
+                        </SecureContent>
                         <ul className={"ps-0 mt-4"}>
                             {
                                 comments.map(comment =>
                                     <li className="list-group-item  align-items-start" key={comment._id}>
                                         <div className="d-flex align-items-center text-decoration-none">
                                             <div className="ms-3">
-                                                <small className="text-muted mb-1">{comment.username}
-                                                    <span> on {prettyDate(comment.datePosted)}</span></small>
+
+                                                <small className="text-muted mb-1">
+                                                    <Link to={`/profile/${comment.userId}`}
+                                                          className={"text-decoration-none"}>
+                                                        {comment.username}
+                                                    </Link>
+                                                    <span> on {prettyDate(comment.datePosted)}</span>
+                                                </small>
+
                                                 <p className="text-black mb-1">{comment.body}</p>
-                                                <i className="fa fa-regular fa-thumbs-up me-2 text-muted"
-                                                    onClick={() => handleLike(comment)}/>
-                                                <small className="text-muted mb-1 me-4">{comment.likes.count}</small>
-                                                {/*<button*/}
-                                                {/*    className={"btn btn-light btn-sm me-2 ms-3"}*/}
-                                                {/*    onClick={() => handleDislike(comment)}*/}
-                                                {/*>Dislike*/}
-                                                {/*</button>*/}
-                                                <i className="fa fa-regular fa-thumbs-down me-2 text-muted"
-                                                   onClick={() => handleDislike(comment)}/>
-                                                <small className="text-muted mb-1">{comment.dislikes.count}</small>
+
+                                                <SecureContent>
+                                                    <i className={`fa fa-regular fa-thumbs-up me-2 text-muted `}
+                                                       onClick={() => handleLike(comment)}/>
+                                                    <small className="text-muted mb-1 me-4">{comment.likes.count}</small>
+                                                </SecureContent>
+
+                                                <SecureContent>
+                                                    <i className="fa fa-regular fa-thumbs-down me-2 text-muted"
+                                                       onClick={() => handleDislike(comment)}/>
+                                                    <small className="text-muted mb-1">{comment.dislikes.count}</small>
+                                                </SecureContent>
+
                                             </div>
                                         </div>
                                     </li>
@@ -194,3 +242,5 @@ const EpisodeDetails = () => {
 ;
 
 export default EpisodeDetails;
+
+// { "_id" : ObjectId("626c0a7d585e209e11c10e66"), "userId" : { "_id" : "626bef2d2133bcf6a909600c" }, "username": "supercoolcreator", "podcastId" : "924372", "podcastName" : "Lemon", "funFact" : "nothing is fun", "boringFact" : "everything is boring" }
