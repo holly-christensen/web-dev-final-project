@@ -31,6 +31,7 @@ export const deleteUser = async (user) => {
 }
 export const updateUser = async (user) => {
     console.log(user);
+    console.log(`${USERS_API}/${user._id}`)
     const response = await axios.put(`${USERS_API}/${user._id}`, user);
     // console.log('service response; '+JSON.stringify(response));
     return response.data;

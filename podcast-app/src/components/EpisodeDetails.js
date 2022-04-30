@@ -123,7 +123,6 @@ const EpisodeDetails = () => {
                 })
                 const commentResult = await updateComment(dispatch, newComment)
             }
-
         }
 
         const handleDislike = async (comment) => {
