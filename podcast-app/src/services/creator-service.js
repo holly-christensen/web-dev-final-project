@@ -19,7 +19,7 @@ export const findCreatorById = async (creator) => {
 }
 
 export const findCreatorByUserId = async (creator) => {
-    console.log("in here")
+    console.log("in here :)")
     console.log(creator)
     const response = await axios.get(`${CREATORS_API}/user/${creator}`, creator);
     console.log(response)

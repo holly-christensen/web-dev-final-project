@@ -8,7 +8,7 @@ import userProfile from "./UserProfile";
 import {useNavigate} from "react-router-dom";
 
 const CreatorSignUp = () => {
-    let {profile, signout} = useProfile()
+    let {profile, signout, upgradeUserToCreator, checkLoggedIn} = useProfile()
 
     const initialPodcastSearchDetails = {
         results: [],
@@ -60,7 +60,8 @@ const CreatorSignUp = () => {
         updateUser(updatedUser).then(r => profile = r)
     }
 
-    const createCreatorHandler = () => {
+    const createCreatorHandler = async () => {
+        // TODO: ADD USERNAME FIELD HERE
         const details = {
             ...creatorDetails,
             funFact: funFactRef.current.value,
@@ -71,7 +72,11 @@ const CreatorSignUp = () => {
         console.log(details)
         createCreator(dispatch, details)
             .then(r => setCreatorDetails(details));
+        //updateUserToCreator()
+       // await upgradeUserToCreator()
         updateUserToCreator()
+
+        //await checkLoggedIn()
         navigate('/profile')
     }
 

@@ -8,7 +8,7 @@ const findCreatorById = (id) => {
 }
 
 const findCreatorByUserId = (userId) => {
-    return creatorsModel.findOne({userId})
+    return creatorsModel.findOne({"userId": userId})
 }
 
 const createCreator = (creator) => {

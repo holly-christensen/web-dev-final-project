@@ -3,7 +3,7 @@ import {
     DELETE_CREATOR,
     UPDATE_CREATOR,
     FIND_ALL_CREATORS,
-    FIND_CREATOR_BY_ID
+    FIND_CREATOR_BY_ID, FIND_CREATOR_BY_USERID
 } from "../actions/creator-actions.js";
 import initialState from "../initialState";
 
@@ -17,6 +17,8 @@ const creatorsReducer = (state = initialState.creators, action) => {
         case FIND_ALL_CREATORS:
             return action.creators;
         case FIND_CREATOR_BY_ID:
+            return action.creator
+        case FIND_CREATOR_BY_USERID:
             return action.creator
         case DELETE_CREATOR:
             return state.filter(

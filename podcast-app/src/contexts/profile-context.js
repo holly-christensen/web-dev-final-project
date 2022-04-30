@@ -2,15 +2,15 @@ import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {useDispatch} from "react-redux";
 import {USER_CONSUMER} from "../user-types";
-import {signupUser} from "../services/user-service";
-import {signUpUser} from "../actions/user-actions";
+//import {signupUser} from "../services/user-service";
+import {signUpUser, updateUser} from "../actions/user-actions";
 
 const ProfileContext = React.createContext()
 
 const api = axios.create({withCredentials: true})
 
 export const ProfileProvider = ({children}) => {
-    const [profile, setProfile]
+    let [profile, setProfile]
         = useState({})
     const dispatch = useDispatch();
 
@@ -29,6 +29,17 @@ export const ProfileProvider = ({children}) => {
         } catch (e) {
             throw e
         }
+    }
+
+    const upgradeUserToCreator = async () => {
+        const updatedUser = {
+            ...profile,
+            type: "USER_CREATOR"
+        }
+        console.log(updatedUser)
+        const response = await updateUser(dispatch, updatedUser);
+        console.log(response)
+        setProfile(response)
     }
 
     const signup = async (username, email, password, firstname, lastname, phonenumber) => {
@@ -66,7 +77,7 @@ export const ProfileProvider = ({children}) => {
         }
     }
 
-    const value = {signout, signin, profile, signup, checkLoggedIn}
+    const value = {signout, signin, profile, signup, checkLoggedIn, upgradeUserToCreator}
     return(
         <ProfileContext.Provider value={value}>
             {children}
