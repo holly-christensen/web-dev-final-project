@@ -150,7 +150,10 @@ const EpisodeDetails = () => {
         const getPodcastCreatorIfExists = async () => {
             // we need to look in our db for creators who have the same podcastId as pid
             const allCreators = await findAllCreators();
-            let podcastCreator = null;
+            let podcastCreator = {
+                username: null,
+                userId: null
+            }
             allCreators.filter((creator) => {
                 if (creator.podcastId === pid) {
                     podcastCreator = {
