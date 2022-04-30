@@ -2,6 +2,7 @@ import {Link, useNavigate} from "react-router-dom";
 import React from "react";
 import {useProfile} from "../contexts/profile-context";
 import UserDetails from "./UserDetails";
+import CreatorDetails from "./CreatorDetails";
 
 const UserProfile = () => {
     const {profile, signout} = useProfile()
@@ -37,6 +38,7 @@ const UserProfile = () => {
             }
             {signedIn &&
                 <div>
+                    {profile.type === "USER_CREATOR" && <CreatorDetails user={profile}></CreatorDetails>}
                     <UserDetails user={profile}></UserDetails>
                     <button className="btn btn-primary" onClick={logout}>Sign Out</button>
                 </div>}

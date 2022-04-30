@@ -3,6 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {createCreator} from "../actions/creator-actions";
 import {useProfile} from "../contexts/profile-context";
 import {getPodcastsBySearchTerm} from "../useRequest";
+import {updateUser} from "../services/user-service";
+import userProfile from "./UserProfile";
+import {useNavigate} from "react-router-dom";
 
 const CreatorSignUp = () => {
     let {profile, signout} = useProfile()
@@ -22,7 +25,11 @@ const CreatorSignUp = () => {
         boringFact: "",
     }
 
+    const navigate = useNavigate()
+
     const searchRef = useRef()
+    const funFactRef = useRef()
+    const boringFactRef = useRef()
     let [searchTerm, setSearchTerm] = useState('')
     let [creatorDetails, setCreatorDetails] = useState(initialCreatorDetails);
     let [podcastSearchDetails, setPodcastSearchDetails] = useState(initialPodcastSearchDetails);
@@ -36,7 +43,7 @@ const CreatorSignUp = () => {
         // setIsSending(true)
 
         setSearchTerm(searchRef.current.value)
-        const result = await getPodcastsBySearchTerm(searchTerm);
+        const result = await getPodcastsBySearchTerm(searchRef.current.value);
         console.log(result)
         setPodcastSearchDetails({...podcastSearchDetails, results: result.podcasts.data})
 
@@ -44,6 +51,29 @@ const CreatorSignUp = () => {
         // if (isMounted.current) // only update if we are still mounted
         //     setIsSending(false)
     }, []) // update the callback if the state changes
+
+    const updateUserToCreator = () => {
+        const updatedUser = {
+            ...profile,
+            type: "USER_CREATOR"
+        }
+        updateUser(updatedUser).then(r => profile = r)
+    }
+
+    const createCreatorHandler = () => {
+        const details = {
+            ...creatorDetails,
+            funFact: funFactRef.current.value,
+            boringFact: boringFactRef.current.value,
+            userId: profile._id
+        }
+        console.log("creating creator")
+        console.log(details)
+        createCreator(dispatch, details)
+            .then(r => setCreatorDetails(details));
+        updateUserToCreator()
+        navigate('/profile')
+    }
 
     const handleRadioOnChange = (result) => {
         setCreatorDetails({
@@ -58,37 +88,62 @@ const CreatorSignUp = () => {
     return(
         <div>
             <h1>Creator Sign Up</h1>
-            <p>Find the podcast that you are a creator for</p>
-            <label>Podcast Name
-                <input ref={searchRef}
-                    defaultValue={searchTerm}
-                    name={"podcastName"}>
-                </input>
-            </label>
-            <button
-                onClick={sendRequest}>
-                Find Podcast
-            </button>
-            <div>
-                {podcastSearchDetails.results.map((result) => {
-                    return (
-                        <div
-                            key={result.id}
-                        >
-                            <input
-                                onChange={() => {
-                                    handleRadioOnChange(result)
-                                }}
-                                type={"radio"}
-                                value={result.id}
-                                name={"results"}/>
-                            <div>
-                                {result.title}
-                                <img src={result.imageUrl} height="50"/>
-                            </div>
-
-                        </div>)
-                })}
+            <div className="row">
+                <div className="col-9">
+                    <label>Fun Fact
+                        <input ref={funFactRef}
+                               placeholder="fun fact"
+                               type="text"
+                               className="form-control"/>
+                    </label>
+                    <br></br>
+                    <label>Boring Fact
+                        <input ref={boringFactRef}
+                               placeholder="boring fact"
+                               type="text"
+                               className="form-control"/>
+                    </label>
+                    <br></br> <br></br>
+                    <p>Find the podcast that you are a creator for</p>
+                    <label>Podcast Name
+                        <input ref={searchRef}
+                               defaultValue={searchTerm}
+                               name={"podcastName"}>
+                        </input>
+                    </label>
+                    <button
+                        onClick={sendRequest}>
+                        Find Podcast
+                    </button>
+                    <div>
+                        {podcastSearchDetails.results.map((result) => {
+                            return (
+                                <div key={result.id}>
+                                    <input
+                                        onChange={() => {
+                                            handleRadioOnChange(result)
+                                        }}
+                                        type={"radio"}
+                                        value={result.id}
+                                        name={"results"}/>
+                                    <div className="row">
+                                        <img className="col-2" src={result.imageUrl}/>
+                                        <div className="col-10">
+                                            <strong>{result.title}</strong>
+                                            <p>{result.description}</p>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                </div>)
+                        })}
+                    </div>
+                </div>
+                <div className="col-1">
+                    {creatorDetails.podcastId &&
+                        <div>
+                            <button className="btn btn-primary" onClick={createCreatorHandler}>Register</button>
+                        </div>}
+                </div>
             </div>
         </div>
     );

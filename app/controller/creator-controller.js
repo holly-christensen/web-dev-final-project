@@ -10,6 +10,14 @@ const findCreatorById = async (req, res) => {
     res.json(creator)
 }
 
+const findCreatorByUserId = async (req, res) => {
+    console.log("in here!!")
+    console.log(req)
+    const userId = req.params['id']
+    const creator = await creatorsDao.findCreatorByUserId(userId)
+    res.json(creator)
+}
+
 const createCreator = async (req, res) => {
     const newCreator = req.body
     const insertedCreator = await creatorsDao.createCreator(newCreator)
@@ -36,4 +44,5 @@ export default (app) =>  {
     app.post('/api/creators', createCreator)
     app.delete('/api/creators/:id', deleteCreator)
     app.put('/api/creators/:id', updateCreator)
+    app.get('/api/creators/user/:id', findCreatorByUserId)
 };
