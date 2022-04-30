@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {useParams, useLocation, useNavigate, Link} from "react-router-dom";
+import React, {useEffect, useRef, useState} from 'react';
+import {useParams, useNavigate, Link} from "react-router-dom";
 import {getPodcastsBySearchTerm} from "../useRequest";
 
 const Search = () => {
