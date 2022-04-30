@@ -107,10 +107,11 @@ const EditProfile = () => {
                                                type="text"
                                                className="form-control"/></label>
                     <br></br><br></br>
-                    <p>Are you a creator? Register
-                        <Link to="/creator-signup" className="ps-1">
-                         here
-                    </Link> </p>
+                    {profile.type === "USER_CONSUMER" &&
+                        <p>Are you a creator? Register
+                            <Link to="/creator-signup" className="ps-1">
+                             here
+                        </Link> </p>}
 
                     <button className="btn btn-primary" onClick={handleEditProfile}>Submit</button>
                 </div>}

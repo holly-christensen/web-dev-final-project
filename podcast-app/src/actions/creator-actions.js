@@ -3,6 +3,7 @@ import * as service from '../services/creator-service.js';
 export const CREATE_CREATOR = 'CREATE_CREATOR';
 export const FIND_ALL_CREATORS = 'FIND_ALL_CREATORS';
 export const FIND_CREATOR_BY_ID = 'FIND_CREATOR_BY_ID';
+export const FIND_CREATOR_BY_USERID = 'FIND_CREATOR_BY_ID';
 export const UPDATE_CREATOR = 'UPDATE_CREATOR';
 export const DELETE_CREATOR = 'DELETE_CREATOR';
 
@@ -32,6 +33,16 @@ export const findCreatorById = async (dispatch, creatorId) => {
     const creator = await service.findCreatorById(creatorId);
     dispatch({
         type: FIND_CREATOR_BY_ID,
+        creator
+    });
+}
+
+export const findCreatorByUserId = async (dispatch, userId) => {
+    console.log(userId)
+    const creator = await service.findCreatorByUserId(userId);
+    console.log(creator)
+    dispatch({
+        type: FIND_CREATOR_BY_USERID,
         creator
     });
 }
