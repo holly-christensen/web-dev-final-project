@@ -61,12 +61,12 @@ const CreatorSignUp = () => {
     }
 
     const createCreatorHandler = async () => {
-        // TODO: ADD USERNAME FIELD HERE
         const details = {
             ...creatorDetails,
             funFact: funFactRef.current.value,
             boringFact: boringFactRef.current.value,
-            userId: profile._id
+            userId: profile._id,
+            username: profile.credentials.username
         }
         console.log("creating creator")
         console.log(details)
