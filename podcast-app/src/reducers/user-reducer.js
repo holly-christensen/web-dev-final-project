@@ -3,13 +3,18 @@ import {
     DELETE_USER,
     UPDATE_USER,
     FIND_ALL_USERS,
-    FIND_USER_BY_ID
+    FIND_USER_BY_ID, SIGNUP_USER
 } from "../actions/user-actions.js";
 import initialState from "../initialState";
 
 const usersReducer = (state = initialState.users, action) => {
     switch (action.type) {
         case CREATE_USER:
+            return [
+                ...state,
+                action.user,
+            ];
+        case SIGNUP_USER:
             return [
                 ...state,
                 action.user,

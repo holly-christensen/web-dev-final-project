@@ -18,6 +18,12 @@ export const findCommentById = async (comment) => {
     return comments;
 }
 
+export const findCommentsByEpisodeId = async (episodeId) => {
+    const response = await axios.get(`${COMMENTS_API}/episode/${episodeId}`, episodeId);
+    const comments = response.data;
+    return comments;
+}
+
 export const deleteComment = async (comment) => {
     const response = await axios
         .delete(`${COMMENTS_API}/${comment._id}`);

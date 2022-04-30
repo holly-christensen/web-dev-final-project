@@ -19,10 +19,11 @@ const deleteUser = (id) => {
     return usersModel.deleteOne({_id: id})
 }
 const updateUser = (id, updatedUser) => {
-    return usersModel.updateOne(
+    const result = usersModel.updateOne(
         {_id: id},
         {$set: updatedUser}
     )
+    return result;
 }
 
 export default {

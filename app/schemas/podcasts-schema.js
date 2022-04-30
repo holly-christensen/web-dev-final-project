@@ -5,13 +5,19 @@ import creatorsSchema from "./creators-schema.js";
 
 const podcastsSchema = mongoose.Schema({
         podcastId: String,
-        creator: {creatorsSchema},
+        creatorId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Creator'
+        },
         title: String,
         description: String,
         imageUrl: String,
         language: String,
         episodes: [{episodeId: String}],
-        reviews: [{reviewsSchema}]
+        reviews: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Review'
+        }]
     },
     {timestamps: true}, {collection: "podcasts"})
 

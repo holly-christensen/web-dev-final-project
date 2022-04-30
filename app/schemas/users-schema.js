@@ -18,9 +18,15 @@ const usersSchema = mongoose.Schema({
             enum:['USER_CREATOR', 'USER_ADMIN', 'USER_CONSUMER'],
             default: 'USER_CONSUMER'
         },
-        following: [{podcastsSchema}],
-        comments: [{commentsSchema}],
-        reviews: [{reviewsSchema}]
+        following: [{podcastId: String}],
+        comments: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment'
+        }],
+        reviews: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Review'
+        }]
     },
     {timestamps: true}, {collection: "users"})
 

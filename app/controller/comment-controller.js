@@ -10,6 +10,12 @@ const findCommentById = async (req, res) => {
     res.json(comment)
 }
 
+const findCommentsByEpisodeId = async (req, res) => {
+    const episodeId = req.params['id']
+    const comments = await commentsDao.findCommentsByEpisodeId(episodeId)
+    res.json(comments)
+}
+
 const createComment = async (req, res) => {
     const newComment = req.body
     const insertedComment = await commentsDao.createComment(newComment)
@@ -33,6 +39,7 @@ const updateComment = async (req, res) => {
 export default (app) =>  {
     app.get('/api/comments', findAllComments)
     app.get('/api/comments/:id', findCommentById)
+    app.get('/api/comments/episode/:id', findCommentsByEpisodeId)
     app.post('/api/comments', createComment)
     app.delete('/api/comments/:id', deleteComment)
     app.put('/api/comments/:id', updateComment)

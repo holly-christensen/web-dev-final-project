@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {useDispatch} from "react-redux";
 import {USER_CONSUMER} from "../user-types";
+import {signupUser} from "../services/user-service";
+import {signUpUser} from "../actions/user-actions";
 
 const ProfileContext = React.createContext()
 
@@ -10,6 +12,7 @@ const api = axios.create({withCredentials: true})
 export const ProfileProvider = ({children}) => {
     const [profile, setProfile]
         = useState({})
+    const dispatch = useDispatch();
 
     const signout = async () => {
         const response = await api
@@ -45,12 +48,9 @@ export const ProfileProvider = ({children}) => {
             lastname: lastname,
             phoneNumber: phonenumber
         }
-
-        try { // TODO: move this to service
-            const response = await api
-                .post("http://localhost:4000/api/signup",
-                    userDetails)
-            setProfile(response.data)
+        try {
+            const response = await signUpUser(dispatch, userDetails);
+            setProfile(response);
         } catch (e) { throw e }
     }
 

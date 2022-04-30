@@ -6,9 +6,8 @@ const findAllPodcasts = () => {
 const findPodcastById = (id) => {
     return podcastsModel.findById(id)
 }
-
-const findPodcastByPodcastId = (podcastId) => {
-    return podcastsModel.findOne({podcastId})
+const findPodcastByPodchaserId = (podcastId) => {
+    return podcastsModel.find({"podcastId": { $eq: podcastId } } )
 }
 const createPodcast = (podcast) => {
     return podcastsModel.create(podcast)
@@ -19,12 +18,20 @@ const deletePodcast = (id) => {
 const updatePodcast = (id, updatedPodcast) => {
     return podcastsModel.updateOne(
         {_id: id},
-        {$set: updatedPodcast}
-    )
+        {$set: updatedPodcast},
+        {upsert: true}
+    );
+}
+
+const upsertPodcastByPodchaserId = (podcastId, updatedPodcast) => {
+    return podcastsModel.updateOne(
+        {podcastId: podcastId},
+        {$set: updatedPodcast},
+        {upsert: true}
+    );
 }
 
 export default {
-    findAllPodcasts, findPodcastById,
-    findPodcastByPodcastId, createPodcast, deletePodcast,
-    updatePodcast
+    findAllPodcasts, findPodcastById, findPodcastByPodchaserId, createPodcast, deletePodcast,
+    updatePodcast, upsertPodcastByPodchaserId
 }

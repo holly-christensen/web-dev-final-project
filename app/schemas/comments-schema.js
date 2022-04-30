@@ -6,6 +6,7 @@ const commentsSchema = mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
         },
+        username: String,
         body: String,
         datePosted: String,
         likes: {
@@ -15,7 +16,13 @@ const commentsSchema = mongoose.Schema({
                                 ref: 'User'
                         }}]
         },
-        dislikes: Number
+        dislikes: {
+                count: Number,
+                dislikedBy: [{userId: {
+                                type: mongoose.Schema.Types.ObjectId,
+                                ref: 'User'
+                        }}]
+        },
     },
     {timestamps: true}, {collection: "comments"})
 
