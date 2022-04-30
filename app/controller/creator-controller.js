@@ -12,9 +12,10 @@ const findCreatorById = async (req, res) => {
 
 const findCreatorByUserId = async (req, res) => {
     console.log("in here!!")
-    console.log(req)
+    //console.log(req)
     const userId = req.params['id']
     const creator = await creatorsDao.findCreatorByUserId(userId)
+    console.log(creator)
     res.json(creator)
 }
 

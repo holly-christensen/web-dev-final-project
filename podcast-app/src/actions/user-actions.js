@@ -65,6 +65,7 @@ export const updateUser = async (dispatch, user) => {
         type: UPDATE_USER,
         user
     });
+    return user;
 }
 export const deleteUser = async (dispatch, user) => {
     const response = await service.deleteUser(user);

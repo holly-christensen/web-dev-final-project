@@ -29,6 +29,7 @@ const Signup = () => {
                 lastRef.current.value,
                 phoneRef.current.value
             )
+            console.log("signed up")
             navigate('/profile')
         } catch (e) {
             alert(e)

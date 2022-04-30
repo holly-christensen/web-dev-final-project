@@ -45,6 +45,7 @@ export const findCreatorByUserId = async (dispatch, userId) => {
         type: FIND_CREATOR_BY_USERID,
         creator
     });
+    return creator;
 }
 
 export const updateCreator = async (dispatch, creator) => {

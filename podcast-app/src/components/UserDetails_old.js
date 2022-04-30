@@ -2,7 +2,7 @@ import React from 'react';
 import {useNavigate} from "react-router-dom";
 
 const UserDetails = (user) => {
-    //console.log(user.user.email)
+    console.log(user.user.email)
     //const [selectedFile, setSelectedFile] = useState(null);
 
     const navigate = useNavigate()
@@ -20,7 +20,7 @@ const UserDetails = (user) => {
             <button className="btn btn-outline-primary" onClick={handleEditProfile}> Edit Profile</button>
             <h3>Following</h3>
             <ul>
-                {profile.following.map(podcast => podcast._id)}
+                {profile.following.map(podcast => podcast)}
             </ul>
         </div>
     );
