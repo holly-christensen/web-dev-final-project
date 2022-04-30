@@ -167,10 +167,13 @@ const EpisodeDetails = () => {
             <>
                 <div className={"container col-9 mt-5"}>
                     <h1>{episodeDetails.title}</h1>
-                    <Link to={`/profile/${creatorDetails.userId}`} className={"text-decoration-none mb-4"}>
-                        <h6>{creatorDetails.username}</h6>
-                    </Link>
-                    <p>{JSON.stringify(profile)}</p>
+                    {
+                        creatorDetails.username &&
+                        <Link to={`/profile/${creatorDetails.userId}`} className={"text-decoration-none"}>
+                            <h6 className={"my-3"}>{creatorDetails.username}</h6>
+                        </Link>
+                    }
+
                     <img src={episodeDetails.imageUrl} alt={"Podcast Image"} height={250}/>
                     <h3 className={"my-3"}>Description</h3>
                     <p>{episodeDetails.description}</p>

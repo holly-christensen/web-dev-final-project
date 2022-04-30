@@ -5,7 +5,7 @@ import creatorsSchema from "./creators-schema.js";
 
 const podcastsSchema = mongoose.Schema({
         podcastId: String,
-        creator: {
+        creatorId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Creator'
         },

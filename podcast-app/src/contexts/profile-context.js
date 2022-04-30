@@ -48,15 +48,8 @@ export const ProfileProvider = ({children}) => {
             lastname: lastname,
             phoneNumber: phonenumber
         }
-
         try {
-            // const response = await api
-            //     .post("http://localhost:4000/api/signup",
-            //         userDetails)
-            // const response = await signupUser(userDetails);
-            // setProfile(response.data)
             const response = await signUpUser(dispatch, userDetails);
-            console.log('in context '+ response);
             setProfile(response);
         } catch (e) { throw e }
     }

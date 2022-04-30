@@ -27,9 +27,6 @@ const PodcastDetails = () => {
 
 
         useEffect(() => getPodcastInfo(), []);
-        useEffect(() => {
-            // console.log("user is following: ", podcastDetails.userIsFollowing);
-        }, [podcastDetails.userIsFollowing]);
         // useEffect(() => updateUserIsFollowing, [])
         useEffect(() => getEpisodes(episodesDetails.currentPage), []);
 
@@ -66,7 +63,6 @@ const PodcastDetails = () => {
             // if (podcastDetails.userIsFollowing === false) {
                 const podcastInDb = await findPodcastByPodchaserId(pid);
                 if (podcastInDb.length === 0) {
-                    console.log('upserting')
                     const response = await upsertPodcastByPodchaserId(pid)
                 }
                 let updatedUser = profile;
@@ -86,15 +82,12 @@ const PodcastDetails = () => {
         }
 
         const updateUserIsFollowing = () => {
-            console.log('in here');
             let isFollowing = false;
             profile.following.forEach((podcast) => {
-                console.log('comparing ' + podcast.podcastId + " and " + pid);
                 if (podcast.podcastId === pid) {
                     isFollowing = true;
                 }
             })
-            console.log('about to set ' + isFollowing)
             setPodcastDetails({...podcastDetails, userIsFollowing: isFollowing})
 
         }
