@@ -107,6 +107,7 @@ const UserProfile = () => {
     const signIn = () => {
         navigate('/signin')
     }
+
     console.log(profile)
     // if user is not logged in, take them to signin page
     // if (profile && Object.keys(profile).length === 0) {
@@ -114,16 +115,17 @@ const UserProfile = () => {
     // }
     return (
         <div>
-            <h1>Profile</h1>
             {!signedIn &&
                 <button onClick={signIn}
                         className="btn btn-primary">SignIn</button>
             }
             {signedIn &&
                 <div>
+                    <h1>{profile.credentials.username}
+                        {profile.type === "USER_CREATOR" && <i className={`fa fa-check-circle ms-2`}/>}</h1>
+                    {profile.profileImg}
                     {profile.type === "USER_CREATOR" && <CreatorDetails user={profile}></CreatorDetails>}
                     <UserDetails user={profile}></UserDetails>
-                    <button className="btn btn-primary" onClick={logout}>Sign Out</button>
                 </div>}
         </div>
     );

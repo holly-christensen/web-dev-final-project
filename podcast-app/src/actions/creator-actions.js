@@ -10,7 +10,7 @@ export const DELETE_CREATOR = 'DELETE_CREATOR';
 export const createCreator = async (dispatch, creatorDetails) => {
     const newCreator = {
         userId: creatorDetails.userId,
-        username: "temp username", //TODO UPDATE CREATOR DETAILS TO INCLUDE USER ID
+        username: creatorDetails.username,
         podcastId: creatorDetails.podcastId,
         podcastName: creatorDetails.podcastName,
         funFact: creatorDetails.funFact,

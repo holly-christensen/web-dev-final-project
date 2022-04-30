@@ -48,6 +48,7 @@ const EditProfile = () => {
         try {
             const result = await updateUser(updatedUser);
             profile = updatedUser
+            navigate('/profile')
             console.log(result)
         } catch (e) {
             console.log(e)

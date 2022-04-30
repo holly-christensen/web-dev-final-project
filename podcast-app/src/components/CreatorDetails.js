@@ -25,8 +25,10 @@ const CreatorDetails = (user) => {
     //console.log(creators)
     return (
         <div>
-            <h1>Creator Details</h1>
-            {creator.funFact}
+            <h3>Creator Information</h3>
+            <p><strong>Podcast Name:</strong> {creator.podcastName}</p>
+            <p><strong>Fun Fact: </strong>{creator.funFact}</p>
+            <p><strong>Boring Fact: </strong>{creator.boringFact}</p>
         </div>
     );
 };

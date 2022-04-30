@@ -2,9 +2,6 @@ import React from 'react';
 import {useNavigate} from "react-router-dom";
 
 const UserDetails = (user) => {
-    //console.log(user.user.email)
-    //const [selectedFile, setSelectedFile] = useState(null);
-
     const navigate = useNavigate()
     const handleEditProfile = () => {
         navigate('/edit-profile')
@@ -13,15 +10,26 @@ const UserDetails = (user) => {
 
     const profile = user.user
     console.log(profile.following)
+    console.log(profile)
     return (
         <div>
-            <h2>{profile.credentials.username}</h2>
-            {profile.profileImg}
-            <button className="btn btn-outline-primary" onClick={handleEditProfile}> Edit Profile</button>
-            <h3>Following</h3>
+            <h3>User Information</h3>
+            <p><strong>{profile.firstName} {profile.lastName}</strong></p>
+            <p><strong>Email: </strong> {profile.email}</p>
+            <p><strong>Phone Number: </strong> {profile.phoneNumber}</p>
+            <h4>Following</h4>
             <ul>
                 {profile.following.map(podcast => podcast._id)}
             </ul>
+            <h4>Comments</h4>
+            <ul>
+                {profile.comments.map(podcast => podcast._id)}
+            </ul>
+            <h4>Reviews</h4>
+            <ul>
+                {profile.reviews.map(podcast => podcast._id)}
+            </ul>
+            <button className="btn btn-outline-primary" onClick={handleEditProfile}> Edit Profile</button>
         </div>
     );
 };
