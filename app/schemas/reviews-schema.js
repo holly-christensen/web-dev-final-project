@@ -6,7 +6,8 @@ const reviewsSchema = mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
         },
-        rating: String,
+        username: String,
+        rating: Number,
         title: String,
         body: String,
         datePosted: String
