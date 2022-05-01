@@ -1,4 +1,4 @@
-// star ratings logic inspired by: https://w3collective.com/react-star-rating-component/
+// star ratings logic references this from W3 Collective: https://w3collective.com/react-star-rating-component/
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import {getPodcastEpisodes, getPodcastsById} from "../useRequest";
@@ -11,8 +11,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {createReview, deleteReview} from "../actions/review-actions";
 import SecureContent from "./secure-content";
 import SecureCreatorContent from "./secure-creator-content";
-
-// TODO MAKE SURE WE ARE ADDING THE PODCAST TO OUR DB WHEN WE LIKE OR FOLLOW
 
 
 const PodcastDetails = () => {
@@ -52,8 +50,8 @@ const PodcastDetails = () => {
         useEffect(() => getPodcastInfo(), []);
         useEffect(() => getReviews(), []);
         useEffect(() => getPodcastCreatorIfExists(), []);
-        useEffect( () => {
-                checkIfFollowing(profile.following);
+        useEffect(() => {
+            checkIfFollowing(profile.following);
 
         }, []);
         useEffect(() => getEpisodes(episodesDetails.currentPage), []);
@@ -103,7 +101,6 @@ const PodcastDetails = () => {
             else {
                 let alreadyFollowing = false;
                 userFollowingList.forEach((id) => {
-                    console.log("comparing " + id.podcastId + " and " + pid);
                     if (id.podcastId === pid)
                         alreadyFollowing = true;
                 })
@@ -115,12 +112,10 @@ const PodcastDetails = () => {
 
         const handleFollowOrUnfollow = async () => {
             const isAlreadyFollowing = checkIfFollowing(profile.following);
-            console.log(isAlreadyFollowing)
             if (!isAlreadyFollowing) {
                 // add this podcast to user following list
                 let newUser = profile;
                 newUser.following.push({podcastId: pid});
-                console.log(newUser)
                 await updateUser(newUser)
                 checkIfFollowing(profile.following);
             } else {
@@ -129,7 +124,6 @@ const PodcastDetails = () => {
                 newUser.following = newUser.following.filter((podcast) => {
                     return podcast.podcastId !== pid
                 })
-                console.log(newUser)
                 await updateUser(newUser)
                 checkIfFollowing(profile.following)
             }
@@ -137,16 +131,12 @@ const PodcastDetails = () => {
 
         const createReviewHandler = async () => {
             // add the review to the db
-            console.log(profile._id);
             const review = await createReview(dispatch, reviewContent, pid, profile._id, profile.credentials.username);
-            console.log(review);
             // empty review input
             setReviewContent(initialReviewContent);
             // update user with new review id
             let updatedUser = profile;
-            console.log(review[0]._id);
             updatedUser.reviews.push({_id: review[0]._id});
-            console.log(updatedUser);
             await updateUser(updatedUser);
             await getReviews();
         }
@@ -156,16 +146,10 @@ const PodcastDetails = () => {
             await deleteReview(dispatch, review)
             getReviews();
             // remove the review from the user's list of reviews
-            console.log(review);
-            console.log(review.userId);
             let user = await findUserById(dispatch, {_id: review.userId});
-            console.log(user);
             user.reviews = user.reviews.filter((reviewId) => {
-                console.log('comparing ' + reviewId + " and " + review._id)
                 return reviewId !== review._id
             })
-            console.log(`updated user, removed ${review._id}`)
-            console.log(user);
             await updateUser(user);
         }
 
@@ -191,12 +175,17 @@ const PodcastDetails = () => {
             <>
                 <div className={"container col-9 mt-5"}>
                     <h1>{podcastDetails.title}</h1>
-                    <p>{pid}</p>
+                    {
+                        creatorDetails.username &&
+                        <Link to={`/profile/${creatorDetails.userId}`} className={"text-decoration-none"}>
+                            <h6 className={"my-3"}>{creatorDetails.username}</h6>
+                        </Link>
+                    }
                     <img src={podcastDetails.imageUrl} alt={"Podcast Image"} height={350}/>
                     <p className={"mt-3"}>{podcastDetails.description}</p>
                     <SecureContent>
                         {isFollowing === null &&
-                            <p> </p>}
+                            <p></p>}
                         {(isFollowing && true) &&
                             <div className={"d-flex align-items-baseline"}>
                                 <button className={`btn btn-primary me-2`}
