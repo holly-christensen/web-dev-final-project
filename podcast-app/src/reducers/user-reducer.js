@@ -27,9 +27,10 @@ const usersReducer = (state = initialState.users, action) => {
             return state.filter(
                 user => user._id !== action.user._id);
         case UPDATE_USER:
-            return state.map(
+            const result = state.map(
                 user => user._id === action.user._id ?
                     action.user : user);
+            return result;
         default: {
             return state.users || initialState.users;
         }

@@ -14,6 +14,7 @@ const podcastsSchema = mongoose.Schema({
         imageUrl: String,
         language: String,
         episodes: [{episodeId: String}],
+        followers: [{userId: String}],
         reviews: [{
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Review'

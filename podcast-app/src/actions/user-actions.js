@@ -57,7 +57,6 @@ export const findUserById = async (dispatch, userInput) => {
         type: FIND_USER_BY_ID,
         user
     });
-    console.log(user)
     return user;
 }
 

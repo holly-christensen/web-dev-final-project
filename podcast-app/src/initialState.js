@@ -2,6 +2,7 @@ const initialState = {
     users: [],
     comments: [],
     creators: [],
+    reviews: [],
 }
 
 export default initialState;

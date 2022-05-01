@@ -31,15 +31,11 @@ export const deleteUser = async (user) => {
     return response.data;
 }
 export const updateUser = async (user) => {
-    console.log(user);
     const response = await axios.put(`${USERS_API}/${user._id}`, user);
-    // console.log('service response; '+JSON.stringify(response));
     return response.data;
 }
 
 export const upsertUser = async (user) => {
-    // console.log('upSERTing user: '+user._id+" with: "+JSON.stringify(user.following));
     const response = await axios.put(`${USERS_API}/${user._id}`, user);
-    // console.log('upSERTed service response; '+JSON.stringify(response));
     return response.data;
 }
