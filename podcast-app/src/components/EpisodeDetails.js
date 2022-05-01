@@ -87,7 +87,7 @@ const EpisodeDetails = () => {
 
         const createCommentHandler = async () => {
             // add the comment to the db
-            const response = await createComment(dispatch, commentBody, eid, profile._id, profile.credentials.username);
+            const response = await createComment(dispatch, commentBody, eid, pid, profile._id, profile.credentials.username);
             // empty comment input
             setCommentBody('');
             // update user with new comment id

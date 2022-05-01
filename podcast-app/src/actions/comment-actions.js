@@ -7,11 +7,12 @@ export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const FIND_COMMENTS_BY_EPISODE_ID = 'FIND_COMMENTS_BY_EPISODE_ID';
 
-export const createComment = async (dispatch, commentBody, episodeId, userId, username) => {
+export const createComment = async (dispatch, commentBody, episodeId, podcastId, userId, username) => {
     const newComment = {
         likes: {count: 0, likedBy: []},
         dislikes: {count: 0, dislikedBy: []},
         episodeId: episodeId,
+        podcastId: podcastId,
         userId: userId,
         username: username,
         body: commentBody,
