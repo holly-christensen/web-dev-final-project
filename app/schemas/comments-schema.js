@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const commentsSchema = mongoose.Schema({
         episodeId: String,
+        podcastId: String,
         userId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
