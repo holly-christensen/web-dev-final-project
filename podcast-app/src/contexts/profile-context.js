@@ -3,7 +3,7 @@ import axios from "axios";
 import {useDispatch} from "react-redux";
 import {USER_CONSUMER} from "../user-types";
 import {findCurrentProfile, signupUser} from "../services/user-service";
-import {signUpUser} from "../actions/user-actions";
+import {signUpUser, updateUser} from "../actions/user-actions";
 
 const ProfileContext = React.createContext()
 
