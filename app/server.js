@@ -8,6 +8,7 @@ import userController from "./controller/user-controller.js";
 import commentController from "./controller/comment-controller.js";
 import creatorController from "./controller/creator-controller.js";
 import podcastController from "./controller/podcast-controller.js";
+import reviewController from "./controller/review-controller.js";
 const app = express();
 //const session = require('express-session');
 app.set('trust proxy', 1);
@@ -58,6 +59,7 @@ userController(app);
 commentController(app);
 creatorController(app);
 podcastController(app);
+reviewController(app);
 
 // simple route
 // app.get("/", (req, res) => {

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {useDispatch} from "react-redux";
 import {USER_CONSUMER} from "../user-types";
-import {signupUser} from "../services/user-service";
+import {findCurrentProfile, signupUser} from "../services/user-service";
 import {signUpUser} from "../actions/user-actions";
 
 const ProfileContext = React.createContext()
@@ -27,6 +27,19 @@ export const ProfileProvider = ({children}) => {
             setProfile(response.data)
             return response.data
         } catch (e) {
+            throw e
+        }
+    }
+
+    const checkUserType = async () => {
+        try {
+            const response = await api
+                .post("http://localhost:4000/api/profile")
+            // setProfile(response.data)
+            // console.log(response.data);
+            return response.data.type;
+        } catch (e) {
+            console.log('caught in checkUserType: '+e)
             throw e
         }
     }
@@ -66,7 +79,7 @@ export const ProfileProvider = ({children}) => {
         }
     }
 
-    const value = {signout, signin, profile, signup, checkLoggedIn}
+    const value = {signout, signin, profile, signup, checkLoggedIn, checkUserType}
     return(
         <ProfileContext.Provider value={value}>
             {children}
