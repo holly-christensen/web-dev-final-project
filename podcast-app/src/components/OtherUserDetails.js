@@ -13,19 +13,38 @@ const OtherUserDetails = () => {
 
     //console.log(user)
     console.log(uid)
-    useEffect(() => getUserInfo, [uid]);
+    useEffect(() => getUserInfo(), []);
+
 
     const getUserInfo = async () => {
         console.log("getting user info")
-        const userInfo = await findUserById(dispatch, uid);
-        console.log(userInfo)
-        setViewedUser(userInfo)
+        let result = {}
+        await findUserById(dispatch, {_id: uid}).then(user => setViewedUser(user))
+        // console.log(userInfo)
+        // console.log(result)
+        // setViewedUser(userInfo)
+        // return userInfo
+    }
+
+    const userId = {_id: uid}
+
+    function RenderComponent() {
+        //const info = getUserInfo()
+        //console.log(info)
+        console.log("in render component")
+        return (
+            <div>
+                <h1>Other User</h1>
+                {viewedUser && <UserDetails user={viewedUser}></UserDetails>}
+            </div>
+        );
     }
 
     console.log(viewedUser)
     return(
         <div>
-            {viewedUser.email && <UserDetails user={viewedUser}></UserDetails>}
+            {/*{viewedUser.email}*/}
+            <RenderComponent/>
         </div>
     );
 };
