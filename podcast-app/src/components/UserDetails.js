@@ -29,23 +29,20 @@ const UserDetails = (user) => {
     const getAllFollowingInfo = async () => {
         console.log("in get all following info")
         console.log(user.user.following)
-        user.user.following.map(async podcast =>
-            await getPodcastInfo(podcast).then(foundPodcast => setFollowing([...following, foundPodcast])))
+        let followedPodcasts = []
+        await Promise.all(user.user.following.map(async podcast =>
+            await getPodcastInfo(podcast).then(foundPodcast => followedPodcasts.push(foundPodcast))))
+        setFollowing(followedPodcasts)
     }
 
     const getAllCommentInfo = async () => {
         console.log("in get all comment info")
         console.log(user.user.comments)
         const results = []
-        user.user.comments.map(comment => {
-                getCommentInfo(comment).then(com => results.push(com))
-                })
+        await Promise.all(user.user.comments.map(comment => {
+                    getCommentInfo(comment).then(com => results.push(com))}))
+        setComments(results)
         //results.push(result)
-        console.log(results)
-        results.map(result => console.log(result))
-        //setComments([...results])
-        console.log(comments)
-        return results;
         // console.log(commentsInfo)
         // //setComments(commentsInfo)
         // return commentsInfo;
@@ -53,8 +50,10 @@ const UserDetails = (user) => {
     }
 
     const getAllReviewInfo = async () => {
-        user.user.reviews.map(async review =>
-            await getReviewInfo(review).then(foundReview => setReviews([...reviews, foundReview])))
+        const results = []
+        await Promise.all(user.user.reviews.map(async review =>
+            await getReviewInfo(review).then(foundReview => setReviews([...reviews, foundReview]))))
+        setReviews(results)
     }
 
     //useEffect(() => getUserInfo(), []);
@@ -69,25 +68,13 @@ const UserDetails = (user) => {
     // function get all comment details and set the state
 
     const getPodcastInfo = async (podcast) => {
-        console.log("In get podcast info!!")
-        console.log(podcast)
-        //const podcastInfo = await findPodcastByPodchaserId(podcast.podcastId);
         const podcastInfo = await getPodcastsById(podcast.podcastId);
-        console.log("got podcast info")
-        console.log(podcastInfo)
         return podcastInfo.podcast;
     }
 
     const getCommentInfo = async (comment) => {
-
         let commentDetails = {_id: comment}
         const commentInfo = await findCommentById(dispatch, commentDetails)
-        console.log("comments!!!")
-        console.log(commentInfo)
-        console.log(comments)
-        //setComments([...comments, commentInfo])
-        console.log("got comment info")
-        console.log(commentInfo)
         return commentInfo;
     }
 
@@ -113,20 +100,16 @@ const UserDetails = (user) => {
             <p><strong>Email: </strong> {profile.email}</p>
             <p><strong>Phone Number: </strong> {profile.phoneNumber}</p>
             <h4>Following</h4>
+            <ul>
                 {following.map((podcast) => {
-                    //console.log('rendering comment')
-                    //const commentInfo = getCommentInfo(comment)
-                    //console.log(commentInfo)
                     return (
                         <li key={podcast._id}>
                             <Link to={`/podcasts/details/${podcast.id}`}>{podcast.title}</Link>
                         </li>)})}
+            </ul>
             <h4>Comments</h4>
             <ul>
                 {comments.map((comment) => {
-                    //console.log('rendering comment')
-                    //const commentInfo = getCommentInfo(comment)
-                    //console.log(commentInfo)
                     return (
                         <li key={comment._id}>
                             <div>{comment.body}</div>
@@ -135,9 +118,6 @@ const UserDetails = (user) => {
             <h4>Reviews</h4>
             <ul>
                 {reviews.map((review) => {
-                    //console.log('rendering comment')
-                    //const commentInfo = getCommentInfo(comment)
-                    //console.log(commentInfo)
                     return (
                         <li key={review._id}>
                             <div>{review.title}</div>
