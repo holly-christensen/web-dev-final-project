@@ -55,6 +55,7 @@ export const findUserById = async (dispatch, userId) => {
         type: FIND_USER_BY_ID,
         user
     });
+    return user;
 }
 
 export const updateUser = async (dispatch, user) => {

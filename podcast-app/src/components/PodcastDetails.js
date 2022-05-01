@@ -2,14 +2,17 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import {getPodcastEpisodes, getPodcastsById} from "../useRequest";
-// import {updateUser} from "../services/user-service";
-import {updateUser} from "../actions/user-actions";
+import {updateUser} from "../services/user-service";
+import {findUserById} from "../actions/user-actions";
 import {findReviewsByPodcastId} from "../services/review-service.js";
 import {useProfile} from "../contexts/profile-context";
 import {findAllCreators} from "../services/creator-service";
 import {useDispatch, useSelector} from "react-redux";
-import {createReview, updateReview} from "../actions/review-actions";
+import {createReview, deleteReview} from "../actions/review-actions";
 import SecureContent from "./secure-content";
+import SecureCreatorContent from "./secure-creator-content";
+
+// TODO MAKE SURE WE ARE ADDING THE PODCAST TO OUR DB WHEN WE LIKE OR FOLLOW
 
 
 const PodcastDetails = () => {
@@ -98,30 +101,49 @@ const PodcastDetails = () => {
                 // add this podcast to user following list
                 let newUser = profile;
                 newUser.following.push({podcastId: pid});
-                const userResult = await updateUser(dispatch, newUser)
+                const userResult = await updateUser(newUser)
             } else {
                 // remove this podcast from user following list
                 let newUser = profile;
                 newUser.following = newUser.following.filter((podcast) => {
                     return podcast.podcastId !== pid
                 })
-                const userResult = await updateUser(dispatch, newUser)
+                const userResult = await updateUser(newUser)
             }
         }
 
         const createReviewHandler = async () => {
             // add the review to the db
             console.log(profile._id);
-            const response = await createReview(dispatch, reviewContent, pid, profile._id, profile.credentials.username);
+            const review = await createReview(dispatch, reviewContent, pid, profile._id, profile.credentials.username);
+            console.log(review);
             // empty review input
             setReviewContent(initialReviewContent);
             // update user with new review id
             let updatedUser = profile;
-            console.log(response[0]._id);
-            updatedUser.reviews.push({_id: response[0]._id});
+            console.log(review[0]._id);
+            updatedUser.reviews.push({_id: review[0]._id});
             console.log(updatedUser);
-            const newUser = await updateUser(dispatch, updatedUser);
+            await updateUser(updatedUser);
             await getReviews();
+        }
+
+        const deleteReviewHandler = async (review) => {
+            // remove the review from the db
+            await deleteReview(dispatch, review)
+            getReviews();
+            // remove the review from the user's list of reviews
+            console.log(review);
+            console.log(review.userId);
+            let user = await findUserById(dispatch, {_id: review.userId});
+            console.log(user);
+            user.reviews = user.reviews.filter((reviewId)=> {
+                console.log('comparing '+reviewId+" and "+review._id)
+                return reviewId !== review._id
+            })
+            console.log(`updated user, removed ${review._id}`)
+            console.log(user);
+            await updateUser(user);
         }
 
         const getPodcastCreatorIfExists = async () => {
@@ -247,6 +269,12 @@ const PodcastDetails = () => {
                             {
                                 reviews.map(review =>
                                     <li className="list-group-item  align-items-start" key={review._id}>
+                                        <SecureCreatorContent>
+                                            <i
+                                                className="fa fas fa-trash float-end p-2"
+                                                onClick={() => deleteReviewHandler(review)}
+                                            > </i>
+                                        </SecureCreatorContent>
                                         <div className="d-flex align-items-center text-decoration-none">
                                             <div className="ms-3">
 
@@ -260,7 +288,7 @@ const PodcastDetails = () => {
                                                 <div className="text-warning mb-1">
                                                     <div>
                                                         {[...Array(review.rating)].map((star, index) => {
-                                                            index += 1; // to help create unique ids
+                                                            index += 1; // to create unique ids
                                                             return (
                                                                 <i className="fa fa-solid fa-star p-1" key={index}> </i>
                                                             );

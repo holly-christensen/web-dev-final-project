@@ -37,4 +37,12 @@
   }
 }
 
+.fa-trash {
+  color: #6c757d;
+}
+
+.fa-trash:hover {
+  color: #DC3545;
+}
+
 

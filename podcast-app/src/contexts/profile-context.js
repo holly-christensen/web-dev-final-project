@@ -35,8 +35,8 @@ export const ProfileProvider = ({children}) => {
         try {
             const response = await api
                 .post("http://localhost:4000/api/profile")
-            setProfile(response.data)
-            console.log(response.data);
+            // setProfile(response.data)
+            // console.log(response.data);
             return response.data.type;
         } catch (e) {
             console.log('caught in checkUserType')
