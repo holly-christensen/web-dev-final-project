@@ -45,4 +45,8 @@
   color: #DC3545;
 }
 
+li {
+  list-style-type: none;
+}
+
 
