@@ -1,12 +1,22 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
+import {getPodcastsById} from "../useRequest";
+import {findPodcastById} from "../services/podcast-service";
 
 const UserDetails = (user) => {
+    console.log("in user details")
     const navigate = useNavigate()
     const handleEditProfile = () => {
         navigate('/edit-profile')
     }
 
+    const getPodcastInfo = async (pid) => {
+        console.log(pid)
+        const podcastInfo = await findPodcastById(pid);
+        console.log("got podcast info")
+        console.log(podcastInfo)
+        return podcastInfo;
+    }
 
     const profile = user.user
     console.log(profile.following)
@@ -19,7 +29,7 @@ const UserDetails = (user) => {
             <p><strong>Phone Number: </strong> {profile.phoneNumber}</p>
             <h4>Following</h4>
             <ul>
-                {profile.following.map(podcast => podcast._id)}
+                {profile.following.map(podcast => getPodcastInfo(podcast.podcastId).title)}
             </ul>
             <h4>Comments</h4>
             <ul>

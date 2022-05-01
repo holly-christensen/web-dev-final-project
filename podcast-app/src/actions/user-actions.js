@@ -51,11 +51,15 @@ export const findAllUsers = async (dispatch) => {
     });
 }
 export const findUserById = async (dispatch, userId) => {
+    console.log("in here")
+    console.log(userId)
     const user = await service.findUserById(userId);
     dispatch({
         type: FIND_USER_BY_ID,
         user
     });
+    console.log(user)
+    return user;
 }
 
 export const updateUser = async (dispatch, user) => {

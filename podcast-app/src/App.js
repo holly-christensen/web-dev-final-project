@@ -18,6 +18,7 @@ import {ProfileProvider} from "./contexts/profile-context";
 import SecureRoute from "./components/secure-route";
 import EditProfile from "./components/EditProfile";
 import CreatorSignUp from "./components/CreatorSignUp";
+import OtherUserDetails from "./components/OtherUserDetails";
 
 function App() {
     return (
@@ -46,6 +47,7 @@ function App() {
                             <Route path="podcasts/:searchString" element={<Search/>}/>
                             <Route path="podcasts/details/:pid" element={<PodcastDetails/>}/>
                             <Route path="podcasts/details/:pid/:eid" element={<EpisodeDetails/>}/>
+                            <Route path="profile/:uid" element={<OtherUserDetails/>}/>
                             <Route path="podcasts/details/:pid/creator/:cid" element={
                                 <SecureRoute>
                                    <CreatorProfile/>
