@@ -50,16 +50,15 @@ export const findAllUsers = async (dispatch) => {
         users
     });
 }
-export const findUserById = async (dispatch, userId) => {
+export const findUserById = async (dispatch, user) => {
     console.log("in here")
-    console.log(userId)
-    const user = await service.findUserById(userId);
+    const foundUser = await service.findUserById(user);
     dispatch({
         type: FIND_USER_BY_ID,
-        user
+        foundUser
     });
-    console.log(user)
-    return user;
+    console.log(foundUser)
+    return foundUser;
 }
 
 export const updateUser = async (dispatch, user) => {

@@ -18,8 +18,8 @@ export const findAllUsers = async () => {
     return users;
 }
 
-export const findUserById = async (userId) => {
-    const response = await axios.get(`${USERS_API}/${userId}`);
+export const findUserById = async (user) => {
+    const response = await axios.get(`${USERS_API}/${user._id}`, user);
     const users = response.data;
     console.log(users)
     return users;

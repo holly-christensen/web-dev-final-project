@@ -107,6 +107,12 @@ const EditProfile = () => {
                                                defaultValue={profile.phoneNumber}
                                                type="text"
                                                className="form-control"/></label>
+                    <br></br>
+                    {/*{profile.type === "USER_CREATOR" && <label>Fun Fact*/}
+                    {/*    <input ref={phoneRef}*/}
+                    {/*           defaultValue={profile.phoneNumber}*/}
+                    {/*           type="text"*/}
+                    {/*           className="form-control"/></label>}*/}
                     <br></br><br></br>
                     {profile.type === "USER_CONSUMER" &&
                         <p>Are you a creator? Register
