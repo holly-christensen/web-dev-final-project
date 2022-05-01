@@ -53,6 +53,7 @@ const EpisodeDetails = () => {
             setComments(comments);
         }
 
+        // TODO COMMENTED FOR NOW, IMPLEMENT/DEBUG IF TIME
         // method to find comments that are liked by this user and add them to the state
         // const getCommentsLikedByThisUser = () => {
         //     let likedCommentIds = [];

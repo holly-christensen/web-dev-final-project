@@ -39,7 +39,7 @@ export const ProfileProvider = ({children}) => {
             // console.log(response.data);
             return response.data.type;
         } catch (e) {
-            console.log('caught in checkUserType')
+            console.log('caught in checkUserType: '+e)
             throw e
         }
     }
