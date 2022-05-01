@@ -27,6 +27,7 @@ const PodcastDetails = () => {
             episodes: [],
             currentPage: 0,
             nextPage: 1,
+            hasMorePages: false,
         }
 
         const initialReviewContent = {
@@ -42,6 +43,7 @@ const PodcastDetails = () => {
         let [creatorDetails, setCreatorDetails] = useState({username: null, _id: null});
         let [reviews, setReviews] = useState(reviewsFromState);
         let [reviewContent, setReviewContent] = useState(initialReviewContent)
+        let [isFollowing, setIsFollowing] = useState(null)
 
         let {profile} = useProfile();
         const {pid} = useParams();
@@ -50,7 +52,11 @@ const PodcastDetails = () => {
         useEffect(() => getPodcastInfo(), []);
         useEffect(() => getReviews(), []);
         useEffect(() => getPodcastCreatorIfExists(), []);
-        // useEffect(() => getEpisodes(episodesDetails.currentPage), []);
+        useEffect( () => {
+                checkIfFollowing(profile.following);
+
+        }, []);
+        useEffect(() => getEpisodes(episodesDetails.currentPage), []);
 
         const getPodcastInfo = async () => {
             const podcastInfo = await getPodcastsById(pid);
@@ -70,6 +76,7 @@ const PodcastDetails = () => {
                 episodes: episodes,
                 currentPage: response.podcast.episodes.paginatorInfo.currentPage,
                 nextPage: response.podcast.episodes.paginatorInfo.currentPage + 1,
+                hasMorePages: response.podcast.episodes.paginatorInfo.hasMorePages
             })
         }
 
@@ -86,29 +93,45 @@ const PodcastDetails = () => {
             return `${month} ${day}, ${year}`;
         }
 
-        const checkIfAlreadyFollowing = (userFollowingList) => {
-            let alreadyFollowing = false;
-            userFollowingList.forEach((id) => {
-                if (id.podcastId === pid)
-                    alreadyFollowing = true;
-            })
-            return alreadyFollowing;
+        const checkIfFollowing = (userFollowingList) => {
+            // if the list is not defined, make null
+            if (userFollowingList === undefined) {
+                setIsFollowing(null);
+                return null;
+            }
+            // else set the state to whether or not the podcast is in the list
+            else {
+                let alreadyFollowing = false;
+                userFollowingList.forEach((id) => {
+                    console.log("comparing " + id.podcastId + " and " + pid);
+                    if (id.podcastId === pid)
+                        alreadyFollowing = true;
+                })
+
+                setIsFollowing(alreadyFollowing);
+                return alreadyFollowing;
+            }
         }
 
         const handleFollowOrUnfollow = async () => {
-            const isAlreadyFollowing = checkIfAlreadyFollowing(profile.following);
+            const isAlreadyFollowing = checkIfFollowing(profile.following);
+            console.log(isAlreadyFollowing)
             if (!isAlreadyFollowing) {
                 // add this podcast to user following list
                 let newUser = profile;
                 newUser.following.push({podcastId: pid});
-                const userResult = await updateUser(newUser)
+                console.log(newUser)
+                await updateUser(newUser)
+                checkIfFollowing(profile.following);
             } else {
                 // remove this podcast from user following list
                 let newUser = profile;
                 newUser.following = newUser.following.filter((podcast) => {
                     return podcast.podcastId !== pid
                 })
-                const userResult = await updateUser(newUser)
+                console.log(newUser)
+                await updateUser(newUser)
+                checkIfFollowing(profile.following)
             }
         }
 
@@ -137,8 +160,8 @@ const PodcastDetails = () => {
             console.log(review.userId);
             let user = await findUserById(dispatch, {_id: review.userId});
             console.log(user);
-            user.reviews = user.reviews.filter((reviewId)=> {
-                console.log('comparing '+reviewId+" and "+review._id)
+            user.reviews = user.reviews.filter((reviewId) => {
+                console.log('comparing ' + reviewId + " and " + review._id)
                 return reviewId !== review._id
             })
             console.log(`updated user, removed ${review._id}`)
@@ -164,16 +187,6 @@ const PodcastDetails = () => {
             return podcastCreator;
         }
 
-        // const numberRatingToStars = (number) => {
-        //     console.log('stars');
-        //     let stars = [];
-        //     for(let i=0; i<number; i++){
-        //         stars.push(<i className="fa fa-solid fa-star"> </i>);
-        //     }
-        //     return stars;
-        // }
-
-
         return (
             <>
                 <div className={"container col-9 mt-5"}>
@@ -182,9 +195,22 @@ const PodcastDetails = () => {
                     <img src={podcastDetails.imageUrl} alt={"Podcast Image"} height={350}/>
                     <p className={"mt-3"}>{podcastDetails.description}</p>
                     <SecureContent>
-                        <button className={`me-2 text-muted`}
-                                onClick={() => handleFollowOrUnfollow()}>Follow/Un
-                        </button>
+                        {isFollowing === null &&
+                            <p> </p>}
+                        {(isFollowing && true) &&
+                            <div className={"d-flex align-items-baseline"}>
+                                <button className={`btn btn-primary me-2`}
+                                        onClick={() => handleFollowOrUnfollow()}>Unfollow
+                                </button>
+                                <p className={"text-muted"}>Following</p>
+                            </div>}
+                        {(!isFollowing && (isFollowing !== null)) &&
+                            <div className={"d-flex align-items-baseline"}>
+                                <button className={`btn btn-outline-primary me-2`}
+                                        onClick={() => handleFollowOrUnfollow()}>Follow
+                                </button>
+                                <p className={"text-muted"}>Not following</p>
+                            </div>}
                     </SecureContent>
                     <div>
                         <h3 className={"mt-5"}>Episodes</h3>
@@ -203,12 +229,13 @@ const PodcastDetails = () => {
                                 )
                             }
                         </ul>
-                        <button
+                        {episodesDetails.hasMorePages && <button
                             onClick={() => {
                                 getEpisodes(episodesDetails.nextPage)
                             }}
+                            className={"btn btn-outline-secondary"}
                         >Show More
-                        </button>
+                        </button>}
                     </div>
                     <div>
                         {/*   REVIEWS   */}
