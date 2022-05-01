@@ -16,11 +16,6 @@ const UserDetails = (user) => {
     let [comments, setComments] = useState([])
     let [reviews, setReviews] = useState([])
 
-    const handleEditProfile = () => {
-        navigate('/edit-profile')
-    }
-
-
     // const getUserInfo = async () => {
     //     console.log("getting user info")
     //     let result = {}
@@ -40,7 +35,6 @@ const UserDetails = (user) => {
 
     const getAllCommentInfo = async () => {
         console.log("in get all comment info")
-        debugger
         console.log(user.user.comments)
         const results = []
         user.user.comments.map(comment => {
@@ -113,7 +107,7 @@ const UserDetails = (user) => {
     //console.log(user)
     return (
         <div>
-            <h1>{JSON.stringify(comments)}</h1>
+            {/*<h1>{JSON.stringify(comments)}</h1>*/}
             <h3>User Information</h3>
             <p><strong>{profile.firstName} {profile.lastName}</strong></p>
             <p><strong>Email: </strong> {profile.email}</p>
@@ -149,7 +143,6 @@ const UserDetails = (user) => {
                             <div>{review.title}</div>
                         </li>)})}
             </ul>
-            <button className="btn btn-outline-primary" onClick={handleEditProfile}> Edit Profile</button>
         </div>
     );
 };

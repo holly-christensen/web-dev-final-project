@@ -4,47 +4,33 @@ import {useDispatch, useSelector} from "react-redux";
 import {findAllUsers, findUserById} from "../actions/user-actions";
 import {getEpisodesById} from "../useRequest";
 import UserDetails from "./UserDetails";
+import UserProfile from "./UserProfile";
+import CreatorDetails from "./CreatorDetails";
 
 const OtherUserDetails = () => {
     let {uid} = useParams();
-    //const users = useSelector((state) => state.users);
     const dispatch = useDispatch();
     let [viewedUser, setViewedUser] = useState({})
 
-    //console.log(user)
-    console.log(uid)
-    useEffect(() => getUserInfo(), []);
-
+    useEffect(() => getUserInfo().then(user => setViewedUser(user)), []);
 
     const getUserInfo = async () => {
-        console.log("getting user info")
-        let result = {}
-        await findUserById(dispatch, {_id: uid}).then(user => setViewedUser(user))
-        // console.log(userInfo)
-        // console.log(result)
-        // setViewedUser(userInfo)
-        // return userInfo
-    }
-
-    const userId = {_id: uid}
-
-    function RenderComponent() {
-        //const info = getUserInfo()
-        //console.log(info)
-        console.log("in render component")
-        return (
-            <div>
-                <h1>Other User</h1>
-                {viewedUser && <UserDetails user={viewedUser}></UserDetails>}
-            </div>
-        );
+        const res =  await findUserById(dispatch, {_id: uid})
+        return res;
     }
 
     console.log(viewedUser)
     return(
         <div>
-            {/*{viewedUser.email}*/}
-            <RenderComponent/>
+            <div> {viewedUser.credentials && <div>
+                <h1>{viewedUser.credentials.username}
+                    {viewedUser.type === "USER_CREATOR" && <i className={`fa fa-check-circle ms-2`}/>}</h1>
+                {viewedUser.profileImg}
+                {viewedUser.type === "USER_CREATOR" && <CreatorDetails user={viewedUser}></CreatorDetails>}
+                <UserDetails user={viewedUser}></UserDetails>
+            </div>
+            }
+            </div>
         </div>
     );
 };
