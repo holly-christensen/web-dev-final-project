@@ -54,6 +54,7 @@ export const ProfileProvider = ({children}) => {
         console.log(response)
         setProfile(response)
     }
+
     const signup = async (username, email, password, firstname, lastname, phonenumber) => {
         const userDetails = {
             credentials: {

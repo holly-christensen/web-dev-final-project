@@ -18,9 +18,10 @@ const Nav = () => {
                 <Link to="podcasts" className="nav-item nav-link">
                     Search
                 </Link>
-                <Link to="profile" className="nav-item nav-link">
-                    Profile
-                </Link>
+                {signedIn &&
+                    <Link to="profile" className="nav-item nav-link">
+                        Profile
+                    </Link>}
                 {signedIn &&
                     <Link to="signOut" className="nav-item nav-link">
                         Sign Out
