@@ -51,7 +51,9 @@ const PodcastDetails = () => {
         useEffect(() => getReviews(), []);
         useEffect(() => getPodcastCreatorIfExists(), []);
         useEffect(() => {
-            checkIfFollowing(profile.following);
+            if(profile !== null){
+                checkIfFollowing(profile.following);
+            }
 
         }, []);
         useEffect(() => getEpisodes(episodesDetails.currentPage), []);
