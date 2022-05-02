@@ -16,11 +16,12 @@ const Signup = () => {
     const {signup} = useProfile()
     const handleSignupBtn = async () => {
         try {
-            // TODO: move this to user-service.js or auth-service.js
-            // await api.post("http://localhost:4000/api/signup", {
-            //   email: emailRef.current.value,
-            //   password: passwordRef.current.value
-            // })
+            if (usernameRef.current.value.length == 0
+                || emailRef.current.value.length == 0 ||
+                passwordRef.current.value.length == 0) {
+                alert("signup failed - missing required field(s)")
+                return;
+            }
             await signup(
                 usernameRef.current.value,
                 emailRef.current.value,
@@ -29,6 +30,7 @@ const Signup = () => {
                 lastRef.current.value,
                 phoneRef.current.value
             )
+            console.log("signed up")
             navigate('/profile')
         } catch (e) {
             alert(e)

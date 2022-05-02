@@ -6,6 +6,11 @@ const findAllCreators = () => {
 const findCreatorById = (id) => {
     return creatorsModel.findById(id)
 }
+
+const findCreatorByUserId = (userId) => {
+    return creatorsModel.findOne({"userId": userId})
+}
+
 const createCreator = (creator) => {
     return creatorsModel.create(creator)
 }
@@ -21,5 +26,5 @@ const updateCreator = (id, updatedCreator) => {
 
 export default {
     findAllCreators, findCreatorById, createCreator, deleteCreator,
-    updateCreator
+    updateCreator, findCreatorByUserId
 }

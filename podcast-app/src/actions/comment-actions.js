@@ -45,6 +45,7 @@ export const findCommentById = async (dispatch, commentId) => {
         type: FIND_COMMENT_BY_ID,
         comment
     });
+    return comment;
 }
 
 export const updateComment = async (dispatch, comment) => {

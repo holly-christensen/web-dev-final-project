@@ -1,178 +1,157 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {findAllCreators, createCreator} from "../actions/creator-actions";
-import {getPodcastsBySearchTerm,} from "../useRequest";
+import React, {useCallback, useRef, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {createCreator} from "../actions/creator-actions";
+import {useProfile} from "../contexts/profile-context";
+import {getPodcastsBySearchTerm} from "../useRequest";
+import {updateUser} from "../services/user-service";
+import userProfile from "./UserProfile";
+import {useNavigate} from "react-router-dom";
 
 const CreatorSignUp = () => {
+    let {profile, signout, upgradeUserToCreator, checkLoggedIn} = useProfile()
 
-        const initialCreatorDetails = {
-            userId: "12345",
-            podcastId: "",
-            podcastName: "",
-            funFact: "",
-            boringFact: "",
-        }
-
-        const initialUserDetails = {
-            username: "",
-            password: "",
-        }
-
-        const initialErrors = {
-            credentialsError: "",
-            serverError: "",
-        }
-
-        const initialPodcastSearchDetails = {
-            results: [],
-            status: "",
-            errorMsg: "",
-            selectedPodcastId: "",
-        }
-
-        let [creatorDetails, setCreatorDetails] = useState(initialCreatorDetails);
-        let [userDetails, setUserDetails] = useState(initialUserDetails);
-        let [errors, setErrors] = useState(initialErrors);
-        let [podcastSearchDetails, setPodcastSearchDetails] = useState(initialPodcastSearchDetails);
-        // TODO i was checking to see if all the necessary inputs were filled before making a creator but it was buggy so i'm temporarily disabling it
-        // let [submitIsDisabled, setSubmitIsDisabled] = useState(true)
-
-        const creators = useSelector((state) => state.creators);
-
-        const dispatch = useDispatch();
-
-        const createCreatorHandler = () => {
-            createCreator(dispatch, creatorDetails)
-                .then(r => setCreatorDetails(initialCreatorDetails));
-        }
-
-        const handleCreatorInputChange = (event) => {
-            const value = event.target.value;
-            setCreatorDetails({
-                ...creatorDetails,
-                [event.target.name]: value
-            });
-        }
-
-        const handleUserInputChange = (event) => {
-            const value = event.target.value;
-            setUserDetails({
-                ...userDetails,
-                [event.target.name]: value
-            });
-            // checkIfSubmitIsValid();
-        }
-
-        const handleRadioOnChange = (result) => {
-            setCreatorDetails({
-                ...creatorDetails,
-                podcastId: result.id,
-                podcastName: result.title
-            })
-            checkIfSubmitIsValid();
-        }
-
-        const checkIfSubmitIsValid = () => {
-            if (userDetails.username
-                && userDetails.password
-                && creatorDetails.podcastName
-                && creatorDetails.podcastId
-                && creatorDetails.userId) {
-
-                setSubmitIsDisabled(false)
-            } else {
-                setSubmitIsDisabled(true);
-            }
-        }
-
-// PODCHASER REQUEST
-        const [isSending, setIsSending] = useState(false)
-        const isMounted = useRef(true)
-
-// set isMounted to false when we unmount the component
-        useEffect(() => {
-            return () => {
-                isMounted.current = false
-            }
-        }, [])
-
-        const sendRequest = useCallback(async () => {
-            if (isSending) return
-            setIsSending(true)
-
-            const result = await getPodcastsBySearchTerm(creatorDetails.podcastName);
-            setPodcastSearchDetails({...podcastSearchDetails, results: result.podcasts.data})
-
-            // once the request is sent, update state again
-            if (isMounted.current) // only update if we are still mounted
-                setIsSending(false)
-        }, [isSending, creatorDetails.podcastName]) // update the callback if the state changes
-        // TODO i don't think creatorDetails.podcastName should be a dependency here because it is updated on every keypress
-
-        return (
-            <div>
-                <h1>Creator Sign Up</h1>
-                <p>You must already have a User account to become a creator. Create a User account <a>here</a>.</p>
-                <ul>
-                    {/*{JSON.stringify(creators)}*/}
-                </ul>
-                <h2>Become a Creator</h2>
-                <div>{JSON.stringify(creatorDetails)}</div>
-
-                <p>Enter the username and password for your existing User account.</p>
-                <label>Username
-                    <input
-                        value={creatorDetails.username}
-                        name={"username"}
-                        onChange={handleUserInputChange}>
-                    </input>
-                </label>
-                <br/>
-                <label>Password
-                    <input value={creatorDetails.password}
-                           name={"password"}
-                           type={"password"}
-                           onChange={handleUserInputChange}>
-                    </input>
-                </label>
-                <br/>
-
-                <p>Find the podcast that you are a creator for</p>
-                <label>Podcast Name
-                    <input
-                        value={creatorDetails.podcastName}
-                        name={"podcastName"}
-                        onChange={handleCreatorInputChange}>
-                    </input>
-                </label>
-                <button
-                    onClick={sendRequest}
-                >
-                    Find Podcast
-                </button>
-                <div>
-                    {podcastSearchDetails.results.map((result) => {
-                        return (
-                            <div
-                                key={result.id}
-                            >
-                                <input
-                                    onChange={() => {
-                                        handleRadioOnChange(result)
-                                    }}
-                                    type={"radio"}
-                                    value={result.id}
-                                    name={"results"}/>
-                                {result.title}</div>)
-                    })}
-                </div>
-                <br/>
-                <button onClick={createCreatorHandler}>
-                    Submit
-                </button>
-            </div>
-        );
+    const initialPodcastSearchDetails = {
+        results: [],
+        status: "",
+        errorMsg: "",
+        selectedPodcastId: "",
     }
-;
+
+    const initialCreatorDetails = {
+        userId: profile._id,
+        podcastId: "",
+        podcastName: "",
+        funFact: "",
+        boringFact: "",
+    }
+
+    const navigate = useNavigate()
+
+    const searchRef = useRef()
+    const funFactRef = useRef()
+    const boringFactRef = useRef()
+    let [searchTerm, setSearchTerm] = useState('')
+    let [creatorDetails, setCreatorDetails] = useState(initialCreatorDetails);
+    let [podcastSearchDetails, setPodcastSearchDetails] = useState(initialPodcastSearchDetails);
+
+    const creators = useSelector((state) => state.creators);
+
+    const dispatch = useDispatch();
+
+    const sendRequest = useCallback(async () => {
+        // if (isSending) return
+        // setIsSending(true)
+
+        setSearchTerm(searchRef.current.value)
+        const result = await getPodcastsBySearchTerm(searchRef.current.value);
+        console.log(result)
+        setPodcastSearchDetails({...podcastSearchDetails, results: result.podcasts.data})
+
+        // once the request is sent, update state again
+        // if (isMounted.current) // only update if we are still mounted
+        //     setIsSending(false)
+    }, []) // update the callback if the state changes
+
+    const updateUserToCreator = () => {
+        const updatedUser = {
+            ...profile,
+            type: "USER_CREATOR"
+        }
+        updateUser(updatedUser).then(r => profile = r)
+    }
+
+    const createCreatorHandler = async () => {
+        const details = {
+            ...creatorDetails,
+            funFact: funFactRef.current.value,
+            boringFact: boringFactRef.current.value,
+            userId: profile._id,
+            username: profile.credentials.username
+        }
+        console.log("creating creator")
+        console.log(details)
+        createCreator(dispatch, details)
+            .then(r => setCreatorDetails(details));
+        //updateUserToCreator()
+       // await upgradeUserToCreator()
+        updateUserToCreator()
+
+        //await checkLoggedIn()
+        navigate('/profile')
+    }
+
+    const handleRadioOnChange = (result) => {
+        setCreatorDetails({
+            ...creatorDetails,
+            podcastId: result.id,
+            podcastName: result.title
+        })
+        //checkIfSubmitIsValid();
+    }
+
+
+    return(
+        <div>
+            <h1>Creator Sign Up</h1>
+            <div className="row">
+                <div className="col-9">
+                    <label>Fun Fact
+                        <input ref={funFactRef}
+                               placeholder="fun fact"
+                               type="text"
+                               className="form-control"/>
+                    </label>
+                    <br></br>
+                    <label>Boring Fact
+                        <input ref={boringFactRef}
+                               placeholder="boring fact"
+                               type="text"
+                               className="form-control"/>
+                    </label>
+                    <br></br> <br></br>
+                    <p>Find the podcast that you are a creator for</p>
+                    <label>Podcast Name
+                        <input ref={searchRef}
+                               defaultValue={searchTerm}
+                               name={"podcastName"}>
+                        </input>
+                    </label>
+                    <button
+                        onClick={sendRequest}>
+                        Find Podcast
+                    </button>
+                    <div>
+                        {podcastSearchDetails.results.map((result) => {
+                            return (
+                                <div key={result.id}>
+                                    <input
+                                        onChange={() => {
+                                            handleRadioOnChange(result)
+                                        }}
+                                        type={"radio"}
+                                        value={result.id}
+                                        name={"results"}/>
+                                    <div className="row">
+                                        <img className="col-2" src={result.imageUrl}/>
+                                        <div className="col-10">
+                                            <strong>{result.title}</strong>
+                                            <p>{result.description}</p>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                </div>)
+                        })}
+                    </div>
+                </div>
+                <div className="col-1">
+                    {creatorDetails.podcastId &&
+                        <div>
+                            <button className="btn btn-primary" onClick={createCreatorHandler}>Register</button>
+                        </div>}
+                </div>
+            </div>
+        </div>
+    );
+}
 
 export default CreatorSignUp;

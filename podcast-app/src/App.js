@@ -16,6 +16,9 @@ import SignOut from "./components/SignOut";
 import Nav from "./components/Nav";
 import {ProfileProvider} from "./contexts/profile-context";
 import SecureRoute from "./components/secure-route";
+import EditProfile from "./components/EditProfile";
+import CreatorSignUp from "./components/CreatorSignUp";
+import OtherUserDetails from "./components/OtherUserDetails";
 
 function App() {
     return (
@@ -31,13 +34,20 @@ function App() {
                                     <UserProfile/>
                                 </SecureRoute>
                             }/>
+                            <Route path="/edit-profile" element={
+                                <SecureRoute>
+                                    <EditProfile/>
+                                </SecureRoute>
+                            }/>
                             <Route path="/signin" element={<SignIn/>}/>
                             <Route path="/signup" element={<SignUp/>}/>
                             <Route path="/signout" element={<SignOut/>}/>
                             <Route path="/podcasts" element={<Search/>}/>
+                            <Route path="/creator-signup" element={<CreatorSignUp/>}/>
                             <Route path="podcasts/:searchString" element={<Search/>}/>
                             <Route path="podcasts/details/:pid" element={<PodcastDetails/>}/>
                             <Route path="podcasts/details/:pid/:eid" element={<EpisodeDetails/>}/>
+                            <Route path="profile/:uid" element={<OtherUserDetails/>}/>
                             <Route path="podcasts/details/:pid/creator/:cid" element={
                                 <SecureRoute>
                                    <CreatorProfile/>
