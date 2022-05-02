@@ -36,7 +36,6 @@ const Homepage = () => {
     const getTrendingPodcasts = async () => {
         // const trendingPods = await getPodcastsByCategoryAndRating("Cats");
         const trendingPods = await getPodcastsBySearchTerm("Cats");
-        console.log(trendingPods);
         setTrendingPodcasts(trendingPods.podcasts.data);
     }
 
