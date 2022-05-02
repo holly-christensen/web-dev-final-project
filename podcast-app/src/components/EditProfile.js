@@ -20,7 +20,12 @@ const EditProfile = () => {
     }
 
     const handleEditProfile = async () => {
-
+        if (usernameRef.current.value.length == 0
+            || emailRef.current.value.length == 0 ||
+            passwordRef.current.value.length == 0) {
+            alert("update failed - missing required field(s)")
+            return;
+        }
         const updatedUser = {
             _id: profile._id,
             credentials: {
@@ -61,19 +66,22 @@ const EditProfile = () => {
                     <label>Username
                         <input ref={usernameRef}
                            defaultValue={profile.credentials.username}
-                           type="username"
+                           type="username" required
                            className="form-control"/></label>
                     <br></br>
                     <label>Email
                         <input ref={emailRef}
                                        defaultValue={profile.email}
                                        type="email"
+                                       required
                                        className="form-control"/></label>
 
                     <br></br>
                     <label>Password
                         <input ref={passwordRef}
+                                        placeholder="password"
                                           type="password"
+                                          required
                                           className="form-control"/></label>
                     <br></br>
                     <label>First Name
