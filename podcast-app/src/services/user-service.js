@@ -21,7 +21,6 @@ export const findAllUsers = async () => {
 export const findUserById = async (user) => {
     const response = await axios.get(`${USERS_API}/${user._id}`, user);
     const users = response.data;
-    console.log(users)
     return users;
 }
 
@@ -31,7 +30,6 @@ export const deleteUser = async (user) => {
     return response.data;
 }
 export const updateUser = async (user) => {
-    console.log(user)
     const response = await axios.put(`${USERS_API}/${user._id}`, user);
     return response.data;
 }

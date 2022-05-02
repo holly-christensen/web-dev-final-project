@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import commentsSchema from "./comments-schema.js";
 
 const episodesSchema = mongoose.Schema({
         episodeId: String,

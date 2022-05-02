@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {findAllCreators, findCreatorByUserId} from "../actions/creator-actions";
-import {useDispatch, useSelector} from "react-redux";
+import {findCreatorByUserId} from "../actions/creator-actions";
+import {useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
 
 
 const CreatorDetails = (user) => {
-    //console.log(user.user._id)
-    const creators = useSelector((state) => state.creators);
     let [creator, setCreator] = useState('');
     const dispatch = useDispatch();
 
@@ -14,16 +12,10 @@ const CreatorDetails = (user) => {
 
    const findCreator = async () => {
        const current = await findCreatorByUserId(dispatch, userId)
-       //console.log(current)
        setCreator(current)
     }
 
     let userId = user.user._id
-    //console.log(userId)
-    //findCreator()
-    //console.log(result)
-    //console.log(creator)
-    //console.log(creators)
     return (
         <div>
             <h3>Creator Information</h3>

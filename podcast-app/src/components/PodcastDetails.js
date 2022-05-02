@@ -295,7 +295,6 @@ const PodcastDetails = () => {
                                         </SecureCreatorContent>
                                         <div className="d-flex align-items-center text-decoration-none">
                                             <div className="ms-3">
-
                                                 <small className="text-muted mb-1">
                                                     <Link to={`/profile/${review.userId}`}
                                                           className={"text-decoration-none"}>

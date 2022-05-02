@@ -1,11 +1,6 @@
-// import './vendors/bootstrap/css/bootstrap.min.css';
-// import './vendors/bootstrap/bootstrap.min.css';
-// import './vendors/fontawesome/css/all.min.css';
-
 import './App.css';
-import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import UserProfile from "./components/UserProfile";
-import CreatorProfile from "./components/CreatorProfile";
 import EpisodeDetails from "./components/EpisodeDetails";
 import Homepage from "./components/Homepage";
 import PodcastDetails from "./components/PodcastDetails";
@@ -48,11 +43,6 @@ function App() {
                             <Route path="podcasts/details/:pid" element={<PodcastDetails/>}/>
                             <Route path="podcasts/details/:pid/:eid" element={<EpisodeDetails/>}/>
                             <Route path="profile/:uid" element={<OtherUserDetails/>}/>
-                            <Route path="podcasts/details/:pid/creator/:cid" element={
-                                <SecureRoute>
-                                   <CreatorProfile/>
-                                </SecureRoute>
-                            }/>
                         </Route>
                     </Routes>
 

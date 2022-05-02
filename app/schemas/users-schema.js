@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
-import reviewsSchema from "./reviews-schema.js"
-import commentsSchema from "./comments-schema.js";
-import podcastsSchema from "./podcasts-schema.js";
+
 
 const usersSchema = mongoose.Schema({
         firstName: String,

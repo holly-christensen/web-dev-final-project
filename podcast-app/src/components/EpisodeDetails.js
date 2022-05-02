@@ -23,7 +23,6 @@ const EpisodeDetails = () => {
         const commentsFromState = useSelector((state) => state.comments);
 
         let [episodeDetails, setEpisodeDetails] = useState(initialEpisodeDetails);
-        // let [commentsLikedByThisUser, setCommentsLikedByThisUser] = useState([]);
         let [comments, setComments] = useState(commentsFromState);
         let [commentBody, setCommentBody] = useState('');
         let [creatorDetails, setCreatorDetails] = useState({username: null, _id: null});
@@ -35,7 +34,6 @@ const EpisodeDetails = () => {
         useEffect(() => getEpisodeInfo(), []);
         useEffect(() => getComments(), []);
         useEffect(() => getPodcastCreatorIfExists(), []);
-        // useEffect(() => getCommentsLikedByThisUser(), []);
 
         const getEpisodeInfo = async () => {
             const episodeInfo = await getEpisodesById(eid);
@@ -49,7 +47,6 @@ const EpisodeDetails = () => {
 
         const getComments = async () => {
             const comments = await findCommentsByEpisodeId(eid);
-            // getCommentsLikedByThisUser();
             setComments(comments);
         }
 

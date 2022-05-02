@@ -38,9 +38,7 @@ export const findCreatorById = async (dispatch, creatorId) => {
 }
 
 export const findCreatorByUserId = async (dispatch, userId) => {
-    console.log(userId)
     const creator = await service.findCreatorByUserId(userId);
-    console.log(creator)
     dispatch({
         type: FIND_CREATOR_BY_USERID,
         creator
