@@ -42,7 +42,6 @@ const UserProfile = () => {
                 <div>
                     <h1>{profile.credentials.username}
                         {profile.type === "USER_CREATOR" && <i className={`fa fa-check-circle ms-2`}/>}</h1>
-                    {profile.profileImg}
                     {profile.type === "USER_CREATOR" && <CreatorDetails user={profile}></CreatorDetails>}
                     <UserDetails user={profile}></UserDetails>
                     <button className="btn btn-outline-primary" onClick={handleEditProfile}> Edit Profile</button>

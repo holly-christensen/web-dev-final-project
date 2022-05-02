@@ -63,7 +63,6 @@ export const ProfileProvider = ({children}) => {
 
             },
             email: email,
-            profileImg: '',
             type: USER_CONSUMER,
             following: [],
             comments: [],

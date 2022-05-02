@@ -5,26 +5,16 @@ import {findPodcastById, findPodcastByPodchaserId} from "../services/podcast-ser
 import {findCommentById} from "../actions/comment-actions";
 import {useDispatch, useSelector} from "react-redux";
 import {findUserById} from "../actions/user-actions";
+import {findReviewById} from "../actions/review-actions";
 
 const UserDetails = (user) => {
     console.log("in user details")
     console.log(user)
     const navigate = useNavigate()
-    let [currentComment, setCurrentComment] = useState({})
-    //let [viewedUser, setViewedUser] = useState({})
+
     let [following, setFollowing] = useState([])
     let [comments, setComments] = useState([])
     let [reviews, setReviews] = useState([])
-
-    // const getUserInfo = async () => {
-    //     console.log("getting user info")
-    //     let result = {}
-    //     await findUserById(dispatch, user).then(user => setViewedUser(user))
-    //     // console.log("userInfo " + userInfo)
-    //     // console.log("result " + result)
-    //     // //setViewedUser(userInfo)
-    //     // return userInfo
-    // }
 
     const getAllFollowingInfo = async () => {
         console.log("in get all following info")
@@ -42,18 +32,16 @@ const UserDetails = (user) => {
         await Promise.all(user.user.comments.map(comment => {
                     getCommentInfo(comment).then(com => results.push(com))}))
         setComments(results)
-        //results.push(result)
-        // console.log(commentsInfo)
-        // //setComments(commentsInfo)
-        // return commentsInfo;
-        // //console.log(comments)
     }
 
     const getAllReviewInfo = async () => {
+        console.log("in get all review info")
         const results = []
         await Promise.all(user.user.reviews.map(async review =>
-            await getReviewInfo(review).then(foundReview => setReviews([...reviews, foundReview]))))
+            await getReviewInfo(review).then(foundReview => results.push(foundReview))))
         setReviews(results)
+        console.log("reviews!!!")
+        console.log(results)
     }
 
     //useEffect(() => getUserInfo(), []);
@@ -62,10 +50,6 @@ const UserDetails = (user) => {
     useEffect(() => getAllReviewInfo(), []);
 
     const dispatch = useDispatch();
-    //console.log(viewedUser)
-    // use effect to get all comment details
-
-    // function get all comment details and set the state
 
     const getPodcastInfo = async (podcast) => {
         const podcastInfo = await getPodcastsById(podcast.podcastId);
@@ -79,9 +63,9 @@ const UserDetails = (user) => {
     }
 
     const getReviewInfo = async (review) => {
-        //const reviewInfo = await findReviewById(dispatch, review)
-        //return reviewInfo;
-        return review;
+        let reviewDetails = {_id: review}
+        const reviewInfo = await findReviewById(dispatch, reviewDetails)
+        return reviewInfo;
     }
 
     // <p key={comment}>{getCommentInfo(comment).body}</p>
@@ -94,7 +78,6 @@ const UserDetails = (user) => {
     //console.log(user)
     return (
         <div>
-            {/*<h1>{JSON.stringify(comments)}</h1>*/}
             <h3>User Information</h3>
             <p><strong>{profile.firstName} {profile.lastName}</strong></p>
             <p><strong>Email: </strong> {profile.email}</p>
@@ -112,7 +95,7 @@ const UserDetails = (user) => {
                 {comments.map((comment) => {
                     return (
                         <li key={comment._id}>
-                            <div>{comment.body}</div>
+                            <Link to={`/podcasts/details/${comment.podcastId}/${comment.episodeId}`}>{comment.body}</Link>
                         </li>)})}
             </ul>
             <h4>Reviews</h4>
@@ -120,7 +103,7 @@ const UserDetails = (user) => {
                 {reviews.map((review) => {
                     return (
                         <li key={review._id}>
-                            <div>{review.title}</div>
+                            <Link to={`/podcasts/details/${review.podcastId}`}>{review.title} </Link>
                         </li>)})}
             </ul>
         </div>

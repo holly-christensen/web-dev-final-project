@@ -15,18 +15,11 @@ const EditProfile = () => {
     let {profile, signout} = useProfile()
     const navigate = useNavigate()
     const signedIn = profile && Object.keys(profile).length > 0
-    const [selectedFile, setSelectedFile] = useState('');
     const signIn = () => {
         navigate('/signin')
     }
 
     const handleEditProfile = async () => {
-        let profilePic = selectedFile
-        console.log("selected file")
-        console.log(selectedFile)
-        if (selectedFile === '') {
-            profilePic = profile.profileImg
-        }
 
         const updatedUser = {
             _id: profile._id,
@@ -36,7 +29,6 @@ const EditProfile = () => {
 
             },
             email: emailRef.current.value,
-            profileImg: profilePic,
             type: profile.type,
             following: profile.following,
             comments: profile.comments,
@@ -66,11 +58,6 @@ const EditProfile = () => {
             }
             {signedIn &&
                 <div>
-                    <h4>Edit profile picture</h4>
-                    <img src={profile.profileImg}/>
-                    <input type="file"
-                           onChange={(e) => setSelectedFile(e.target.files[0])}/>
-                    <br></br>
                     <label>Username
                         <input ref={usernameRef}
                            defaultValue={profile.credentials.username}
@@ -108,11 +95,6 @@ const EditProfile = () => {
                                                type="text"
                                                className="form-control"/></label>
                     <br></br>
-                    {/*{profile.type === "USER_CREATOR" && <label>Fun Fact*/}
-                    {/*    <input ref={phoneRef}*/}
-                    {/*           defaultValue={profile.phoneNumber}*/}
-                    {/*           type="text"*/}
-                    {/*           className="form-control"/></label>}*/}
                     <br></br><br></br>
                     {profile.type === "USER_CONSUMER" &&
                         <p>Are you a creator? Register

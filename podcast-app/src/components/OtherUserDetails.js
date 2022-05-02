@@ -25,7 +25,6 @@ const OtherUserDetails = () => {
             <div> {viewedUser.credentials && <div>
                 <h1>{viewedUser.credentials.username}
                     {viewedUser.type === "USER_CREATOR" && <i className={`fa fa-check-circle ms-2`}/>}</h1>
-                {viewedUser.profileImg}
                 {viewedUser.type === "USER_CREATOR" && <CreatorDetails user={viewedUser}></CreatorDetails>}
                 <UserDetails user={viewedUser}></UserDetails>
             </div>

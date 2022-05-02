@@ -44,6 +44,7 @@ export const findReviewById = async (dispatch, reviewId) => {
         type: FIND_REVIEW_BY_ID,
         review
     });
+    return review;
 }
 
 export const updateReview = async (dispatch, review) => {
