@@ -1,5 +1,4 @@
 import * as service from '../services/user-service.js';
-import {USER_CONSUMER} from "../user-types";
 import {signupUser} from "../services/user-service.js";
 
 export const CREATE_USER = 'CREATE_USER';
@@ -8,31 +7,6 @@ export const FIND_ALL_USERS = 'FIND_ALL_USERS';
 export const FIND_USER_BY_ID = 'FIND_USER_BY_ID';
 export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
-
-// export const createUser = async (dispatch, userDetails) => {
-//     const newUser = {
-//         firstName: userDetails.firstname,
-//         lastName: userDetails.lastname,
-//         phoneNumber: userDetails.phoneNumber,
-//         profileImg: '',
-//         email: userDetails.email,
-//         credentials: {
-//             username: userDetails.username,
-//
-//             password: userDetails.password,
-//         },
-//         type: USER_CONSUMER,
-//         following: [],
-//         comments: [],
-//         reviews: []
-//     }
-//     const user = await service.createUser(newUser);
-//     dispatch({
-//         type: CREATE_USER,
-//         user
-//     });
-//     return user;
-// }
 
 export const signUpUser = async (dispatch, userDetails) => {
     const newUser = await signupUser(userDetails);
@@ -51,13 +25,11 @@ export const findAllUsers = async (dispatch) => {
     });
 }
 export const findUserById = async (dispatch, userInput) => {
-    console.log("in here")
     const user = await service.findUserById(userInput);
     dispatch({
         type: FIND_USER_BY_ID,
         user
     });
-    console.log(user)
     return user;
 }
 

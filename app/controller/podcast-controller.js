@@ -6,7 +6,6 @@ const findAllPodcasts = async (req, res) => {
 }
 const findPodcastById = async (req, res) => {
     const podcastId = req.params['id']
-    console.log(podcastId)
     const podcast = await podcastsDao.findPodcastById(podcastId)
     res.json(podcast)
 }

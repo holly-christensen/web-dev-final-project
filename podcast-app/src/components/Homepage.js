@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useProfile} from "../contexts/profile-context";
-import {getPodcastsByCategoryAndRating, getPodcastsById, getPodcastsBySearchTerm} from "../useRequest";
+import {getPodcastsById, getPodcastsBySearchTerm} from "../useRequest";
 import {Link} from "react-router-dom";
 import SecureContent from "./secure-content";
 
@@ -34,7 +34,6 @@ const Homepage = () => {
     }
 
     const getTrendingPodcasts = async () => {
-        // const trendingPods = await getPodcastsByCategoryAndRating("Cats");
         const trendingPods = await getPodcastsBySearchTerm("Cats");
         setTrendingPodcasts(trendingPods.podcasts.data);
     }

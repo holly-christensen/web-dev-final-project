@@ -44,7 +44,6 @@ const CreatorSignUp = () => {
 
         setSearchTerm(searchRef.current.value)
         const result = await getPodcastsBySearchTerm(searchRef.current.value);
-        console.log(result)
         setPodcastSearchDetails({...podcastSearchDetails, results: result.podcasts.data})
 
         // once the request is sent, update state again
@@ -68,15 +67,10 @@ const CreatorSignUp = () => {
             userId: profile._id,
             username: profile.credentials.username
         }
-        console.log("creating creator")
-        console.log(details)
         createCreator(dispatch, details)
             .then(r => setCreatorDetails(details));
-        //updateUserToCreator()
-       // await upgradeUserToCreator()
         updateUserToCreator()
 
-        //await checkLoggedIn()
         navigate('/profile')
     }
 

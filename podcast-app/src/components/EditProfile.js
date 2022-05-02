@@ -1,6 +1,5 @@
 import {useProfile} from "../contexts/profile-context";
 import {Link, useNavigate} from "react-router-dom";
-import UserDetails from "./UserDetails";
 import React, {useRef, useState} from "react";
 import {USER_CONSUMER} from "../user-types";
 import {updateUser} from "../services/user-service";
@@ -12,7 +11,7 @@ const EditProfile = () => {
     const usernameRef = useRef()
     const firstRef = useRef()
     const phoneRef = useRef()
-    let {profile, signout} = useProfile()
+    let {profile} = useProfile()
     const navigate = useNavigate()
     const signedIn = profile && Object.keys(profile).length > 0
     const signIn = () => {
@@ -46,14 +45,12 @@ const EditProfile = () => {
             const result = await updateUser(updatedUser);
             profile = updatedUser
             navigate('/profile')
-            console.log(result)
         } catch (e) {
             console.log(e)
             alert ("Could not update profile")
         }
     }
 
-    console.log(profile)
     return (
         <div>
             <h1>Edit Profile</h1>
@@ -102,7 +99,6 @@ const EditProfile = () => {
                                                defaultValue={profile.phoneNumber}
                                                type="text"
                                                className="form-control"/></label>
-                    <br></br>
                     <br></br><br></br>
                     {profile.type === "USER_CONSUMER" &&
                         <p>Are you a creator? Register

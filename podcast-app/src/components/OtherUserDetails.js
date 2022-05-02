@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {findAllUsers, findUserById} from "../actions/user-actions";
 import {getEpisodesById} from "../useRequest";
@@ -19,7 +19,6 @@ const OtherUserDetails = () => {
         return res;
     }
 
-    console.log(viewedUser)
     return(
         <div>
             <div> {viewedUser.credentials && <div>

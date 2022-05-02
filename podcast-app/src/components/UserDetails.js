@@ -1,18 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {getPodcastsById} from "../useRequest";
-import {findPodcastById, findPodcastByPodchaserId} from "../services/podcast-service";
 import {findCommentById} from "../actions/comment-actions";
-import {useDispatch, useSelector} from "react-redux";
-import {findUserById} from "../actions/user-actions";
+import {useDispatch} from "react-redux";
 import {findReviewById} from "../actions/review-actions";
 import SecureContent from "./secure-content";
-import SecureCreatorContent from "./secure-creator-content";
 import {useProfile} from "../contexts/profile-context";
 
 const UserDetails = (user) => {
-    console.log("in user details")
-    console.log(user)
     const {profile} = useProfile()
     const navigate = useNavigate()
 
@@ -20,14 +15,11 @@ const UserDetails = (user) => {
     if (user.user === profile) {
         self = true
     }
-    console.log(self)
     let [following, setFollowing] = useState([])
     let [comments, setComments] = useState([])
     let [reviews, setReviews] = useState([])
 
     const getAllFollowingInfo = async () => {
-        console.log("in get all following info")
-        console.log(user.user.following)
         let followedPodcasts = []
         await Promise.all(user.user.following.map(async podcast =>
             await getPodcastInfo(podcast).then(foundPodcast => followedPodcasts.push(foundPodcast))))
@@ -48,7 +40,6 @@ const UserDetails = (user) => {
         setReviews(results)
     }
 
-    //useEffect(() => getUserInfo(), []);
     useEffect(() => getAllFollowingInfo(), [])
     useEffect(() => getAllCommentInfo(), []);
     useEffect(() => getAllReviewInfo(), []);

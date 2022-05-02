@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useQuery } from "react-query";
-import {graphql, buildSchema} from "graphql";
 
 const PODCHASER_API = 'https://api.podchaser.com/graphql';
 
@@ -31,5 +30,3 @@ export const getPodcasts = async () => {
 
     });
 }
-
-// getPodcasts();

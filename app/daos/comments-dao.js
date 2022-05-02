@@ -1,5 +1,4 @@
 import commentsModel from '../models/comment.model.js'
-import usersModel from "../models/user.model.js";
 
 const findAllComments = () => {
     return commentsModel.find()
@@ -46,5 +45,6 @@ const createComment = (comment) => {
 }
 
 export default {
-    likeComment, dislikeComment, findCommentById, deleteComment, updateComment, findAllComments, createComment, findCommentsByEpisodeId
+    likeComment, dislikeComment, findCommentById, deleteComment, updateComment,
+    findAllComments, createComment, findCommentsByEpisodeId
 }
