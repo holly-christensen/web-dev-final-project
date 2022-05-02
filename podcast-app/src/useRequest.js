@@ -103,3 +103,18 @@ export async function getPodcastEpisodes(id, page) {
         }
     `);
 }
+
+export async function getPodcastsByCategoryAndRating(category) {
+    return await graphQLClient.request(gql`
+query {
+    podcasts(filters: {categories: "Comedy", rating: {minRating: 3}) {
+        data {
+            title,
+            id,
+            description,
+            imageUrl
+        }
+    }
+}
+    `);
+}
