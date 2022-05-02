@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useProfile} from "../contexts/profile-context";
-import {getPodcastsById} from "../useRequest";
+import {getPodcastsByCategoryAndRating, getPodcastsById, getPodcastsBySearchTerm} from "../useRequest";
 import {Link} from "react-router-dom";
 
 const Homepage = () => {
@@ -8,10 +8,7 @@ const Homepage = () => {
     let {profile} = useProfile();
 
     let [followedPodcasts, setFollowedPodcasts] = useState([])
-
-    useEffect(() => {
-        console.log("set followed podcasts: " + JSON.stringify(followedPodcasts));
-    }, [followedPodcasts]);
+    let [trendingPodcasts, setTrendingPodcasts] = useState([])
 
 
     useEffect(() => {
@@ -20,6 +17,8 @@ const Homepage = () => {
         }
     }, []);
 
+    useEffect(() => { getTrendingPodcasts()}, []);
+
     const getFollowedPodcasts = async () => {
         const podcastPochaserIds = profile.following;
         let newPodcasts = [];
@@ -27,34 +26,62 @@ const Homepage = () => {
         if (podcastPochaserIds) {
             await Promise.all(podcastPochaserIds.map(async (pod) => {
                 const details = await getPodcastsById(pod.podcastId);
-                console.log(details)
                 newPodcasts.push(details.podcast);
             }));
         }
         setFollowedPodcasts(newPodcasts);
     }
 
+    const getTrendingPodcasts = async () => {
+        // const trendingPods = await getPodcastsByCategoryAndRating("Comedy", 4);
+        const trendingPods = await getPodcastsBySearchTerm("Comedy");
+        console.log(trendingPods);
+        setTrendingPodcasts(trendingPods);
+    }
+
+    const truncateDescription = (description) => {
+        return description.length > 100 ? description.substring(0, 100) + "..." : description;
+    }
+
     return (
         <div>
             <h1>Homepage</h1>
-            <h3>Tending Podcasts</h3>
             <h3>Podcasts you follow</h3>
-            <ul className={"ps-0 mt-4"}>
+            <div className={"ps-0 mt-4 card-group"}>
                 {
                     followedPodcasts.map((podcast) => {
-                        return (<li>
-                            <div className={"card"} style={{ width: '15rem'}}>
+                        return (<div key={podcast.podcastId}>
+                            <div className={"card m-2"} style={{width: '15rem'}}>
                                 <img className={"card-img-top"} src={podcast.imageUrl} alt={podcast.title}/>
                                 <div className={"card-body"}>
                                     <h6 className={"card-title"}>{podcast.title}</h6>
-                                    <p className={"card-text"}>{podcast.description}</p>
-                                    <Link to={`/podcast/details/${podcast.id}`} className={"btn btn-primary"}>Go</Link>
+                                    <p className={"text-muted"}>{truncateDescription(podcast.description)}</p>
+                                    <Link to={`/podcast/details/${podcast.id}`}
+                                          className={"link text-decoration-none p-0 m-0"}>See more</Link>
                                 </div>
                             </div>
-                        </li>)
+                        </div>)
                     })
                 }
-            </ul>
+            </div>
+            <h3>Tending Podcasts</h3>
+            <div className={"ps-0 mt-4 card-group"}>
+                {
+                    trendingPodcasts.map((podcast) => {
+                        return (<div key={podcast.podcastId}>
+                            <div className={"card m-2"} style={{width: '15rem'}}>
+                                <img className={"card-img-top"} src={podcast.imageUrl} alt={podcast.title}/>
+                                <div className={"card-body"}>
+                                    <h6 className={"card-title"}>{podcast.title}</h6>
+                                    <p className={"text-muted"}>{truncateDescription(podcast.description)}</p>
+                                    <Link to={`/podcast/details/${podcast.id}`}
+                                          className={"link text-decoration-none p-0 m-0"}>See more</Link>
+                                </div>
+                            </div>
+                        </div>)
+                    })
+                }
+            </div>
         </div>
     );
 };
