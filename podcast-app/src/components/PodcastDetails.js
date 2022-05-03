@@ -39,7 +39,7 @@ const PodcastDetails = () => {
         let [podcastDetails, setPodcastDetails] = useState(initialPodcastDetails);
         let [episodesDetails, setEpisodesDetails] = useState(initialEpisodesDetails);
         let [creatorDetails, setCreatorDetails] = useState({username: null, _id: null});
-        let [reviews, setReviews] = useState(reviewsFromState);
+        let [reviews, setReviews] = useState([]);
         let [reviewContent, setReviewContent] = useState(initialReviewContent)
         let [isFollowing, setIsFollowing] = useState(null)
 
