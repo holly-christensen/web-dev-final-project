@@ -1,4 +1,4 @@
-import './App.css';
+import './styles/App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import UserProfile from "./components/UserProfile";
 import EpisodeDetails from "./components/EpisodeDetails";
@@ -22,28 +22,29 @@ function App() {
                 <Nav/>
                 <div className="container">
                     <Routes>
-                        <Route path="/">
-                            <Route path="/home" element={<Homepage/>}/>
-                            <Route path="/profile" element={
+                        {/*<Route path="/">*/}
+                            <Route exact path={"/"} element={<Homepage/>}/>
+                            <Route path={"/home"} element={<Homepage/>}/>
+                            <Route path={"/profile"} element={
                                 <SecureRoute>
                                     <UserProfile/>
                                 </SecureRoute>
                             }/>
-                            <Route path="/edit-profile" element={
+                            <Route path={"/edit-profile"} element={
                                 <SecureRoute>
                                     <EditProfile/>
                                 </SecureRoute>
                             }/>
-                            <Route path="/signin" element={<SignIn/>}/>
-                            <Route path="/signup" element={<SignUp/>}/>
-                            <Route path="/signout" element={<SignOut/>}/>
-                            <Route path="/podcasts" element={<Search/>}/>
-                            <Route path="/creator-signup" element={<CreatorSignUp/>}/>
-                            <Route path="podcasts/:searchString" element={<Search/>}/>
-                            <Route path="podcasts/details/:pid" element={<PodcastDetails/>}/>
-                            <Route path="podcasts/details/:pid/:eid" element={<EpisodeDetails/>}/>
-                            <Route path="profile/:uid" element={<OtherUserDetails/>}/>
-                        </Route>
+                            <Route path={"/signin"} element={<SignIn/>}/>
+                            <Route path={"/signup"} element={<SignUp/>}/>
+                            <Route path={"/signout"} element={<SignOut/>}/>
+                            <Route path={"/podcasts"} element={<Search/>}/>
+                            <Route path={"/creator-signup"} element={<CreatorSignUp/>}/>
+                            <Route path={"podcasts/:searchString"} element={<Search/>}/>
+                            <Route path={"podcasts/details/:pid"} element={<PodcastDetails/>}/>
+                            <Route path={"podcasts/details/:pid/:eid"} element={<EpisodeDetails/>}/>
+                            <Route path={"profile/:uid"} element={<OtherUserDetails/>}/>
+                        {/*</Route>*/}
                     </Routes>
 
                 </div>
