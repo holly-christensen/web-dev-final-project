@@ -8,7 +8,8 @@ import usersReducer from "./reducers/user-reducer";
 import commentsReducer from "./reducers/comment-reducer";
 import creatorsReducer from "./reducers/creator-reducer";
 import reviewsReducer from "./reducers/review-reducer";
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
+import './styles/vendors/bootstrap.min.css';
 
 const store = createStore(combineReducers({
         users: usersReducer,
